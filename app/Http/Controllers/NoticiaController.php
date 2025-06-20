@@ -87,11 +87,5 @@ class NoticiaController extends Controller
 
         return redirect()->route('noticias.index')->with('success', 'Notícia eliminada');
     }
-
-    public function show($id)
-    {
-        $noticia = \App\Models\Noticia::findOrFail($id);
-        return view('noticias.show', compact('noticia'));
-    }
-
+    
 }

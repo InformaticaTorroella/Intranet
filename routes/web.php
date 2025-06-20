@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\DocumentController;
 
 Route::get('/', function () {
     return redirect()->route('admin.home');
@@ -21,16 +22,18 @@ Route::get('/calendar', function () {
     return view('calendar');
 })->name('calendar');
 
+
+// Noticia routes
+
 Route::get('noticias', [NoticiaController::class, 'index'])->name('noticias.index');
 
 Route::get('noticias/create', function () {
     if (!session()->has('username')) {
-        session(['url.intended' => url()->current()]);  // Guardas la URL actual
+        session(['url.intended' => url()->current()]);
         return redirect()->route('login');
     }
     return app()->call('App\Http\Controllers\NoticiaController@create');
 })->name('noticias.create');
-
 
 Route::post('noticias', function () {
     if (!session()->has('username')) {
@@ -62,3 +65,46 @@ Route::delete('noticias/{id}', function ($id) {
 
 Route::get('noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
 
+
+// Document routes
+
+Route::get('documents', function () {
+    return app()->call('App\Http\Controllers\DocumentController@index');
+})->name('documents.index');
+
+Route::get('documents/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\DocumentController@create');
+})->name('documents.create');
+
+Route::post('documents', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\DocumentController@store');
+})->name('documents.store');
+
+Route::get('documents/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\DocumentController@edit', ['id' => $id]);
+})->name('documents.edit');
+
+Route::put('documents/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\DocumentController@update', ['id' => $id]);
+})->name('documents.update');
+
+Route::delete('documents/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\DocumentController@destroy', ['id' => $id]);
+})->name('documents.destroy');

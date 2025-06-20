@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class Document extends Model
 {
-    protected $table = 'documents'; // Assuming your table name is 'documents'
+    protected $table = 'int_documents'; // Assuming your table name is 'int_documents'
     public $timestamps = false;
     protected $primaryKey = 'id';
 
     // GET documents ordered by tramit id and tipus
     public static function getOrdre($idtramit, $tipus)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tramit', $idtramit)
             ->where('FK_id_tipus_tramit', $tipus)
             ->orderBy('ordre', 'asc')
@@ -24,7 +24,7 @@ class Document extends Model
     // Get last document by object id and type
     public static function getOrdreUltim($id, $tipus)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_obj', $tipus)
             ->where('FK_id_obj', $id)
             ->orderByDesc('id')
@@ -35,7 +35,7 @@ class Document extends Model
     // Get all documents ordered by nom_visual
     public static function getDocuments()
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->orderBy('nom_visual', 'asc')
             ->get();
     }
@@ -43,7 +43,7 @@ class Document extends Model
     // Get all documents admin with translation simplified
     public static function getDocumentsAdmin()
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->select('id', 'nom_visual', 'url')
             ->orderBy('nom_visual', 'asc')
             ->get();
@@ -52,7 +52,7 @@ class Document extends Model
     // Get documents by tramit id
     public static function getDocumentsTramit($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_tramit', 1)
             ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
@@ -62,7 +62,7 @@ class Document extends Model
     // Get documents by expedient id and tipus tramit
     public static function getDocumentsExpedient($id, $tipus_tramit)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tramit', $id)
             ->where('FK_id_tipus_tramit', $tipus_tramit)
             ->orderBy('ordre', 'asc')
@@ -72,7 +72,7 @@ class Document extends Model
     // Get documents by normativa id
     public static function getDocumentsNormativa($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_tramit', 3)
             ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
@@ -82,7 +82,7 @@ class Document extends Model
     // Get documents by proces id
     public static function getDocumentsProces($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_tramit', 2)
             ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
@@ -92,7 +92,7 @@ class Document extends Model
     // Get documents by servei id
     public static function getDocumentsServei($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_tramit', 5)
             ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
@@ -102,7 +102,7 @@ class Document extends Model
     // Get documents by concessionaria id
     public static function getDocumentsConcessionaria($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('FK_id_tipus_tramit', 6)
             ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
@@ -112,7 +112,7 @@ class Document extends Model
     // Get documents by noticia id
     public static function getDocumentsNoticia($id)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->select('id', 'nom_visual', 'url', 'extensio', 'ordre', 'data_entrada')
             ->where('FK_id_tipus_obj', 1)
             ->where('FK_id_obj', $id)
@@ -123,19 +123,19 @@ class Document extends Model
     // Get single document by id
     public static function getDocument($id)
     {
-        return DB::table('documents')->where('id', $id)->first();
+        return DB::table('int_documents')->where('id', $id)->first();
     }
 
     // Get all documents
     public static function getAllDocuments()
     {
-        return DB::table('documents')->get();
+        return DB::table('int_documents')->get();
     }
 
     // Insert document, returns inserted id
     public static function insertDocument(array $arr)
     {
-        $id = DB::table('documents')->insertGetId([
+        $id = DB::table('int_documents')->insertGetId([
             'nom_visual'      => $arr['nom_document'],
             'nom_arxiu'       => $arr['nom_arxiu'],
             'data_entrada'    => $arr['data_entrada'], // format Y-m-d H:i:s
@@ -151,7 +151,7 @@ class Document extends Model
     // Update document by id
     public static function updateDocument($id, array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $id)
             ->update([
                 'nom_visual'      => $arr['nom_document'],
@@ -168,7 +168,7 @@ class Document extends Model
     // Update path document
     public static function updatePathDocument($id, array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $arr['id_document'])
             ->where('FK_id_tramit', $id)
             ->update(['nom_arxiu' => $arr['nom_arxiu']]);
@@ -177,7 +177,7 @@ class Document extends Model
     // Update document name and ordre
     public static function updateDocumentNom($id, array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $id)
             ->update([
                 'nom_visual' => $arr['nom_document'],
@@ -188,7 +188,7 @@ class Document extends Model
     // Update document URL
     public static function updateDocumentUrl($id, array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $arr['id_document'])
             ->update(['url' => $arr['url_document']]);
     }
@@ -196,7 +196,7 @@ class Document extends Model
     // Update file to URL
     public static function updateFileToUrl($id, array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $arr['id_document'])
             ->update([
                 'nom_visual' => $arr['nom_document'],
@@ -209,7 +209,7 @@ class Document extends Model
     // Update ordre
     public static function updateOrdre($iddocument, array $array)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $iddocument)
             ->update(['ordre' => $array['document'][0]['ORDRE']]);
     }
@@ -217,13 +217,13 @@ class Document extends Model
     // Delete document simple by id
     public static function deleteDocumentSimple($id)
     {
-        return DB::table('documents')->where('id', $id)->delete();
+        return DB::table('int_documents')->where('id', $id)->delete();
     }
 
     // Delete document by id, normativa and tipus_tramit
     public static function deleteDocument(array $arr)
     {
-        return DB::table('documents')
+        return DB::table('int_documents')
             ->where('id', $arr['id_document'])
             ->where('FK_id_tramit', $arr['id_normativa'])
             ->where('FK_id_tipus_tramit', $arr['id_tipus_tramit'])
