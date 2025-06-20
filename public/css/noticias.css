@@ -1,0 +1,169 @@
+body, html {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f1f1;
+    min-height: 100vh;
+    width: 100%;
+    /* Elimina overflow: hidden y display:flex aquí */
+}
+/* Centrar vertical y horizontalmente el bloque de noticias */
+.noticias-page-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start; /* o center si quieres centrado vertical total */
+    justify-content: center;
+    background: #f8f1f1;
+    padding-top: 40px;
+    box-sizing: border-box;
+}
+.noticias-container {
+    background: white;
+    overflow-y: auto;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.25);
+    width: 50%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #800000;
+    user-select: none;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 80%;
+}
+
+label {
+    font-weight: 600;
+    color: #800000;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1.5px solid #b03030;
+    border-radius: 6px;
+    outline-color: #800000;
+    resize: vertical;
+}
+
+textarea {
+    min-height: 80px;
+}
+
+button.btn-primary {
+    padding: 14px;
+    font-size: 18px;
+    background-color: #800000;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 220px;
+    align-self: center;
+}
+
+button.btn-primary:hover {
+    background-color: #a00000;
+}
+
+button.btn-danger {
+    padding: 12px;
+    font-size: 18px;
+    background-color: #b22222;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 220px;
+    align-self: center;
+    margin-top: 10px;
+}
+
+button.btn-danger:hover {
+    background-color: #800000;
+}
+
+.btn-editar, .btn-crear, .btn-ver {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn-editar:hover, .btn-crear:hover, .btn-ver:hover {
+    background-color: #0056b3;
+}
+
+.noticia {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.noticia h2 {
+    margin: 0 0 10px 0;
+}
+
+.detalle-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.25);
+    max-width: 700px;
+    width: 90%;
+    text-align: center;
+}
+
+.detalle-container h1 {
+    color: #800000;
+    margin-bottom: 25px;
+    user-select: none;
+}
+
+.detalle-container p {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.detalle-container p strong {
+    color: #800000;
+}
+
+.detalle-container a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #800000;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.detalle-container a:hover {
+    text-decoration: underline;
+}

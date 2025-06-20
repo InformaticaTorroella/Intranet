@@ -71,11 +71,15 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->logout();
+        // auth()->logout();  <-- como no usas auth, elimina esto
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        $intendedUrl = session('url.intended', '/admin/home'); // Si no hay, home por defecto
+        session()->forget('url.intended'); // Limpias la URL guardada
+
+        return redirect($intendedUrl);
     }
+
 
 }
