@@ -13,22 +13,36 @@
 
     
     <div class="espacio-superior">
-      <a href="{{ route('noticias.index') }}">Gestionar Noticias</a>
+      <section class="panel-enlaces">
+        <div class="enlaces-grid">
+          <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
+          <a href="#" class="enlace-panel">Documents</a>
+          <a href="#" class="enlace-panel">Circulars</a>
+          <a href="#" class="enlace-panel">Avisos</a>
+          <a href="#" class="enlace-panel">Telefons</a>
+        </div>
+      </section>
+
     </div>
     <main>
 
       <section class="noticias-container">
-        <h1>Noticies Recents</h1>
+        <h1>Notícies Recents</h1>
+        <div class="noticias-grid">
           @forelse ($noticias as $noticia)
+            <a href="{{ route('noticias.show', $noticia->id) }}" class="noticia-link">
               <article class="noticia">
-                  <h2 class="noticia-titulo">{{ $noticia->nom }}</h2>
-                  <p class="noticia-descripcio">{{ $noticia->descripcio }}</p>
-                  <p class="noticia-data">Publicada: {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
+                <h2 class="noticia-titulo">{{ $noticia->nom }}</h2>
+                <p class="noticia-data">Publicada: {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
               </article>
+            </a>
           @empty
-              <p>No hi ha notícies disponibles.</p>
+            <p>No hi ha notícies disponibles.</p>
           @endforelse
-        </section> 
+        </div>
+      </section>
+
+
     </main>
 
     <x-footer />

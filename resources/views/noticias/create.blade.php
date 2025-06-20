@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
 </head>
 <body>
+    <x-header />
     <h1>Crear Notícia</h1>
     <form action="{{ route('noticias.store') }}" method="POST">
         @csrf
@@ -37,5 +38,6 @@
 
         <button type="submit" class="btn-primary">Crear</button>
     </form>
+    <x-footer />
 </body>
 </html>

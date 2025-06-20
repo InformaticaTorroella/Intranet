@@ -7,24 +7,60 @@
     <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
 </head>
 <body>
-    <div class="detalle-container">
-        <h1>{{ $noticia->nom }}</h1>
+  <x-header />
 
-        <p><strong>Descripción:</strong> {{ $noticia->descripcio }}</p>
-        <p><strong>Fecha publicación:</strong> {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
-        <p><strong>Publicado:</strong> {{ $noticia->publicat ? 'Sí' : 'No' }}</p>
-        <p><strong>URL:</strong> 
+  <div class="main-content">
+    <div class="detalle-container">
+        <div class="titulo-caja">{{ $noticia->nom }}</div>
+
+        <div class="detalle-item">
+            <strong>Descripción:</strong>
+            <div class="detalle-caja">{{ $noticia->descripcio }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>Fecha publicación:</strong>
+            <div class="detalle-caja">{{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>Publicado:</strong>
+            <div class="detalle-caja">{{ $noticia->publicat ? 'Sí' : 'No' }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>URL:</strong>
+            <div class="detalle-caja">
             @if($noticia->url)
                 <a href="{{ $noticia->url }}" target="_blank">{{ $noticia->url }}</a>
             @else
-                No disponible
+                <p>No disponible</p>
             @endif
-        </p>
-        <p><strong>Data inicial:</strong> {{ $noticia->data_inicial ?? 'No disponible' }}</p>
-        <p><strong>Data final:</strong> {{ $noticia->data_final ?? 'No disponible' }}</p>
-        <p><strong>Tipus objecte (fk_tipus_obj):</strong> {{ $noticia->fk_tipus_obj ?? 'No disponible' }}</p>
+            </div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>Data inicial:</strong>
+            <div class="detalle-caja">{{ $noticia->data_inicial ?? '<p>No disponible</p>' }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>Data final:</strong>
+            <div class="detalle-caja">{{ $noticia->data_final ?? '<p>No disponible</p>' }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <strong>Tipus objecte (fk_tipus_obj):</strong>
+            <div class="detalle-caja">{{ $noticia->fk_tipus_obj ?? '<p>No disponible</p>' }}</div>
+        </div>
 
         <a href="{{ route('noticias.index') }}">Volver a lista</a>
-    </div>
+        </div>
+
+
+  </div>
+
+  <x-footer />
 </body>
+
 </html>

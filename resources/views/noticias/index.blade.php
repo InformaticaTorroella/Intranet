@@ -30,9 +30,7 @@
             @if(session()->has('username'))
                 <a href="{{ route('noticias.create') }}" class="btn-crear">Crear Notícia</a>
             @else
-                <script>
-                    window.location.href = "{{ route('login') }}";
-                </script>
+                <p>Per crear una notícia, si us plau, inicia sessió.</p>
             @endif
         </section>
     </div>

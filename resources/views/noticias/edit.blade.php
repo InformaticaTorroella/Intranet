@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
 </head>
 <body>
+    <x-header />
     <h1>Editar Notícia</h1>
     <form action="{{ route('noticias.update', $noticia->id) }}" method="POST">
         @csrf
@@ -36,14 +37,21 @@
 
         <label>Data final:</label>
         <input type="date" name="data_final" value="{{ old('data_final', $noticia->data_final) }}" required>
+        <button type="submit" class="btn btn-primary">Guardar</button>
         <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" style="margin-top: 1rem;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar esta notícia?')">Eliminar</button>
         </form>
-        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 
-    
+    <x-footer />
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            if (!confirm('¿Estás seguro de que quieres guardar los cambios?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
