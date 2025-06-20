@@ -18,6 +18,9 @@ Route::get('/admin/home', function () {
     $noticias = \App\Models\Noticia::orderBy('data_creacio', 'desc')->take(10)->get();
     return view('admin.home', compact('noticias'));
 })->name('admin.home');
+Route::get('/calendar', function () {
+    return view('calendar');
+})->name('calendar');
 
 
 
