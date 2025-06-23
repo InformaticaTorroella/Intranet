@@ -57,8 +57,13 @@
             <div class="detalle-caja">{{ $avis->trial633 }}</div>
         </div>
 
-        <a href="{{ route('avis.index') }}">Tornar</a> | 
-        <a href="{{ route('avis.edit', $avis->id) }}">Editar</a>
+        <a href="{{ route('avis.index') }}">Tornar</a> 
+        @if(session()->has('username'))
+        | <a href="{{ route('avis.edit', $avis->id) }}">Editar</a>
+        @else
+
+        @endif
+        
     </div>
   </div>
 
