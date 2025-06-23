@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\AvisController;
+
 
 Route::get('/', function () {
     return redirect()->route('admin.home');
@@ -108,3 +110,48 @@ Route::delete('documents/{id}', function ($id) {
     }
     return app()->call('App\Http\Controllers\DocumentController@destroy', ['id' => $id]);
 })->name('documents.destroy');
+
+
+// Avis routes
+Route::get('avis', function () {
+    return app()->call('App\Http\Controllers\AvisController@index');
+})->name('avis.index');
+
+Route::get('avis/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\AvisController@create');
+})->name('avis.create');
+
+Route::post('avis', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\AvisController@store');
+})->name('avis.store');
+
+Route::get('avis/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\AvisController@edit', ['id' => $id]);
+})->name('avis.edit');
+
+Route::put('avis/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\AvisController@update', ['id' => $id]);
+})->name('avis.update');
+
+Route::delete('avis/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\AvisController@destroy', ['id' => $id]);
+})->name('avis.destroy');
+
+Route::get('avis/{id}', [AvisController::class, 'show'])->name('avis.show');

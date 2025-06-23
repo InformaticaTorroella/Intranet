@@ -17,8 +17,8 @@
         <div class="enlaces-grid">
           <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
           <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
+          <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
           <a href="#" class="enlace-panel">Circulars</a>
-          <a href="#" class="enlace-panel">Avisos</a>
           <a href="#" class="enlace-panel">Telefons</a>
         </div>
       </section>
