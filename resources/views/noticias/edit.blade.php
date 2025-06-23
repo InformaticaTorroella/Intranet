@@ -41,7 +41,7 @@
         <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" style="margin-top: 1rem;">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar esta notícia?')">Eliminar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquesta notícia?')">Eliminar</button>
         </form>
     </form>
 

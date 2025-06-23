@@ -66,17 +66,8 @@ html, body {
   font-size: 15px;
 }
 
-.document a {
-  color: #007BFF;
-  text-decoration: none;
-}
-
-.document a:hover {
-  text-decoration: underline;
-}
-
 /* Botones de acción */
-.btn-editar, .btn-crear {
+.btn-editar, .btn-crear, .btn-descarregar {
   display: inline-block;
   margin-top: 10px;
   padding: 8px 16px;
@@ -88,11 +79,88 @@ html, body {
   transition: background-color 0.3s ease;
 }
 
-.btn-editar:hover, .btn-crear:hover {
+.btn-editar:hover, .btn-crear:hover, .btn-descarregar:hover {
   background-color: #0056b3;
 }
 
 /* Mensajes */
 .documents-container p {
   user-select: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+label {
+  font-weight: 600;
+  color: #800000;
+}
+
+select,
+input.form-control,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1.5px solid #b03030;
+  border-radius: 6px;
+  outline-color: #800000;
+  resize: vertical;
+}
+
+textarea {
+  min-height: 80px;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #800000;
+  user-select: none;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button.btn-primary {
+  padding: 14px;
+  font-size: 18px;
+  background-color: #800000;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 220px;
+  align-self: center;
+}
+
+button.btn-primary:hover {
+  background-color: #a00000;
+}
+
+button.btn-danger {
+  padding: 12px;
+  font-size: 18px;
+  background-color: #b22222;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 220px;
+  align-self: center;
+  margin-top: 10px;
+}
+
+button.btn-danger:hover {
+  background-color: #800000;
 }

@@ -2,40 +2,49 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Documento</title>
+    <title>Editar Document</title>
+    <link rel="stylesheet" href="{{ asset('css/documents.css') }}">
 </head>
 <body>
-    <h1>Editar Documento</h1>
+    <x-header />
+    <h1 class="form-title">Editar Document</h1>
 
     <form method="POST" action="{{ route('documents.update', $document->id) }}">
         @csrf
         @method('PUT')
 
-        <label>Nombre Visual</label><br>
-        <input type="text" name="nom_document" value="{{ old('nom_document', $document->nom_visual) }}" required><br><br>
+        <label class="form-label">Nom</label>
+        <input type="text" name="nom_document" class="form-control" value="{{ old('nom_document', $document->nom_visual) }}" required>
 
-        <label>Nombre Archivo</label><br>
-        <input type="text" name="nom_arxiu" value="{{ old('nom_arxiu', $document->nom_arxiu) }}"><br><br>
+        <label class="form-label">Nom del Arxiu</label>
+        <input type="text" name="nom_arxiu" class="form-control" value="{{ old('nom_arxiu', $document->nom_arxiu) }}">
 
-        <label>Fecha Entrada</label><br>
-        <input type="datetime-local" name="data_entrada" value="{{ old('data_entrada', $document->data_entrada ? date('Y-m-d\TH:i', strtotime($document->data_entrada)) : '') }}"><br><br>
+        <label class="form-label">Data Entrada</label>
+        <input type="datetime-local" name="data_entrada" class="form-control" value="{{ old('data_entrada', $document->data_entrada ? date('Y-m-d\TH:i', strtotime($document->data_entrada)) : '') }}">
 
-        <label>Extensión</label><br>
-        <input type="text" name="extensio" maxlength="10" value="{{ old('extensio', $document->extensio) }}"><br><br>
+        <label class="form-label">Extensio</label>
+        <input type="text" name="extensio" maxlength="10" class="form-control" value="{{ old('extensio', $document->extensio) }}">
 
-        <label>Orden</label><br>
-        <input type="number" name="ordre" value="{{ old('ordre', $document->ordre) }}"><br><br>
+        <label class="form-label">Ordre</label>
+        <input type="number" name="ordre" class="form-control" value="{{ old('ordre', $document->ordre) }}">
 
-        <label>URL</label><br>
-        <input type="text" name="url_document" value="{{ old('url_document', $document->url) }}"><br><br>
+        <label class="form-label">URL</label>
+        <input type="text" name="url_document" class="form-control" value="{{ old('url_document', $document->url) }}">
 
-        <label>FK ID Obj</label><br>
-        <input type="number" name="id_obj" value="{{ old('id_obj', $document->fk_id_obj) }}"><br><br>
+        <label class="form-label">FK ID Obj</label>
+        <input type="number" name="fk_id_obj" class="form-control" value="{{ old('fk_id_obj', $document->fk_id_obj) }}">
 
-        <label>FK ID Tipus Obj</label><br>
-        <input type="number" name="tipus_obj" value="{{ old('tipus_obj', $document->fk_id_tipus_obj) }}"><br><br>
+        <label class="form-label">FK ID Tipus Obj</label>
+        <input type="number" name="fk_id_tipus_obj" class="form-control" value="{{ old('fk_id_tipus_obj', $document->fk_id_tipus_obj) }}">
 
-        <button type="submit">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <form action="{{ route('noticias.destroy', $document->id) }}" method="POST" style="margin-top: 1rem;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquest document?')">Eliminar</button>
+        </form>
     </form>
+
+    <x-footer />
 </body>
 </html>

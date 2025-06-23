@@ -19,9 +19,10 @@
                     <p class="document-data_entrada">Data Entrada: {{ \Carbon\Carbon::parse($document->data_entrada)->format('d/m/Y H:i') }}</p>
                     <p class="document-extensio">Extensió: {{ $document->extensio }}</p>
                     <p class="document-ordre">Ordre: {{ $document->ordre }}</p>
-                    <p class="document-url"><a href="{{ $document->url }}" target="_blank">Descarregar</a></p>
                     <p class="document-fk_id_obj">ID Objecte: {{ $document->fk_id_obj }}</p>
                     <p class="document-fk_id_tipus_obj">Tipus Objecte: {{ $document->fk_id_tipus_obj }}</p>
+                    <a href="{{ $document->url }}" target="_blank" class="btn-descarregar">Descarregar</a>
+
 
                     @if(session()->has('username') && isset($document->id))
                         <a href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn-editar">Editar</a>
