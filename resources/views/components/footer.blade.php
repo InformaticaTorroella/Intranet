@@ -9,9 +9,15 @@
       @if(session()->has('username'))
         {{ session('username') }}
       @else
-        <a href="login">Iniciar Sessió</a>
+        <a href="{{ route('login') }}">Iniciar Sessió</a>
       @endif
     </p>
+    @if(session()->has('username'))
+      <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+        @csrf
+        <button type="submit" class="logout-btn">Tanca sessio</button>
+      </form>
+    @endif
   </div>
   <div class="logo">
     <img src="{{ asset('images/LogoAjTorroella.png') }}" loading="lazy" alt="Logo">
