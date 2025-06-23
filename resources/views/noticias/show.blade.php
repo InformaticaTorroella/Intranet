@@ -11,7 +11,7 @@
 
   <div class="main-content">
     <div class="detalle-container">
-        <div class="titulo-caja">{{ $noticia->nom }}</div>
+        <div><h1>{{ $noticia->nom }}</h1></div>
 
         <div class="detalle-item">
             <strong>Descripción:</strong>
@@ -53,8 +53,8 @@
             <strong>Tipus objecte (fk_tipus_obj):</strong>
             <div class="detalle-caja">{{ $noticia->fk_tipus_obj ?? '<p>No disponible</p>' }}</div>
         </div>
-
-        <a href="{{ route('noticias.index') }}">Volver a lista</a>
+        
+        <a href="{{ route('noticias.index') }}">Tornar</a>
         </div>
 
 

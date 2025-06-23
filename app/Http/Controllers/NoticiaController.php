@@ -55,6 +55,12 @@ class NoticiaController extends Controller
         return view('noticias.edit', compact('noticia'));
     }
 
+    public function show($id)
+    {
+        $noticia = Noticia::findOrFail($id);
+        return view('noticias.show', compact('noticia'));
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([

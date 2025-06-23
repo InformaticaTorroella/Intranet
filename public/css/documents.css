@@ -128,7 +128,7 @@ textarea {
   margin-bottom: 20px;
 }
 
-button.btn-primary {
+button.btn-primary, .btn-go-back {
   padding: 14px;
   font-size: 18px;
   background-color: #800000;
@@ -142,7 +142,7 @@ button.btn-primary {
   align-self: center;
 }
 
-button.btn-primary:hover {
+button.btn-primary:hover, .btn-go-back:hover {
   background-color: #a00000;
 }
 
@@ -163,4 +163,22 @@ button.btn-danger {
 
 button.btn-danger:hover {
   background-color: #800000;
+}
+
+.detalle-container a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #800000;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid #800000;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.detalle-container a:hover {
+  background-color: #800000;
+  color: white;
+  text-decoration: none;
 }

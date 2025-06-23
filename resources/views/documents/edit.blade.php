@@ -38,11 +38,13 @@
         <input type="number" name="fk_id_tipus_obj" class="form-control" value="{{ old('fk_id_tipus_obj', $document->fk_id_tipus_obj) }}">
 
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <form action="{{ route('noticias.destroy', $document->id) }}" method="POST" style="margin-top: 1rem;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquest document?')">Eliminar</button>
-        </form>
+        
+        <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('documents.index') }}'">Tornar</button>
+    </form>
+    <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="margin-top: 1rem;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquest document?')">Eliminar</button>
     </form>
 
     <x-footer />

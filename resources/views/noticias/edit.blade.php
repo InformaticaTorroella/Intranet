@@ -38,11 +38,12 @@
         <label>Data final:</label>
         <input type="date" name="data_final" value="{{ old('data_final', $noticia->data_final) }}" required>
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" style="margin-top: 1rem;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquesta notícia?')">Eliminar</button>
-        </form>
+        <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('noticias.index') }}'">Tornar</button>
+    </form>
+    <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" style="margin-top: 1rem;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquesta notícia?')">Eliminar</button>
     </form>
 
     <x-footer />

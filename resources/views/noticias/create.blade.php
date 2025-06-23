@@ -37,6 +37,7 @@
         <input type="date" name="data_final" value="{{ old('data_final') }}" required>
 
         <button type="submit" class="btn-primary">Crear</button>
+        <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('noticias.index') }}'">Tornar</button>
     </form>
     <x-footer />
 </body>

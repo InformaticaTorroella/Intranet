@@ -169,7 +169,7 @@ textarea {
 }
 
 /* Botones */
-button.btn-primary {
+button.btn-primary, .btn-go-back {
   padding: 14px;
   font-size: 18px;
   background-color: #800000;
@@ -183,7 +183,7 @@ button.btn-primary {
   align-self: center;
 }
 
-button.btn-primary:hover {
+button.btn-primary:hover, .btn-go-back:hover {
   background-color: #a00000;
 }
 

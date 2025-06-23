@@ -50,6 +50,7 @@
         <input class="form-control" type="number" name="fk_id_tipus_obj" value="{{ old('fk_id_tipus_obj') }}" required>
 
         <button class="btn btn-primary" type="submit">Crear Document</button>
+        <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('documents.index') }}'">Tornar</button>
     </form> 
 
     <x-footer />
