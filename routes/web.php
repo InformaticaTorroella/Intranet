@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\AvisController;
-
+use App\Http\Controllers\TelefonController;
 
 Route::get('/', function () {
     return redirect()->route('admin.home');
@@ -156,7 +156,6 @@ Route::delete('avis/{id}', function ($id) {
 
 Route::get('avis/{id}', [AvisController::class, 'show'])->name('avis.show');
 
-use App\Http\Controllers\TelefonController;
 
 // TELEFONS
 Route::get('telefons', function () {
