@@ -27,10 +27,22 @@
     <input type="text" name="extensio_mobil" class="form-input">
 
     <label class="form-label">Àrea</label>
-    <input type="number" name="area" class="form-input">
+    <select name="area" class="form-select" required>
+      <option value="">-- Selecciona Àrea --</option>
+      @foreach ($arees as $area)
+        <option value="{{ $area->IdArea }}">{{ $area->Area }}</option>
+      @endforeach
+    </select>
+
 
     <label class="form-label">Edifici</label>
-    <input type="number" name="edifici" class="form-input">
+    <select name="edifici" class="form-select" required>
+      <option value="">-- Selecciona Edifici --</option>
+      @foreach ($equipaments as $equipament)
+        <option value="{{ $equipament->id_equimanent }}">{{ $equipament->Equipament }}</option>
+      @endforeach
+    </select>
+
 
     <label class="form-label">Tipus</label>
     <input type="number" name="fk_tipus_obj" class="form-input">

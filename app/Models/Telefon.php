@@ -79,4 +79,15 @@ class Telefon extends Model
     {
         return self::destroy($id);
     }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'fk_id_area');
+    }
+
+    public function equipament()
+    {
+        return $this->belongsTo(\App\Models\Equipament::class, 'fk_id_equipament', 'id_equimanent');
+    }
+
 }

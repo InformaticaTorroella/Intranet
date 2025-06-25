@@ -4,37 +4,58 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class Area extends Model
 {
-    protected $table = 'ciutada.area';
-    protected $primaryKey = 'id';
+    protected $table = 'int_area';
+    protected $primaryKey = 'IdArea';
     public $timestamps = false;
+    public $incrementing = false;
 
-    protected $fillable = ['nom'];
+    protected $fillable = ['Area'];
 
-    // Método para obtener todas las áreas con traducción simplificada
+    // Función para quitar acentos en PHP
+    public static function removeAccents($str)
+    {
+        return strtr(
+            $str,
+            'áéíóúàèìòùãõâêîôöäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ',
+            'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOUAEIOUC'
+        );
+    }
+
     public static function getAllArees()
     {
-        return DB::table('ciutada.area')
-            ->selectRaw("id, nom, TRANSLATE(nom, 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ','aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') as nom_t")
-            ->orderBy('nom', 'asc')
+        $areas = DB::table('intranet.int_area')
+            ->select('IdArea', 'Area')
+            ->orderBy('Area', 'asc')
             ->get();
+
+        return $areas->map(function ($area) {
+            $area->Area_t = self::removeAccents($area->Area);
+            return $area;
+        });
     }
 
-    // Método para obtener todas las áreas para admin, ordenado por nom_t
     public static function getAllAreesAdmin()
     {
-        return DB::table('ciutada.area')
-            ->selectRaw("id, nom, TRANSLATE(nom, 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ','aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') as nom_t")
-            ->orderBy('nom_t', 'asc')
+        $areas = DB::table('intranet.int_area')
+            ->select('IdArea', 'Area')
             ->get();
+
+        return $areas->map(function ($area) {
+            $area->Area_t = self::removeAccents($area->Area);
+            return $area;
+        })->sortBy('Area_t')->values();
     }
 
-    // Obtener una área concreta por id
     public static function getArea($idarea)
     {
-        return self::where('id', $idarea)->first();
+        return self::where('IdArea', $idarea)->first();
+    }
+
+    public function telefons()
+    {
+        return $this->hasMany(\App\Models\Telefon::class, 'fk_id_area');
     }
 }
