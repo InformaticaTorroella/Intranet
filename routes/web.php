@@ -155,3 +155,49 @@ Route::delete('avis/{id}', function ($id) {
 })->name('avis.destroy');
 
 Route::get('avis/{id}', [AvisController::class, 'show'])->name('avis.show');
+
+use App\Http\Controllers\TelefonController;
+
+// TELEFONS
+Route::get('telefons', function () {
+    return app()->call('App\Http\Controllers\TelefonController@index');
+})->name('telefons.index');
+
+Route::get('telefons/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\TelefonController@create');
+})->name('telefons.create');
+
+Route::post('telefons', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\TelefonController@store');
+})->name('telefons.store');
+
+Route::get('telefons/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\TelefonController@edit', ['id' => $id]);
+})->name('telefons.edit');
+
+Route::put('telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\TelefonController@update', ['id' => $id]);
+})->name('telefons.update');
+
+Route::delete('telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\TelefonController@destroy', ['id' => $id]);
+})->name('telefons.destroy');
+
+Route::get('telefons/{id}', [TelefonController::class, 'show'])->name('telefons.show');
