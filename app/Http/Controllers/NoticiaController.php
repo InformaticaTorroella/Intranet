@@ -40,7 +40,6 @@ class NoticiaController extends Controller
         $noticia->data_inicial = $validated['data_inicial'];
         $noticia->data_final = $validated['data_final'];
         
-        // No asignes id ni fk_tipus_obj si no es necesario o si es nullable
 
         $noticia->save();
 

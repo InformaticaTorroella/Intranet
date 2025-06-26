@@ -15,7 +15,7 @@ class Noticia extends Model
         'fk_tipus_obj', 'url', 'extensio', 'data_inicial', 'data_final'
     ];
 
-    // Obtener campos para editar (sin modificar fecha publicación)
+    // Obtenir caps per editar sense modificar la data de publicació
     public static function getNoticiaUpdatePublicar($id)
     {
         return DB::table('int_noticies')
@@ -24,7 +24,7 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtener noticia completa
+    // Obtenir noticies completes
     public static function getNoticia($id)
     {
         return DB::table('int_noticies')
@@ -40,13 +40,13 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtener nombre categoría noticia
+    // Obtenir nom de categornia de la noticia
     public static function getNomCatNoticia($id)
     {
         return DB::table('int_cat_noticies')->where('id', $id)->get();
     }
 
-    // Obtener todas las noticias
+    // Obtenir totes les noticies
     public static function getNoticies()
     {
         return DB::table('int_noticies')
@@ -58,7 +58,7 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtener todas las noticias publicadas para intranet
+    // Obtenir noticias publicadas per l'intranet
     public static function getNoticiesIntranet()
     {
         return DB::table('int_noticies')
@@ -72,7 +72,7 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtener etiquetas de una noticia
+    // Obtenir etiquetes de una noticia
     public static function getTagsNoticia($id)
     {
         return DB::table('int_etiquetes as e')
@@ -90,7 +90,7 @@ class Noticia extends Model
         return DB::table('int_noticies')->where('publicat', 1)->count();
     }
 
-    // Obtener noticias publicadas paginadas
+    // Obtenir noticias publicadas paginadas
     public static function getNoticiesReleased($pag_num)
     {
         $perPage = 9;
@@ -122,7 +122,7 @@ class Noticia extends Model
         ]);
     }
 
-    // Insertar relación noticia - categoria
+    // Insertar relació noticia - categoria
     public static function insertRelacioNoticiaCategoria(array $data)
     {
         return DB::table('int_fk_noticies_categoria')->insert([

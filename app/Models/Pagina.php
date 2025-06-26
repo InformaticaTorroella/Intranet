@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Pagina extends Model
 {
-    protected $table = 'int_noticies'; // Default table, adapt as needed
+    protected $table = 'int_noticies'; 
     public $timestamps = false;
 
     public static function getSearch($s_cat, $s_text)

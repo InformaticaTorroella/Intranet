@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); // formulario login
+        return view('auth.login'); // formulari login
     }
 
     public function login(Request $request)
@@ -61,22 +61,28 @@ class LoginController extends Controller
 
         $userInfo = $entries[0];
 
+        // Intenta extreure l'OU
+        $ou = $userInfo['ou'][0] ?? (
+            (preg_match('/OU=([^,]+)/', $userInfo['distinguishedname'][0] ?? '', $m)) ? $m[1] : 'Desconegut'
+        );
+
         session([
             'username' => $username,
             'name' => trim(($userInfo['givenname'][0] ?? '') . ' ' . ($userInfo['sn'][0] ?? '')),
+            'ou' => $ou,
         ]);
+
 
         return redirect('/admin/home');
     }
 
     public function logout(Request $request)
     {
-        // auth()->logout();  <-- como no usas auth, elimina esto
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $intendedUrl = session('url.intended', '/admin/home'); // Si no hay, home por defecto
-        session()->forget('url.intended'); // Limpias la URL guardada
+        $intendedUrl = session('url.intended', '/admin/home'); // Si no hi ha, home por defecte
+        session()->forget('url.intended'); // netejar la URL
 
         return redirect($intendedUrl);
     }

@@ -14,7 +14,7 @@ class Area extends Model
 
     protected $fillable = ['Area'];
 
-    // Función para quitar acentos en PHP
+    // Funci oper treure els accents
     public static function removeAccents($str)
     {
         return strtr(

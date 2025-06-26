@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <title>Detalle Notícia</title>
+    <title>Noticias</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
 </head>
@@ -14,17 +14,17 @@
         <div><h1>{{ $noticia->nom }}</h1></div>
 
         <div class="detalle-item">
-            <strong>Descripción:</strong>
+            <strong>Descriptció:</strong>
             <div class="detalle-caja">{{ $noticia->descripcio }}</div>
         </div>
 
         <div class="detalle-item">
-            <strong>Fecha publicación:</strong>
+            <strong>Data de publicació:</strong>
             <div class="detalle-caja">{{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</div>
         </div>
 
         <div class="detalle-item">
-            <strong>Publicado:</strong>
+            <strong>Publicat:</strong>
             <div class="detalle-caja">{{ $noticia->publicat ? 'Sí' : 'No' }}</div>
         </div>
 

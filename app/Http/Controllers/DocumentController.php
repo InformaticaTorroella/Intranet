@@ -99,11 +99,10 @@ class DocumentController extends Controller
         return redirect()->route('documents.index')->with('success', 'Document actualitzat');
     }
 
-    // Método destroy corregido
     public function destroy($id)
     {
-        $document = Document::getDocument($id); // usar el mètode del model
-
+        $document = Document::getDocument($id);
+        
         if (!$document) {
             abort(404);
         }

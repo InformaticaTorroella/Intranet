@@ -108,7 +108,7 @@ class Usuari extends Model
         return DB::table('int_acces_log')->insert([
             'nom_usuari' => $data['username'],
             'fk_area' => $data['area'],
-            'data' => $data['data'], // Assume format Y-m-d H:i:s
+            'data' => $data['data'], 
         ]);
     }
 
