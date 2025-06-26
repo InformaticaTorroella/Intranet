@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\DB;
 class Equipament extends Model
 {
     protected $table = 'int_equipaments';
-    protected $primaryKey = 'id_equimanent'; // corregido el typo aquí
+    protected $primaryKey = 'id_equimanent'; 
     public $timestamps = false;
-    public $incrementing = false; // si no hay PK auto incrementable
+    public $incrementing = false; 
 
     protected $fillable = ['Equipament'];
 
@@ -19,7 +19,7 @@ class Equipament extends Model
     {
         return DB::table('intranet.int_equipaments')
             ->where('id_equimanent', $id)
-            ->first();  // Cambiado a first() para devolver objeto único
+            ->first();  
     }
 
     // RETORNA TOTS ELS int_equipaments AMB PROPIETATS NORMALITZADES (id, nom)

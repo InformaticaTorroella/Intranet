@@ -73,7 +73,7 @@ class Faq extends Model
             ->toArray();
     }
 
-    // CERCA FAQS PER TEXT EN NOM (sense TRANSLATE)
+    // CERCA FAQS PER TEXT EN NOM (sense TRANSLATE--oracle )
     public static function getCercaFaqs($s_text)
     {
         return DB::table('ajuntament.int_faqs')

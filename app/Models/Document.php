@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Document extends Model
 {
-    protected $table = 'int_documents'; // Assuming your table name is 'int_documents'
+    protected $table = 'int_documents'; 
     public $timestamps = false;
     protected $primaryKey = 'id';
 
