@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Edita telèfon</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/telefons.css') }}">
 </head>
 <body>

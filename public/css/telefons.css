@@ -7,6 +7,7 @@ html, body {
   flex-direction: column;
   font-family: Arial, sans-serif;
   background: #f8f1f1;
+  scroll-behavior: smooth;
 }
 
 main {
@@ -245,3 +246,14 @@ select.form-select:focus {
   outline: none;
 }
 
+.sortable {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sortable:hover {
+  text-decoration: underline;
+}

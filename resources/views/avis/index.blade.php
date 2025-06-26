@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Avisos</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/avis.css') }}">
 </head>
 <body>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Document</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/documents.css') }}">
 </head>
 <body>

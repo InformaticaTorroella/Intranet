@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Nou telèfon</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/telefons.css') }}">
 </head>
 <body>
@@ -27,28 +28,26 @@
     <input type="text" name="extensio_mobil" class="form-input">
 
     <label class="form-label">Àrea</label>
-    <select name="area" class="form-select" required>
+    <select name="area" class="form-select">
       <option value="">-- Selecciona Àrea --</option>
       @foreach ($arees as $area)
         <option value="{{ $area->IdArea }}">{{ $area->Area }}</option>
       @endforeach
     </select>
 
-
     <label class="form-label">Edifici</label>
-    <select name="edifici" class="form-select" required>
+    <select name="edifici" class="form-select">
       <option value="">-- Selecciona Edifici --</option>
       @foreach ($equipaments as $equipament)
         <option value="{{ $equipament->id_equimanent }}">{{ $equipament->Equipament }}</option>
       @endforeach
     </select>
 
-
     <label class="form-label">Tipus</label>
     <input type="number" name="fk_tipus_obj" class="form-input">
 
     <label class="form-label">Data Edició</label>
-    <input type="date" name="data_edicio" class="form-input">
+    <input type="date" name="data_edicio" class="form-input" value="{{ old('data_edicio', date('Y-m-d')) }}">
 
     <button type="submit" class="btn btn-success">Guardar</button>
     <a href="{{ route('telefons.index') }}" class="btn btn-secondary">Cancel·la</a>

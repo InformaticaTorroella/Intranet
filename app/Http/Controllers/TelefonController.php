@@ -10,30 +10,23 @@ use App\Models\Equipament;
 class TelefonController extends Controller
 {
     // Mostrar todos los teléfonos
-
-
-    // En tu controlador, método que carga la vista
     public function index(Request $request)
     {
         $equipament_id = $request->input('id_equipament');
         $area_id = $request->input('area_id');
+        $orderBy = $request->input('order_by', 'nom'); // <--- Añade esta línea
+        $order = $request->input('order', 'asc'); // asc o desc
 
-        // Cargar equipaments ordenados
         $equipaments = Equipament::orderBy('Equipament')->get();
 
-        // Si hay equipament seleccionado, filtrar áreas con teléfonos solo de ese equipament
         if ($equipament_id) {
-            // Si hay equipament, sólo áreas con teléfonos en ese equipament
             $arees = Area::whereHas('telefons', function ($query) use ($equipament_id) {
                 $query->where('fk_id_equipament', $equipament_id);
             })->orderBy('Area')->get();
         } else {
-            // Si no hay equipament, todas las áreas
             $arees = Area::orderBy('Area')->get();
         }
 
-
-        // Consulta base para teléfonos
         $query = Telefon::query();
 
         if ($area_id) {
@@ -42,13 +35,10 @@ class TelefonController extends Controller
             $query->where('fk_id_equipament', $equipament_id);
         }
 
-        $telefons = $query->orderBy('nom')->get();
+        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->get();
 
-        return view('telefons.index', compact('telefons', 'equipaments', 'arees'));
+        return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }
-
-
-
 
     // Mostrar formulario de creación
     public function create()
@@ -57,7 +47,6 @@ class TelefonController extends Controller
         $equipaments = Equipament::orderBy('Equipament')->get();
         return view('telefons.create', compact('arees', 'equipaments'));
     }
-
 
     // Guardar un nuevo teléfono
     public function store(Request $request)
@@ -71,10 +60,15 @@ class TelefonController extends Controller
             'area' => 'nullable|integer',
             'edifici' => 'nullable|integer',
             'fk_tipus_obj' => 'nullable|integer',
-            'data_edicio' => 'required|date',
+            'data_edicio' => 'nullable|date',
         ]);
 
-        Telefon::insertTelefon($request->all());
+        $data = $request->all();
+        if (empty($data['data_edicio'])) {
+            $data['data_edicio'] = date('Y-m-d');
+        }
+
+        Telefon::insertTelefon($data);
         return redirect()->route('telefons.index')->with('success', 'Telèfon creat correctament!');
     }
 
@@ -92,7 +86,6 @@ class TelefonController extends Controller
         return view('telefons.edit', compact('telefon', 'arees', 'equipaments'));
     }
 
-
     // Actualizar teléfono
     public function update(Request $request, $id)
     {
@@ -105,10 +98,15 @@ class TelefonController extends Controller
             'area' => 'nullable|integer',
             'edifici' => 'nullable|integer',
             'fk_tipus_obj' => 'nullable|integer',
-            'data_edicio' => 'required|date',
+            'data_edicio' => 'nullable|date',
         ]);
 
-        Telefon::updateTelefon($id, $request->all());
+        $data = $request->all();
+        if (empty($data['data_edicio'])) {
+            $data['data_edicio'] = date('Y-m-d');
+        }
+
+        Telefon::updateTelefon($id, $data);
         return redirect()->route('telefons.index')->with('success', 'Telèfon actualitzat correctament!');
     }
 
