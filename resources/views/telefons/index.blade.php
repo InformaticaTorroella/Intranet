@@ -119,7 +119,7 @@
                 </form>
               @else
                 <p>
-                  Per editar o eliminar un telefon, si us plau,
+                  Per editar o eliminar un telèfon, si us plau,
                   <a href="{{ route('login') }}">inicia sessió</a>.
                 </p>
               @endif

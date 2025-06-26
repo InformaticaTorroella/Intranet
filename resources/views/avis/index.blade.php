@@ -32,7 +32,10 @@
                 @if(session()->has('username'))
                     <a href="{{ route('avis.create') }}" class="btn-crear">Crear Avis</a>
                 @else
-                    <p>Per crear un avís, si us plau, inicia sessió.</p>
+                    <p>
+                        Per crear un avís, si us plau,
+                        <a href="{{ route('login') }}">inicia sessió</a>.
+                    </p>
                 @endif
             </section>
         </div>

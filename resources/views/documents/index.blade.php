@@ -35,7 +35,10 @@
             @if(session()->has('username'))
                 <a href="{{ route('documents.create') }}" class="btn-crear">Crear Document</a>
             @else
-                <p>Per crear un document, si us plau, inicia sessió.</p>
+                <p>
+                  Per crear un document, si us plau,
+                  <a href="{{ route('login') }}">inicia sessió</a>.
+                </p>
             @endif
         </section>
     </div>
