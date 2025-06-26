@@ -72,12 +72,18 @@ class LoginController extends Controller
             'ou' => $ou,
         ]);
 
-
+        logActivity('LogIn', "Name: $username", 'L’usuari ha inicat sessió.');
+        
         return redirect('/admin/home');
     }
 
     public function logout(Request $request)
     {
+        
+        $username = session('username'); // Primer recuparem el nom del usuari
+        
+        logActivity('LogOut', "Name: $username", 'L’usuari ha tancat la sessió.');
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

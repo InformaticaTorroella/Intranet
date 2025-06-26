@@ -6,6 +6,8 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\TelefonController;
+use App\Http\Controllers\LogController;
+
 
 Route::get('/', function () {
     return redirect()->route('admin.home');
@@ -200,3 +202,13 @@ Route::delete('telefons/{id}', function ($id) {
 })->name('telefons.destroy');
 
 Route::get('telefons/{id}', [TelefonController::class, 'show'])->name('telefons.show');
+
+
+// Ruta per als logs
+Route::get('/logs', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call('App\Http\Controllers\LogController@index');
+})->name('logs.index');
