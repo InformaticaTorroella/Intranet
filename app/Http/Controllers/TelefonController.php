@@ -35,7 +35,7 @@ class TelefonController extends Controller
             $query->where('fk_id_equipament', $equipament_id);
         }
 
-        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->get();
+        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->paginate(15);
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }

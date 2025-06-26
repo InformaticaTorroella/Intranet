@@ -137,6 +137,11 @@
       </tbody>
 
     </table>
+    
+    <div class="pagination">
+      {{ $telefons->links() }}
+    </div>
+
   @endif
 </main>
 

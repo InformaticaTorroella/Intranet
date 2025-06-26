@@ -260,3 +260,46 @@ select.form-select:focus {
 .sortable:hover {
   text-decoration: underline;
 }
+
+.pagination-list {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 6px 10px;
+    color: #802222;
+    text-decoration: none;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.page-link:hover:not(.current) {
+    background-color: #e9ecef;
+}
+
+.page-link.current {
+    background-color: #b03030;
+    color: white;
+    cursor: default;
+}
+
+.disabled .page-link {
+    color: #702a2a;
+    cursor: default;
+}
+
+.interactive-dots span {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #b03030;
+    user-select: none;
+}
+.page-dropdown li:hover {
+    background-color: #882929;
+    color: white;
+}
