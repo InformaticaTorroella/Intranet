@@ -68,9 +68,15 @@ class TelefonController extends Controller
             $data['data_edicio'] = date('Y-m-d');
         }
 
-        Telefon::insertTelefon($data);
+        $telefon = Telefon::create($data);  // Asumiendo que el modelo tiene fillable configurado
+
+        $id = $telefon->id;
+
+        logActivity('Crea Telefon', "ID: $id", "L'usuari ha creat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon creat correctament!');
     }
+
 
     // Mostrar formulari de edició
     public function edit($id)
@@ -107,6 +113,9 @@ class TelefonController extends Controller
         }
 
         Telefon::updateTelefon($id, $data);
+
+        logActivity('Edita Telefon', "ID: $id", "L'usuari ha editat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon actualitzat correctament!');
     }
 
@@ -114,6 +123,9 @@ class TelefonController extends Controller
     public function destroy($id)
     {
         Telefon::deleteTelefon($id);
+
+        logActivity('Eliminar Telefon', "ID: $id", "L'usuari ha eliminat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon eliminat correctament!');
     }
 

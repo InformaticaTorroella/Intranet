@@ -141,7 +141,6 @@ class Noticia extends Model
                 'descripcio' => $data['descripcio_noticia'],
                 'data_publicacio' => $data['data_pub'],
                 'publicat' => $data['bool_pub'],
-                'fk_tipus_obj' => $data['tipus_obj'],
                 'url' => $data['url_document'],
                 'data_inicial' => $data['data_inicial'],
                 'data_final' => $data['data_final'],

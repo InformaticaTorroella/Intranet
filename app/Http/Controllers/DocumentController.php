@@ -23,7 +23,7 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'nom_visual' => 'required|string|max:255',
             'data_entrada' => 'required|date',
@@ -45,18 +45,22 @@ class DocumentController extends Controller
         $path = $file->storeAs("uploads/$folder", $filename, 'public');
         $url = asset("storage/uploads/$folder/$filename");
 
-        $dataEntrada = Carbon::parse($request->data_entrada)->format('Y-m-d H:i:s');
+        $dataEntrada = \Carbon\Carbon::parse($validated['data_entrada'])->format('Y-m-d H:i:s');
 
-        Document::insertDocument([
-            'nom_document' => $request->nom_visual,
+        $data = [
+            'nom_document' => $validated['nom_visual'],
             'nom_arxiu' => $filename,
             'extensio' => $ext,
             'data_entrada' => $dataEntrada,
-            'ordre' => $request->ordre,
+            'ordre' => $validated['ordre'],
             'url_document' => $url,
-            'id_obj' => $request->fk_id_obj,
-            'tipus_obj' => $request->fk_id_tipus_obj,
-        ]);
+            'id_obj' => $validated['fk_id_obj'],
+            'tipus_obj' => $validated['fk_id_tipus_obj'],
+        ];
+
+        $document = Document::create($data);
+
+        logActivity('Crea Document', "ID: {$document->id}", "L'usuari ha creat el document Nº {$document->id}.");
 
         return redirect()->back()->with('success', 'Document pujat correctament.');
     }
@@ -81,7 +85,6 @@ class DocumentController extends Controller
             'url' => 'nullable|string|max:230',
             'fk_id_obj' => 'nullable|integer',
             'fk_id_tipus_obj' => 'nullable|integer',
-            'trial695' => 'nullable|string|size:1',
         ]);
 
         $document = Document::findOrFail($id);
@@ -95,6 +98,8 @@ class DocumentController extends Controller
         $document->fk_id_tipus_obj = $validated['fk_id_tipus_obj'] ?? null;
         $document->trial695 = $validated['trial695'] ?? null;
         $document->save();
+
+        logActivity('Edita Document', "ID: $id", "L'usuari ha editat el document Nº $id.");
 
         return redirect()->route('documents.index')->with('success', 'Document actualitzat');
     }
@@ -119,6 +124,8 @@ class DocumentController extends Controller
 
         // Esborrem el registre a BD
         Document::deleteDocumentSimple($id);
+
+        logActivity('Elimiar Document', "ID: $id", "L'usuari ha eliminat el document Nº $id.");
 
         return redirect()->route('documents.index')->with('success', 'Document eliminat correctament.');
     }

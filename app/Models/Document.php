@@ -11,6 +11,17 @@ class Document extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'nom_visual',
+        'nom_arxiu',
+        'data_entrada',
+        'extensio',
+        'ordre',
+        'url',
+        'fk_id_obj',
+        'fk_id_tipus_obj',
+    ];
+
     // GET documents ordered by tramit id and tipus
     public static function getOrdre($idtramit, $tipus)
     {
