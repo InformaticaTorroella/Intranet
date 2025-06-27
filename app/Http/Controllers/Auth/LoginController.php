@@ -72,7 +72,7 @@ class LoginController extends Controller
             'ou' => $ou,
         ]);
 
-        logActivity('LogIn', "Name: $username", 'L’usuari ha inicat sessió.');
+        logActivity('LogIn', "Name: $username", "L'usuari ha inicat sessió.");
         
         return redirect('/home');
     }
@@ -82,7 +82,7 @@ class LoginController extends Controller
         
         $username = session('username'); // Primer recuparem el nom del usuari
         
-        logActivity('LogOut', "Name: $username", 'L’usuari ha tancat la sessió.');
+        logActivity('LogOut', "Name: $username", "L'usuari ha tancat la sessió.");
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

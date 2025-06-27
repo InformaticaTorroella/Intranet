@@ -30,31 +30,25 @@
 
         <div class="detalle-item">
             <strong>URL:</strong>
-            <div class="detalle-caja">
-            @if($noticia->url)
-                <a href="{{ $noticia->url }}" target="_blank">{{ $noticia->url }}</a>
-            @else
-                <p>No disponible</p>
-            @endif
-            </div>
+            <div class="detalle-caja"><a class="url" href="{{ $noticia->url ?? '' }}">{{ $noticia->url ?? 'No disponible' }}</a></div>
         </div>
 
         <div class="detalle-item">
             <strong>Data inicial:</strong>
-            <div class="detalle-caja">{{ $noticia->data_inicial ?? '<p>No disponible</p>' }}</div>
+            <div class="detalle-caja">{{ $noticia->data_inicial ?? 'No disponible' }}</div>
         </div>
 
         <div class="detalle-item">
             <strong>Data final:</strong>
-            <div class="detalle-caja">{{ $noticia->data_final ?? '<p>No disponible</p>' }}</div>
+            <div class="detalle-caja">{{ $noticia->data_final ?? 'No disponible' }}</div>
         </div>
 
         <div class="detalle-item">
             <strong>Tipus objecte (fk_tipus_obj):</strong>
-            <div class="detalle-caja">{{ $noticia->fk_tipus_obj ?? '<p>No disponible</p>' }}</div>
+            <div class="detalle-caja">{{ $noticia->fk_tipus_obj ?? 'No disponible' }}</div>
         </div>
         
-        <a href="{{ route('noticias.index') }}">Tornar</a>
+        <a class="goBack" href="{{ route('noticias.index') }}">Tornar</a>
         </div>
 
 

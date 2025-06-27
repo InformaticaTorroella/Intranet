@@ -130,4 +130,40 @@ class DocumentController extends Controller
         $document = Document::findOrFail($id);
         return view('documents.show', compact('document'));
     }
+
+    public function view($id)
+    {
+        $document = \App\Models\Document::find($id);
+        if (!$document) {
+            abort(404, 'Documento no encontrado');
+        }
+
+        $parsedUrl = parse_url($document->url, PHP_URL_PATH);
+
+        $segments = explode('/', $parsedUrl);
+
+        $username = count($segments) >= 4 ? $segments[3] : null;
+
+        if (!session()->has('username')) {
+            abort(403, 'Inicia sessio per descarregar aquest document');
+        }
+
+        $filePath = preg_replace('#^/storage/#', 'public/', $parsedUrl);
+
+        $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+        $fullPath = storage_path('app' . DIRECTORY_SEPARATOR . $filePath);
+
+        $exists = file_exists($fullPath);
+
+        if (!$exists) {
+            abort(404, 'Document no trobat');
+        }
+
+        return response()->download($fullPath, $document->nom_arxiu, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $document->nom_arxiu . '"',
+        ]);
+    }
+
+
 }

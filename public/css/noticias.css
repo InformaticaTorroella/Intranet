@@ -38,7 +38,7 @@ html, body {
   color: #800000;
 }
 
-.detalle-container a {
+.detalle-container .goBack {
   display: inline-block;
   margin-top: 20px;
   color: #800000;
@@ -50,10 +50,30 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.detalle-container a:hover {
+.detalle-container .goBack:hover {
   background-color: #800000;
   color: white;
   text-decoration: none;
+}
+
+.url {
+  color: #800000;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s, text-decoration-style 0.2s;
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 16px;
+  word-break: break-all;
+}
+
+.url:hover,
+.url:focus {
+  color: #a00000;
+  text-decoration: underline solid;
+  background: none;
 }
 
 /* Caja título en detalle */

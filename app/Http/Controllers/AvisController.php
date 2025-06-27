@@ -16,6 +16,7 @@ class AvisController extends Controller
 
     public function create()
     {
+
         return view('avis.create');
     }
 
@@ -50,6 +51,10 @@ class AvisController extends Controller
 
         $avis->save();
 
+        $username = session('username'); // Primer recuparem el nom del usuari
+
+        logActivity('Crea Avis', "Name: $username", "L'usuari ha creat l'avis Nº $id.");
+
         return redirect()->route('avis.index')->with('success', 'Avís creat');
     }
 
@@ -62,6 +67,7 @@ class AvisController extends Controller
     public function edit($id)
     {
         $avis = Avis::findOrFail($id);
+
         return view('avis.edit', compact('avis'));
     }
 
@@ -96,6 +102,10 @@ class AvisController extends Controller
         $avis->trial633 = $validated['trial633'] ?? null;
 
         $avis->save();
+
+        $username = session('username'); // Primer recuparem el nom del usuari
+
+        logActivity('Edita Avis', "Name: $username", "L'usuari ha editat l'avis Nº $id.");
 
         return redirect()->route('avis.index')->with('success', 'Avís actualitzat');
     }
