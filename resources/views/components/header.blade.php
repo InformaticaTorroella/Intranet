@@ -10,7 +10,7 @@
   <nav class="links">
     <ul class="menu-list">
       <li class="menu-item">
-        <a href="{{ route('admin.home') }}">Inici</a>
+        <a href="{{ route('home') }}">Inici</a>
       </li>
       <li class="menu-item">
         <a href="https://torroellademontgri.sedipualba.es/">Seu Electronica</a>

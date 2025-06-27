@@ -10,17 +10,17 @@ use App\Http\Controllers\LogController;
 
 
 Route::get('/', function () {
-    return redirect()->route('admin.home');
+    return redirect()->route('home');
 });
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/admin/home', function () {
+Route::get('//home', function () {
     $noticias = \App\Models\Noticia::orderBy('data_creacio', 'desc')->take(10)->get();
-    return view('admin.home', compact('noticias'));
-})->name('admin.home');
+    return view('home', compact('noticias'));
+})->name('home');
 
 Route::get('/calendar', function () {
     return view('calendar');

@@ -22,7 +22,7 @@ class AdminController extends Controller
     {
         $noticias = Noticia::getNoticiesIntranet()->take(10);
         
-        return view('admin.home', compact('noticias'));
+        return view('home', compact('noticias'));
     }
 }
 

@@ -74,7 +74,7 @@ class LoginController extends Controller
 
         logActivity('LogIn', "Name: $username", 'L’usuari ha inicat sessió.');
         
-        return redirect('/admin/home');
+        return redirect('/home');
     }
 
     public function logout(Request $request)
@@ -87,7 +87,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $intendedUrl = session('url.intended', '/admin/home'); // Si no hi ha, home por defecte
+        $intendedUrl = session('url.intended', '/home'); // Si no hi ha, home por defecte
         session()->forget('url.intended'); // netejar la URL
 
         return redirect($intendedUrl);
