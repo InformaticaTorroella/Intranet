@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <title>Intranet de Torroella de Montgrí</title>
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/logs.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <x-header />
 
-    <main>
-        <h1>Logs de Activitat</h1>
+    <main class="logs-container">
+        <h1 class="logs-title">Logs d’Activitat</h1>
 
-        <table>
+        <table class="logs-table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -38,12 +38,17 @@
                         <td>{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
                     </tr>
                 @empty
-                    <tr><td colspan="7">No hi ha logs disponibles.</td></tr>
+                    <tr>
+                        <td colspan="7" class="logs-empty">No hi ha logs disponibles.</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>
 
-        {{ $logs->links() }}
+        <div class="pagination">
+            {{ $logs->links() }}
+        </div>
+
     </main>
 
     <x-footer />

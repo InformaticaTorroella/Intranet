@@ -48,11 +48,11 @@
         <label>Trial633</label><br>
         <input type="text" name="trial633" maxlength="1" value="{{ old('trial633') }}"><br>
 
-        <button type="submit">Guardar</button>
+        <div class="btn-actions">
+            <button type="submit" class="btn-primary">Guardar</button>
+            <a href="{{ route('avis.index') }}" class="btn-go-back">Tornar</a>
+        </div>
     </form>
-
-    <a href="{{ route('avis.index') }}">Tornar</a>
-
 
     <x-footer />
 </body>
