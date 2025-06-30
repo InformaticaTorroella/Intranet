@@ -3,13 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-use App\Models\Document;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\TelefonController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\CircularController;
+
+
 
 // Rutas de autenticació
 Route::get('/', fn() => redirect()->route('home'));
@@ -23,8 +25,6 @@ Route::get('/home', function () {
     $noticias = \App\Models\Noticia::orderBy('data_creacio', 'desc')->take(10)->get();
     return view('home', compact('noticias'));
 })->name('home');
-
-// 📄 RUTA PROTEGIDA DE VISUALITZACIÓ DE DOCUMENTS
 
 
 // 📢 Noticies
@@ -143,3 +143,54 @@ Route::get('/logs', function () {
     }
     return app()->call('App\Http\Controllers\LogController@index');
 })->name('logs.index');
+
+// 📄 Circulars
+Route::get('circulars', function() {
+    return app()->call([new CircularController(), 'index']);
+})->name('circulars.index');
+
+Route::get('circulars/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call([new CircularController(), 'create']);
+})->name('circulars.create');
+
+Route::post('circulars', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call([new CircularController(), 'store']);
+})->name('circulars.store');
+
+Route::get('circulars/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app()->call([new CircularController(), 'edit'], ['id' => $id]);
+})->name('circulars.edit');
+
+Route::put('circulars/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call([new CircularController(), 'update'], ['id' => $id]);
+})->name('circulars.update');
+
+Route::delete('circulars/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app()->call([new CircularController(), 'destroy'], ['id' => $id]);
+})->name('circulars.destroy');
+
+Route::get('circulars/{id}', function ($id) {
+    return app()->call([new CircularController(), 'show'], ['id' => $id]);
+})->name('circulars.show');
+
+Route::get('circulars/view/{id}/{action?}', function ($id, $action = 'download') {
+    return app()->call([new CircularController(), 'view'], ['id' => $id, 'action' => $action]);
+})->name('circulars.view');
+

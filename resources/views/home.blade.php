@@ -20,7 +20,7 @@
           <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
           <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
           <a href="{{ route('telefons.index') }}" class="enlace-panel">Telefons</a>
-          <a href="#" class="enlace-panel">Circulars</a>
+          <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
         </div>
       </section>
 
