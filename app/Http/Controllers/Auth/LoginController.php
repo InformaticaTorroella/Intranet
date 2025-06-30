@@ -53,29 +53,44 @@ class LoginController extends Controller
         }
 
         $entries = ldap_get_entries($ldapConn, $search);
-        ldap_unbind($ldapConn);
 
         if ($entries['count'] == 0) {
+            ldap_unbind($ldapConn);
             return back()->withErrors(['ldap' => 'Usuario no encontrado en LDAP']);
         }
 
         $userInfo = $entries[0];
 
-        // Intenta extreure l'OU
+        // Extraer OU
         $ou = $userInfo['ou'][0] ?? (
             (preg_match('/OU=([^,]+)/', $userInfo['distinguishedname'][0] ?? '', $m)) ? $m[1] : 'Desconegut'
         );
+
+        // Extraer grupos (memberOf)
+        $groups = [];
+        if (isset($userInfo['memberof'])) {
+            for ($i = 0; $i < $userInfo['memberof']['count']; $i++) {
+                // Extraer solo el nombre del grupo (CN)
+                if (preg_match('/CN=([^,]+)/', $userInfo['memberof'][$i], $match)) {
+                    $groups[] = $match[1];
+                }
+            }
+        }
 
         session([
             'username' => $username,
             'name' => trim(($userInfo['givenname'][0] ?? '') . ' ' . ($userInfo['sn'][0] ?? '')),
             'ou' => $ou,
+            'user_groups' => $groups,  // Aquí guardamos los grupos en sesión
         ]);
 
+        ldap_unbind($ldapConn);
+
         logActivity('LogIn', "Name: $username", "L'usuari ha inicat sessió.");
-        
+
         return redirect('/home');
     }
+
 
     public function logout(Request $request)
     {

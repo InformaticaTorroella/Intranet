@@ -11,6 +11,9 @@
 <body>
 <x-header />
 <main>
+  @php
+      $userGroups = session('user_groups', []);
+  @endphp
   <h2>Telèfons</h2>
 
 
@@ -95,7 +98,9 @@
           <i class="fas {{ sortIcon('fk_id_equipament', $currentOrderBy, $currentOrder) }}"></i>
         </span>
       </th>
+      @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
       <th>Accions</th>
+      @endif
     </tr>
   </thead>
 
@@ -109,28 +114,21 @@
             <td>{{ $telefon->extensio_mobil ?? 'No disponible' }}</td>
             <td>{{ $telefon->area->Area ?? 'No disponible' }}</td>
             <td>{{ $telefon->equipament->Equipament ?? 'No disponible' }}</td>
+            
+            
+            @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
             <td class="actions">
               <div class="action-wrapper">
-                @if(session()->has('username'))
-                  <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>
-
-                  @if(session('ou') !== 'Usuaris')
-                    <p class="no-delete-msg">Per eliminar un telèfon, si us plau, contacta amb l'administrador.</p>
-                  @else
-                    <form action="{{ route('telefons.destroy', $telefon->id) }}" method="POST" onsubmit="return confirm('Segur?')">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
-                  @endif
-                @else
-                  <p class="no-login-msg">
-                    Per editar o eliminar un telèfon, si us plau,
-                    <a href="{{ route('login') }}">inicia sessió</a>.
-                  </p>
-                @endif
+                <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>
+                <form action="{{ route('telefons.destroy', $telefon->id) }}" method="POST" onsubmit="return confirm('Segur?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
               </div>
             </td>
+            @endif
+
 
           </tr>
         @endforeach

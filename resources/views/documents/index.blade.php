@@ -8,6 +8,9 @@
 </head>
 <body>
     <x-header />
+    @php
+      $userGroups = session('user_groups', []);
+    @endphp
     <div class="documents-page-center">
         <section class="documents-container">
             <h1>Documents</h1>
@@ -26,7 +29,7 @@
 
 
 
-                    @if(session()->has('username') && isset($document->id))
+                    @if(session()->has('username') && in_array('Intranet_Documents', $userGroups) && isset($document->id))
                         <a href="{{ route('documents.edit', ['id' => $document->id]) }}" class="btn-editar">Editar</a>
                     @endif
                 </article>
@@ -34,12 +37,12 @@
                 <p>No hi ha documents disponibles.</p>
             @endforelse
 
-            @if(session()->has('username'))
+            @if(session()->has('username') && in_array('Intranet_Documents', $userGroups) && isset($document->id))
                 <a href="{{ route('documents.create') }}" class="btn-crear">Crear Document</a>
             @else
                 <p>
-                  Per crear un document, si us plau,
-                  <a href="{{ route('login') }}">inicia sessió</a>.
+                  No tens permisos per crear documents. <br>
+                  Si vols crear un document, contacta amb el teu administrador.
                 </p>
             @endif
         </section>

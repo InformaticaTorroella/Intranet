@@ -8,6 +8,7 @@
 </head>
 <body>
     <x-header />
+    
     <h1>Editar Notícia</h1>
     <form action="{{ route('noticias.update', $noticia->id) }}" method="POST">
         @csrf
@@ -40,6 +41,7 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
         <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('noticias.index') }}'">Tornar</button>
     </form>
+    
     <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST">
         @csrf
         @method('DELETE')

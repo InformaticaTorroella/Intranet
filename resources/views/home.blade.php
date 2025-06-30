@@ -12,7 +12,17 @@
 <body>
     <x-header />
 
-    
+    <h3>Grups del usuari:</h3>
+    @if(session('user_groups') && count(session('user_groups')) > 0)
+        <ul>
+            @foreach(session('user_groups') as $group)
+                <li>{{ $group }}</li>
+            @endforeach
+        </ul>
+    @else
+        <p>No grups asignats al usuari.</p>
+    @endif
+
     <div class="espacio-superior">
       <section class="panel-enlaces">
         <div class="enlaces-grid">

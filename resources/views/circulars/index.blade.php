@@ -7,7 +7,9 @@
 </head>
 <body>
     <x-header />
-
+    @php
+      $userGroups = session('user_groups', []);
+    @endphp
     <div class="circulars-page-center">
         <div class="circulars-container">
             <h1>Circulars</h1>
@@ -25,7 +27,7 @@
                     <a href="{{ route('circulars.view', ['id' => $circular->id, 'action' => 'view']) }}" target="_blank" class="btn-veure">Veure</a>
                     <a href="{{ route('circulars.view', ['id' => $circular->id, 'action' => 'download']) }}" class="btn-veure">Descarregar</a>
 
-                    @if(session()->has('username'))
+                    @if(session()->has('username') && in_array('Intranet_Circulars', $userGroups)
                         <a href="{{ route('circulars.edit', $circular->id) }}" class="btn-editar">Editar</a>
 
                         <form action="{{ route('circulars.destroy', $circular->id) }}" method="POST" style="display:inline;">
@@ -39,10 +41,10 @@
                 <p>No hi ha circulars disponibles.</p>
             @endforelse
 
-            @if(session()->has('username'))
+            @if(session()->has('username') && in_array('Intranet_Circulars', $userGroups))
                 <a href="{{ route('circulars.create') }}" class="btn-crear">Crear Circular</a>
             @else
-                <p>Per crear una circular, si us plau <a href="{{ route('login') }}">inicia sessió</a>.</p>
+                <p>No teniu permisos per a crear circulars.</p>
             @endif
         </div>
     </div>

@@ -28,7 +28,7 @@
     <input type="text" name="extensio_mobil" class="form-input" value="{{ $telefon->extensio_mobil }}">
 
     <label class="form-label">Àrea</label>
-    <select name="area" class="form-select" required>
+    <select name="area" class="form-select">
       <option value="">-- Selecciona Àrea --</option>
       @foreach ($arees as $area)
         <option value="{{ $area->IdArea }}" {{ $telefon->fk_id_area == $area->IdArea ? 'selected' : '' }}>
@@ -38,7 +38,7 @@
     </select>
 
     <label class="form-label">Edifici</label>
-    <select name="edifici" class="form-select" required>
+    <select name="edifici" class="form-select">
       <option value="">-- Selecciona Edifici --</option>
       @foreach ($equipaments as $equipament)
         <option value="{{ $equipament->id_equimanent }}" {{ $telefon->fk_id_equipament == $equipament->id_equimanent ? 'selected' : '' }}>
