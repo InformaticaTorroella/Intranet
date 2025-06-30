@@ -24,10 +24,7 @@ Route::get('/home', function () {
     return view('home', compact('noticias'));
 })->name('home');
 
-Route::get('/calendar', fn() => view('calendar'))->name('calendar');
-
 // 📄 RUTA PROTEGIDA DE VISUALITZACIÓ DE DOCUMENTS
-Route::get('documents/view/{id}', [DocumentController::class, 'view'])->name('documents.view');
 
 
 // 📢 Noticies
@@ -59,6 +56,8 @@ Route::get('noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.
 
 // 📁 Documents
 Route::get('documents', fn() => app()->call('App\Http\Controllers\DocumentController@index'))->name('documents.index');
+
+Route::get('/documents/view/{id}/{action?}', [DocumentController::class, 'view'])->name('documents.view');
 
 Route::get('documents/create', function () {
     if (!session()->has('username')) {

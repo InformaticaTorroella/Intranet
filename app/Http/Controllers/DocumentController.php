@@ -138,32 +138,25 @@ class DocumentController extends Controller
         return view('documents.show', compact('document'));
     }
 
-    public function view($id)
+    public function view($id, $action = 'download')
     {
-        $document = \App\Models\Document::find($id);
-        if (!$document) {
-            abort(404, 'Documento no encontrado');
+        if (!session()->has('username')) {
+            abort(403, 'Inicia sessió per accedir al document');
         }
+
+        $document = Document::find($id);
+        if (!$document) abort(404, 'Document no trobat');
 
         $parsedUrl = parse_url($document->url, PHP_URL_PATH);
-
-        $segments = explode('/', $parsedUrl);
-
-        $username = count($segments) >= 4 ? $segments[3] : null;
-
-        if (!session()->has('username')) {
-            abort(403, 'Inicia sessio per descarregar aquest document');
-        }
-
         $filePath = preg_replace('#^/storage/#', 'public/', $parsedUrl);
+        $fullPath = storage_path('app/' . $filePath);
 
-        $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
-        $fullPath = storage_path('app' . DIRECTORY_SEPARATOR . $filePath);
+        if (!file_exists($fullPath)) abort(404, 'Fitxer no trobat');
 
-        $exists = file_exists($fullPath);
-
-        if (!$exists) {
-            abort(404, 'Document no trobat');
+        if ($action === 'view') {
+            return response()->file($fullPath, [
+                'Content-Type' => 'application/pdf',
+            ]);
         }
 
         return response()->download($fullPath, $document->nom_arxiu, [
@@ -171,6 +164,9 @@ class DocumentController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $document->nom_arxiu . '"',
         ]);
     }
+
+
+
 
 
 }

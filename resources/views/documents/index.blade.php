@@ -21,7 +21,8 @@
                     <p class="document-ordre">Ordre: {{ $document->ordre }}</p>
                     <p class="document-fk_id_obj">ID Objecte: {{ $document->fk_id_obj }}</p>
                     <p class="document-fk_id_tipus_obj">Tipus Objecte: {{ $document->fk_id_tipus_obj }}</p>
-                    <a href="{{ route('documents.view', ['id' => $document->id]) }}" target="_blank" class="btn-descarregar">Descarregar</a>
+                    <a href="{{ route('documents.view', ['id' => $document->id, 'action' => 'view']) }}" target="_blank" class="btn-veure">Veure</a>
+                    <a href="{{ route('documents.view', ['id' => $document->id]) }}" class="btn-descarregar">Descarregar</a>
 
 
 
