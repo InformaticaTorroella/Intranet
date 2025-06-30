@@ -12,7 +12,7 @@
 <body>
     <x-header />
 
-    <h3>Grups del usuari:</h3>
+    <!--<h3>Grups del usuari:</h3>
     @if(session('user_groups') && count(session('user_groups')) > 0)
         <ul>
             @foreach(session('user_groups') as $group)
@@ -21,7 +21,7 @@
         </ul>
     @else
         <p>No grups asignats al usuari.</p>
-    @endif
+    @endif-->
 
     <div class="espacio-superior">
       <section class="panel-enlaces">

@@ -27,7 +27,7 @@
                     <a href="{{ route('circulars.view', ['id' => $circular->id, 'action' => 'view']) }}" target="_blank" class="btn-veure">Veure</a>
                     <a href="{{ route('circulars.view', ['id' => $circular->id, 'action' => 'download']) }}" class="btn-veure">Descarregar</a>
 
-                    @if(session()->has('username') && in_array('Intranet_Circulars', $userGroups)
+                    @if(session()->has('username') && in_array('Intranet_Circulars', $userGroups))
                         <a href="{{ route('circulars.edit', $circular->id) }}" class="btn-editar">Editar</a>
 
                         <form action="{{ route('circulars.destroy', $circular->id) }}" method="POST" style="display:inline;">

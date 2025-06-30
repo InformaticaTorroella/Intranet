@@ -6,20 +6,33 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\Models\CatDocument;
+
 
 
 class DocumentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $documents = Document::orderBy('ordre', 'asc')->get();
-        return view('documents.index', compact('documents'));
+        $categories = CatDocument::all();
+
+        $documents = Document::query();
+
+        if ($request->filled('categoria')) {
+            $documents->where('fk_id_cat_document', $request->categoria);
+        }
+
+        $documents = $documents->orderBy('ordre', 'asc')->get();
+
+        return view('documents.index', compact('documents', 'categories'));
     }
 
     public function create()
     {
-        return view('documents.create');
+        $categories = CatDocument::orderBy('nom')->get();
+        return view('documents.create', compact('categories'));
     }
+
 
     public function store(Request $request)
     {
@@ -28,8 +41,8 @@ class DocumentController extends Controller
             'nom_visual' => 'required|string|max:255',
             'data_entrada' => 'required|date',
             'ordre' => 'required|integer',
-            'fk_id_obj' => 'required|integer',
-            'fk_id_tipus_obj' => 'required|integer',
+            'categoria_id' => 'required|exists:int_cat_documents,id',
+
         ]);
 
         $file = $request->file('file');
@@ -54,8 +67,6 @@ class DocumentController extends Controller
             'data_entrada' => $dataEntrada,
             'ordre' => $validated['ordre'],
             'url_document' => $url,
-            'id_obj' => $validated['fk_id_obj'],
-            'tipus_obj' => $validated['fk_id_tipus_obj'],
         ];
 
         $document = Document::create($data);
@@ -69,10 +80,11 @@ class DocumentController extends Controller
 
     public function edit($id)
     {
-        $document = Document::find($id);
-        if (!$document) abort(404);
-        return view('documents.edit', compact('document'));
+        $document = Document::findOrFail($id);
+        $categories = CatDocument::orderBy('nom')->get();
+        return view('documents.edit', compact('document', 'categories'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -83,8 +95,7 @@ class DocumentController extends Controller
             'extensio' => 'nullable|string|max:10',
             'ordre' => 'required|integer',
             'url' => 'nullable|string|max:230',
-            'fk_id_obj' => 'nullable|integer',
-            'fk_id_tipus_obj' => 'nullable|integer',
+            'categoria_id' => 'required|exists:int_cat_documents,id',
         ]);
 
         $document = Document::findOrFail($id);
@@ -94,9 +105,6 @@ class DocumentController extends Controller
         $document->extensio = $validated['extensio'] ?? null;
         $document->ordre = $validated['ordre'];
         $document->url = $validated['url'] ?? null;
-        $document->fk_id_obj = $validated['fk_id_obj'] ?? null;
-        $document->fk_id_tipus_obj = $validated['fk_id_tipus_obj'] ?? null;
-        $document->trial695 = $validated['trial695'] ?? null;
         $document->save();
 
         logActivity('Edita Document', "ID: $id", "L'usuari ha editat el document Nº $id.");
@@ -140,10 +148,6 @@ class DocumentController extends Controller
 
     public function view($id, $action = 'download')
     {
-        if (!session()->has('username')) {
-            abort(403, 'Inicia sessió per accedir al document');
-        }
-
         $document = Document::find($id);
         if (!$document) abort(404, 'Document no trobat');
 

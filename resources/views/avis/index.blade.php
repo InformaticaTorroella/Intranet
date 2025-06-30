@@ -23,7 +23,7 @@
                     <p class="noticia-data">Creat: {{ \Carbon\Carbon::parse($avis->data_creacio)->format('d/m/Y H:i') }}</p>
                     <a href="{{ route('avis.show', $avis->id) }}" class="btn-ver">Veure</a>
 
-                    @if(session()->has('username') && inarray('Intranet_Avisos', $userGroups) &&isset($avis->id))
+                    @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups) &&isset($avis->id))
                         <a href="{{ route('avis.edit', ['id' => $avis->id]) }}" class="btn-editar">Editar</a>
                     @endif
                 </article>
@@ -32,7 +32,7 @@
             @endforelse
 
 
-                @if(session()->has('username') && inarray('Intranet_Avisos', $userGroups))
+                @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
                     <a href="{{ route('avis.create') }}" class="btn-crear">Crear Avis</a>
                 @else
                     <p>
