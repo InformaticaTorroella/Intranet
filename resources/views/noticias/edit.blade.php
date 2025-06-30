@@ -40,7 +40,7 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
         <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('noticias.index') }}'">Tornar</button>
     </form>
-    <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST" style="margin-top: 1rem;">
+    <form action="{{ route('noticias.destroy', $noticia->id) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que bols eliminar aquesta notícia?')">Eliminar</button>

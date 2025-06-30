@@ -1,4 +1,4 @@
-/* Reset básico y base */
+/* Reset bàsic i base */
 html, body {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ html, body {
   width: 100%;
 }
 
-/* Contenedor principal para detalle (detalle-container) */
+/* Contenidor principal per a detall (detalle-container) */
 .detalle-container {
   background: white;
   border-radius: 8px;
@@ -56,7 +56,7 @@ html, body {
   text-decoration: none;
 }
 
-/* Caja título en detalle */
+/* Caixa títol en detall */
 .titulo-caja {
   border: 2px solid #800000;
   border-radius: 6px;
@@ -72,7 +72,7 @@ html, body {
   background-color: #fff0f0;
 }
 
-/* Items detalle */
+/* Ítems detall */
 .detalle-item {
   margin-bottom: 25px;
   text-align: left;
@@ -97,7 +97,7 @@ html, body {
   white-space: pre-wrap;
 }
 
-/* Contenedor para página principal */
+/* Contenidor per pàgina principal */
 .noticias-page-center {
   min-height: 100vh;
   display: flex;
@@ -109,7 +109,7 @@ html, body {
   width: 100%;
 }
 
-/* Contenedor principal avisos */
+/* Contenidor principal avisos */
 .noticias-container {
   background: white;
   overflow-y: auto;
@@ -124,7 +124,7 @@ html, body {
   margin-bottom: 30px;
 }
 
-/* Titulares y textos generales */
+/* Titulars i textos generals */
 h1 {
   font-size: 32px;
   font-weight: 700;
@@ -134,7 +134,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Formulario */
+/* Formulari */
 .form {
   display: flex;
   flex-direction: column;
@@ -167,8 +167,13 @@ textarea {
   min-height: 80px;
 }
 
-/* Botones */
-button.btn-primary, .btn-go-back {
+/* Botons: estils unificats per evitar duplicats */
+/* Tant buttons com links que funcionin com a botons */
+.btn-primary,
+.btn-go-back,
+button.btn-primary,
+button.btn-go-back {
+  display: inline-block; /* Important per uniformitat */
   padding: 14px;
   font-size: 18px;
   background-color: #800000;
@@ -179,13 +184,22 @@ button.btn-primary, .btn-go-back {
   transition: background-color 0.3s ease;
   width: 100%;
   max-width: 220px;
-  align-self: center;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
-button.btn-primary:hover, .btn-go-back:hover {
+.btn-primary:hover,
+.btn-go-back:hover,
+button.btn-primary:hover,
+button.btn-go-back:hover {
   background-color: #a00000;
+  color: white;
 }
 
+/* Botó de perill (danger) */
 button.btn-danger {
   padding: 12px;
   font-size: 18px;
@@ -199,14 +213,17 @@ button.btn-danger {
   max-width: 220px;
   align-self: center;
   margin-top: 10px;
+  box-sizing: border-box;
 }
 
 button.btn-danger:hover {
   background-color: #800000;
 }
 
-/* Botones de acción */
-.btn-editar, .btn-crear, .btn-ver {
+/* Botons d'acció */
+.btn-editar,
+.btn-crear,
+.btn-ver {
   display: inline-block;
   margin-top: 10px;
   padding: 6px 12px;
@@ -214,58 +231,83 @@ button.btn-danger:hover {
   color: white;
   text-decoration: none;
   border-radius: 4px;
+  user-select: none;
 }
 
-.btn-editar:hover, .btn-crear:hover, .btn-ver:hover {
+.btn-editar:hover,
+.btn-crear:hover,
+.btn-ver:hover {
   background-color: #0056b3;
 }
 
-/* Noticias individuales */
-.noticia {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
-}
 
-.noticia h2 {
-  margin: 0 0 10px 0;
-}
-
+/* Classes avisos */
 .avis {
-    border: 2px solid #007bff;
-    background-color: #e7f1ff;
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
+  border: 2px solid #007bff;
+  background-color: #e7f1ff;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
 }
 
 .alerta {
-    border: 2px solid #dc3545;
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+  border: 2px solid #dc3545;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
 }
 
 .avis-header {
-    font-weight: bold;
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    display: inline-block;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: inline-block;
 }
 
 .aviso {
-    background-color: #e7f1ff;
-    color: #004085;
-    border: 1px solid #b8daff;
+  background-color: #e7f1ff;
+  color: #004085;
+  border: 1px solid #b8daff;
 }
 
 .critico {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Contenidor per botons d'acció verticals */
+.btn-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Contenedor para los botones de guardar y volver */
+.btn-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Centrar el formulario de eliminar y el botón */
+form.form-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Asegura que el botón eliminar tenga mismo ancho que los otros */
+form.form-container button.btn-danger {
+  width: 220px;
 }

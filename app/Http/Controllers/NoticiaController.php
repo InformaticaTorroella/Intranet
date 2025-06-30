@@ -40,11 +40,15 @@ class NoticiaController extends Controller
         $noticia->data_inicial = $validated['data_inicial'];
         $noticia->data_final = $validated['data_final'];
         
-        // No asignes id ni fk_tipus_obj si no es necesario o si es nullable
 
-        $noticia->save();
-
-        return redirect()->route('noticias.index')->with('success', 'Notícia creada');
+        try {
+            $noticia->save();
+            $id = $noticia->id;
+            logActivity('Crear Noticia', "ID: $id", "L'usuari ha Creat la noticia Nº $id.");
+            return redirect()->route('noticias.index')->with('success', 'Notícia creada');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al guardar la notícia: ' . $e->getMessage()]);
+        }
     }
 
 
@@ -63,12 +67,13 @@ class NoticiaController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'nom_noticia' => 'required|string|max:255',
             'descripcio_noticia' => 'required|string',
             'data_pub' => 'required|date',
             'bool_pub' => 'required|boolean',
-            'tipus_obj' => 'required|integer',
+            'tipus_obj' => 'nullable|integer',
             'url_document' => 'nullable|string',
             'data_inicial' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicial',
@@ -83,6 +88,8 @@ class NoticiaController extends Controller
 
         Noticia::updateNoticia($data);
 
+        logActivity('Edita Noticia', "ID: $id", "L'usuari ha editat la noticia Nº $id.");
+
         return redirect()->route('noticias.index')->with('success', 'Notícia actualitzada');
     }
 
@@ -90,6 +97,8 @@ class NoticiaController extends Controller
     {
         $noticia = Noticia::findOrFail($id);
         $noticia->delete();
+
+        logActivity('Eliminar Noticia', "ID: $id", "L'usuari ha eliminat la noticia Nº $id.");
 
         return redirect()->route('noticias.index')->with('success', 'Notícia eliminada');
     }

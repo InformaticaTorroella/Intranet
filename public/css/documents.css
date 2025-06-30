@@ -67,7 +67,7 @@ html, body {
 }
 
 /* Botones de acción */
-.btn-editar, .btn-crear, .btn-descarregar {
+.btn-editar, .btn-crear, .btn-descarregar, .btn-veure {
   display: inline-block;
   margin-top: 10px;
   padding: 8px 16px;
@@ -79,7 +79,7 @@ html, body {
   transition: background-color 0.3s ease;
 }
 
-.btn-editar:hover, .btn-crear:hover, .btn-descarregar:hover {
+.btn-editar:hover, .btn-crear:hover, .btn-descarregar:hover, .btn-veure:hover {
   background-color: #0056b3;
 }
 

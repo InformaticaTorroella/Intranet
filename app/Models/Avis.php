@@ -26,19 +26,19 @@ class Avis extends Model
         'data_solucionat' => 'datetime',
     ];
 
-    // Retorna todos los avisos
+    // Retorna tots els avisos
     public static function getAllAvisos()
     {
         return self::orderBy('id', 'desc')->get();
     }
 
-    // Retorna info de un avis concreto
+    // Retorna la informacio de un avis concret de un avis concreto
     public static function getAvis($id)
     {
         return self::find($id);
     }
 
-    // Inserta un nuevo avis
+    // Inserta un nou avis
     public static function insertAvis(array $data)
     {
         $data['data_creacio'] = Carbon::parse($data['data_creacio']);
@@ -57,7 +57,7 @@ class Avis extends Model
         ]);
     }
 
-    // Actualiza un avis
+    // Actualitza un avis
     public static function updateAvis(int $id, array $data)
     {
         $avis = self::findOrFail($id);
@@ -71,7 +71,7 @@ class Avis extends Model
         return $avis;
     }
 
-    // Marcar avis como solucionado
+    // Marcar avis com solucionats
     public static function validarAvis(int $id, array $data)
     {
         $avis = self::findOrFail($id);

@@ -23,7 +23,7 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'nom_visual' => 'required|string|max:255',
             'data_entrada' => 'required|date',
@@ -45,18 +45,22 @@ class DocumentController extends Controller
         $path = $file->storeAs("uploads/$folder", $filename, 'public');
         $url = asset("storage/uploads/$folder/$filename");
 
-        $dataEntrada = Carbon::parse($request->data_entrada)->format('Y-m-d H:i:s');
+        $dataEntrada = \Carbon\Carbon::parse($validated['data_entrada'])->format('Y-m-d H:i:s');
 
-        Document::insertDocument([
-            'nom_document' => $request->nom_visual,
+        $data = [
+            'nom_document' => $validated['nom_visual'],
             'nom_arxiu' => $filename,
             'extensio' => $ext,
             'data_entrada' => $dataEntrada,
-            'ordre' => $request->ordre,
+            'ordre' => $validated['ordre'],
             'url_document' => $url,
-            'id_obj' => $request->fk_id_obj,
-            'tipus_obj' => $request->fk_id_tipus_obj,
-        ]);
+            'id_obj' => $validated['fk_id_obj'],
+            'tipus_obj' => $validated['fk_id_tipus_obj'],
+        ];
+
+        $document = Document::create($data);
+
+        logActivity('Crea Document', "ID: {$document->id}", "L'usuari ha creat el document Nº {$document->id}.");
 
         return redirect()->back()->with('success', 'Document pujat correctament.');
     }
@@ -81,7 +85,6 @@ class DocumentController extends Controller
             'url' => 'nullable|string|max:230',
             'fk_id_obj' => 'nullable|integer',
             'fk_id_tipus_obj' => 'nullable|integer',
-            'trial695' => 'nullable|string|size:1',
         ]);
 
         $document = Document::findOrFail($id);
@@ -96,14 +99,15 @@ class DocumentController extends Controller
         $document->trial695 = $validated['trial695'] ?? null;
         $document->save();
 
+        logActivity('Edita Document', "ID: $id", "L'usuari ha editat el document Nº $id.");
+
         return redirect()->route('documents.index')->with('success', 'Document actualitzat');
     }
 
-    // Método destroy corregido
     public function destroy($id)
     {
-        $document = Document::getDocument($id); // usar el mètode del model
-
+        $document = Document::getDocument($id);
+        
         if (!$document) {
             abort(404);
         }
@@ -121,6 +125,8 @@ class DocumentController extends Controller
         // Esborrem el registre a BD
         Document::deleteDocumentSimple($id);
 
+        logActivity('Elimiar Document', "ID: $id", "L'usuari ha eliminat el document Nº $id.");
+
         return redirect()->route('documents.index')->with('success', 'Document eliminat correctament.');
     }
 
@@ -131,4 +137,36 @@ class DocumentController extends Controller
         $document = Document::findOrFail($id);
         return view('documents.show', compact('document'));
     }
+
+    public function view($id, $action = 'download')
+    {
+        if (!session()->has('username')) {
+            abort(403, 'Inicia sessió per accedir al document');
+        }
+
+        $document = Document::find($id);
+        if (!$document) abort(404, 'Document no trobat');
+
+        $parsedUrl = parse_url($document->url, PHP_URL_PATH);
+        $filePath = preg_replace('#^/storage/#', 'public/', $parsedUrl);
+        $fullPath = storage_path('app/' . $filePath);
+
+        if (!file_exists($fullPath)) abort(404, 'Fitxer no trobat');
+
+        if ($action === 'view') {
+            return response()->file($fullPath, [
+                'Content-Type' => 'application/pdf',
+            ]);
+        }
+
+        return response()->download($fullPath, $document->nom_arxiu, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $document->nom_arxiu . '"',
+        ]);
+    }
+
+
+
+
+
 }

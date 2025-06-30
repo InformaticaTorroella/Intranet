@@ -10,7 +10,7 @@ class Albara extends Model
 {
     protected $table = 'int_albara';
     protected $primaryKey = 'id';
-    public $timestamps = false; // Laravel por defecto busca created_at, updated_at
+    public $timestamps = false; // Laravel per defecte busca created_at, updated_at
 
     protected $fillable = [
         'area',
@@ -25,14 +25,14 @@ class Albara extends Model
         'modificat'
     ];
 
-    // Si la columna data_creacio y data_validacio son timestamp, Laravel las puede mutar a Carbon:
+    // Si la columna data_creacio y data_validació son timestamp, Laravel las puede mutar a Carbon:
     protected $dates = [
         'data_creacio',
         'data_validacio',
         'data_modificacio',
     ];
 
-    // Métodos equivalentes a tus funciones antiguas
+    // Métodes equivalents a les funcions de la aplicacio anteriro
 
     public static function getAlbara($idalbara)
     {
@@ -71,7 +71,7 @@ class Albara extends Model
 
     public static function insertAlbara($data)
     {
-        // Se puede hacer directamente con create si $fillable está bien definido
+        // Es pot fer directe ment amb create si $fillable está ben definit
         return self::create($data);
     }
 

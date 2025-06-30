@@ -9,12 +9,12 @@ use App\Models\Equipament;
 
 class TelefonController extends Controller
 {
-    // Mostrar todos los teléfonos
+    // Mostrar tots els telefons
     public function index(Request $request)
     {
         $equipament_id = $request->input('id_equipament');
         $area_id = $request->input('area_id');
-        $orderBy = $request->input('order_by', 'nom'); // <--- Añade esta línea
+        $orderBy = $request->input('order_by', 'nom'); 
         $order = $request->input('order', 'asc'); // asc o desc
 
         $equipaments = Equipament::orderBy('Equipament')->get();
@@ -35,12 +35,12 @@ class TelefonController extends Controller
             $query->where('fk_id_equipament', $equipament_id);
         }
 
-        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->get();
+        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->paginate(15);
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }
 
-    // Mostrar formulario de creación
+    // Mostrar formulari de creacio
     public function create()
     {
         $arees = Area::orderBy('Area')->get();
@@ -48,7 +48,7 @@ class TelefonController extends Controller
         return view('telefons.create', compact('arees', 'equipaments'));
     }
 
-    // Guardar un nuevo teléfono
+    // Guardar un nou telefon
     public function store(Request $request)
     {
         $request->validate([
@@ -68,11 +68,17 @@ class TelefonController extends Controller
             $data['data_edicio'] = date('Y-m-d');
         }
 
-        Telefon::insertTelefon($data);
+        $telefon = Telefon::create($data);  // Asumiendo que el modelo tiene fillable configurado
+
+        $id = $telefon->id;
+
+        logActivity('Crea Telefon', "ID: $id", "L'usuari ha creat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon creat correctament!');
     }
 
-    // Mostrar formulario de edición
+
+    // Mostrar formulari de edició
     public function edit($id)
     {
         $telefon = Telefon::getTelefon($id);
@@ -86,7 +92,7 @@ class TelefonController extends Controller
         return view('telefons.edit', compact('telefon', 'arees', 'equipaments'));
     }
 
-    // Actualizar teléfono
+    // Actualizar telefon
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -107,17 +113,23 @@ class TelefonController extends Controller
         }
 
         Telefon::updateTelefon($id, $data);
+
+        logActivity('Edita Telefon', "ID: $id", "L'usuari ha editat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon actualitzat correctament!');
     }
 
-    // Eliminar teléfono
+    // Eliminar telefon
     public function destroy($id)
     {
         Telefon::deleteTelefon($id);
+
+        logActivity('Eliminar Telefon', "ID: $id", "L'usuari ha eliminat el telefon Nº $id.");
+
         return redirect()->route('telefons.index')->with('success', 'Telèfon eliminat correctament!');
     }
 
-    // Mostrar un teléfono (opcional)
+    // Mostrar un telefon (opcional)
     public function show($id)
     {
         $telefon = Telefon::getTelefon($id);

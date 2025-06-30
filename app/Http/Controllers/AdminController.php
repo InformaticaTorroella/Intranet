@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        // Middleware para proteger todas las acciones
+        // Middleware anonim per protegir totes les accions
         $this->middleware(function ($request, $next) {
             if (!session()->has('username')) {
                 return redirect('/login');
@@ -22,7 +22,7 @@ class AdminController extends Controller
     {
         $noticias = Noticia::getNoticiesIntranet()->take(10);
         
-        return view('admin.home', compact('noticias'));
+        return view('home', compact('noticias'));
     }
 }
 

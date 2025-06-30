@@ -110,25 +110,38 @@
             <td>{{ $telefon->area->Area ?? 'No disponible' }}</td>
             <td>{{ $telefon->equipament->Equipament ?? 'No disponible' }}</td>
             <td class="actions">
-              @if(session()->has('username'))
-                <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>
-                <form action="{{ route('telefons.destroy', $telefon->id) }}" method="POST" onsubmit="return confirm('Segur?')">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
-              @else
-                <p>
-                  Per editar o eliminar un telèfon, si us plau,
-                  <a href="{{ route('login') }}">inicia sessió</a>.
-                </p>
-              @endif
+              <div class="action-wrapper">
+                @if(session()->has('username'))
+                  <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>
+
+                  @if(session('ou') !== 'Usuaris')
+                    <p class="no-delete-msg">Per eliminar un telèfon, si us plau, contacta amb l'administrador.</p>
+                  @else
+                    <form action="{{ route('telefons.destroy', $telefon->id) }}" method="POST" onsubmit="return confirm('Segur?')">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                  @endif
+                @else
+                  <p class="no-login-msg">
+                    Per editar o eliminar un telèfon, si us plau,
+                    <a href="{{ route('login') }}">inicia sessió</a>.
+                  </p>
+                @endif
+              </div>
             </td>
+
           </tr>
         @endforeach
       </tbody>
 
     </table>
+    
+    <div class="pagination">
+      {{ $telefons->links() }}
+    </div>
+
   @endif
 </main>
 

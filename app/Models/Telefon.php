@@ -9,8 +9,7 @@ use Carbon\Carbon;
 class Telefon extends Model
 {
     protected $table = 'int_telefons';
-    public $timestamps = false; // As data_edicio is manually managed
-
+    public $timestamps = false; 
     protected $fillable = [
         'nom',
         'num_directe',

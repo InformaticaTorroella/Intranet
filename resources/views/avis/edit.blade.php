@@ -58,6 +58,12 @@
         <button type="submit" class="btn btn-primary">Actualitzar</button>
         <button type="button" class="btn-go-back" onclick="window.location.href='{{ route('avis.index') }}'">Tornar</button>
     </form>
+    <form action="{{ route('avis.destroy', $avis->id) }}" method="POST" class="form-container">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que vols eliminar aquest avís?')">Eliminar</button>
+    </form>
+
 
     <x-footer />
 
