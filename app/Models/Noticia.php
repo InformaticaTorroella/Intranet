@@ -12,10 +12,9 @@ class Noticia extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'nom', 'descripcio', 'data_creacio', 'data_publicacio', 'publicat', 
-        'fk_tipus_obj', 'url', 'extensio', 'data_inicial', 'data_final'
+        'cat_noticia_id', 'url', 'extensio', 'data_inicial', 'data_final'
     ];
 
-    // Obtenir caps per editar sense modificar la data de publicació
     public static function getNoticiaUpdatePublicar($id)
     {
         return DB::table('int_noticies')
@@ -24,7 +23,6 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtenir noticies completes
     public static function getNoticia($id)
     {
         return DB::table('int_noticies')
@@ -32,7 +30,7 @@ class Noticia extends Model
                 'id', 'nom', 'descripcio',
                 DB::raw("DATE_FORMAT(data_creacio, '%Y-%m-%d') as data_creacio"),
                 DB::raw("DATE_FORMAT(data_publicacio, '%Y-%m-%d') as data_publicacio"),
-                'publicat', 'fk_tipus_obj', 'url', 'extensio',
+                'publicat', 'cat_noticia_id', 'url', 'extensio',
                 DB::raw("DATE_FORMAT(data_inicial, '%Y-%m-%d') as data_inicial"),
                 DB::raw("DATE_FORMAT(data_final, '%Y-%m-%d') as data_final")
             )
@@ -40,39 +38,35 @@ class Noticia extends Model
             ->get();
     }
 
-    // Obtenir nom de categornia de la noticia
     public static function getNomCatNoticia($id)
     {
         return DB::table('int_cat_noticies')->where('id', $id)->get();
     }
 
-    // Obtenir totes les noticies
     public static function getNoticies()
     {
         return DB::table('int_noticies')
             ->select(
                 'id', 'nom', 'descripcio',
                 DB::raw("DATE_FORMAT(data_creacio, '%Y-%m-%d') as data_creacio"),
-                'data_publicacio', 'publicat', 'fk_tipus_obj'
+                'data_publicacio', 'publicat', 'cat_noticia_id'
             )
             ->get();
     }
 
-    // Obtenir noticias publicadas per l'intranet
     public static function getNoticiesIntranet()
     {
         return DB::table('int_noticies')
             ->select(
                 'id', 'nom', 'descripcio', 'data_creacio',
                 DB::raw("DATE_FORMAT(data_publicacio, '%W- %d %M %Y %H:%i') as data_publicacio"),
-                'publicat', 'fk_tipus_obj', 'data_publicacio as data_pub_new'
+                'publicat', 'cat_noticia_id', 'data_publicacio as data_pub_new'
             )
             ->where('publicat', 1)
             ->orderBy('data_creacio', 'desc')
             ->get();
     }
 
-    // Obtenir etiquetes de una noticia
     public static function getTagsNoticia($id)
     {
         return DB::table('int_etiquetes as e')
@@ -84,13 +78,11 @@ class Noticia extends Model
             ->get();
     }
 
-    // Contar noticias publicadas
     public static function getNoticiesReleasedNum()
     {
         return DB::table('int_noticies')->where('publicat', 1)->count();
     }
 
-    // Obtenir noticias publicadas paginadas
     public static function getNoticiesReleased($pag_num)
     {
         $perPage = 9;
@@ -106,7 +98,6 @@ class Noticia extends Model
             ->get();
     }
 
-    // Insertar noticia
     public static function insertNoticia(array $data)
     {
         return DB::table('int_noticies')->insertGetId([
@@ -115,14 +106,13 @@ class Noticia extends Model
             'data_creacio' => $data['data_cre'],
             'data_publicacio' => $data['data_pub'],
             'publicat' => $data['bool_pub'],
-            'fk_tipus_obj' => $data['tipus_obj'],
+            'cat_noticia_id' => $data['cat_noticia_id'] ?? null,
             'url' => $data['url_document'],
             'data_inicial' => $data['data_inicial'],
             'data_final' => $data['data_final'],
         ]);
     }
 
-    // Insertar relació noticia - categoria
     public static function insertRelacioNoticiaCategoria(array $data)
     {
         return DB::table('int_fk_noticies_categoria')->insert([
@@ -131,7 +121,6 @@ class Noticia extends Model
         ]);
     }
 
-    // Actualizar noticia
     public static function updateNoticia(array $data)
     {
         return DB::table('int_noticies')
@@ -141,9 +130,15 @@ class Noticia extends Model
                 'descripcio' => $data['descripcio_noticia'],
                 'data_publicacio' => $data['data_pub'],
                 'publicat' => $data['bool_pub'],
+                'cat_noticia_id' => $data['cat_noticia_id'],
                 'url' => $data['url_document'],
                 'data_inicial' => $data['data_inicial'],
                 'data_final' => $data['data_final'],
             ]);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(CatNoticia::class, 'cat_noticia_id', 'id');
     }
 }

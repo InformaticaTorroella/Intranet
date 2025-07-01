@@ -18,6 +18,16 @@
         <label>Descripció:</label>
         <textarea name="descripcio_noticia" required>{{ old('descripcio_noticia') }}</textarea>
 
+        <label>Categoria:</label>
+        <select name="cat_noticia_id" required>
+            <option value="">-- Selecciona categoria --</option>
+            @foreach($categories as $cat)
+                <option value="{{ $cat->id }}" {{ old('cat_noticia_id') == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->nom }}
+                </option>
+            @endforeach
+        </select>
+
         <label>Data de publicació:</label>
         <input type="datetime-local" name="data_pub" value="{{ old('data_pub') }}" required>
 

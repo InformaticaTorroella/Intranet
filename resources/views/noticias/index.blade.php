@@ -14,6 +14,17 @@
     <div class="noticias-page-center">
         <section class="noticias-container">
             <h1>Notícies</h1>
+            <form method="GET" action="{{ route('noticias.index') }}" class="noticias-filter-form">
+                <label for="filter_categoria">Categoria:</label>
+                <select name="filter_categoria" id="filter_categoria" onchange="this.form.submit()">
+                    <option value="" {{ request('filter_categoria') == '' ? 'selected' : '' }}>Totes</option>
+                    @foreach($categories as $categoria)
+                        <option value="{{ $categoria->id }}" {{ request('filter_categoria') == $categoria->id ? 'selected' : '' }}>
+                            {{ $categoria->nom }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
 
             @forelse ($noticias as $noticia)
                 <article class="noticia">

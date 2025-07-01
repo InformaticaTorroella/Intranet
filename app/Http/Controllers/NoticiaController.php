@@ -3,21 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticia;
+use App\Models\CatNoticia;
 use Illuminate\Http\Request;
 
 class NoticiaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $noticias = Noticia::orderBy('data_publicacio', 'desc')->get();
-        return view('noticias.index', compact('noticias'));
+        // Agafar categories
+        $categories = CatNoticia::all();
+
+        // Recollir filtres
+        $filterCategoria = $request->input('filter_categoria');
+        $filterPublicat = $request->input('filter_publicat');
+
+        // Crear la query base
+        $query = Noticia::query();
+
+        // Filtrar per categoria si hi ha filtre
+        if ($filterCategoria) {
+            $query->where('cat_noticia_id', $filterCategoria);
+        }
+
+        // Filtrar per estat publicat si hi ha filtre
+        if ($filterPublicat !== null && $filterPublicat !== '') {
+            $query->where('publicat', $filterPublicat);
+        }
+
+        // Agafar resultats ordenats per data de publicació desc
+        $noticias = $query->orderBy('data_publicacio', 'desc')->get();
+
+        return view('noticias.index', compact('noticias', 'categories'));
     }
+
 
 
     public function create()
     {
-        return view('noticias.create');
+        $categories = CatNoticia::all();
+        return view('noticias.create', compact('categories'));
     }
+
 
     public function store(Request $request)
     {
@@ -29,6 +55,7 @@ class NoticiaController extends Controller
             'url_document' => 'nullable|string',
             'data_inicial' => 'required|date',
             'data_final' => 'required|date',
+            'cat_noticia_id' => 'required|exists:int_cat_noticies,id',
         ]);
 
         $noticia = new Noticia();
@@ -39,7 +66,7 @@ class NoticiaController extends Controller
         $noticia->url = $validated['url_document'] ?? null;
         $noticia->data_inicial = $validated['data_inicial'];
         $noticia->data_final = $validated['data_final'];
-        
+        $noticia->cat_noticia_id = $validated['cat_noticia_id'];
 
         try {
             $noticia->save();
@@ -52,12 +79,18 @@ class NoticiaController extends Controller
     }
 
 
+
     public function edit($id)
     {
         $noticia = Noticia::getNoticia($id)->first();
         if (!$noticia) abort(404);
-        return view('noticias.edit', compact('noticia'));
+
+        $categories = CatNoticia::all();
+
+        return view('noticias.edit', compact('noticia', 'categories'));
     }
+
+
 
     public function show($id)
     {
@@ -67,31 +100,36 @@ class NoticiaController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        $request->validate([
+        $validated = $request->validate([
             'nom_noticia' => 'required|string|max:255',
             'descripcio_noticia' => 'required|string',
             'data_pub' => 'required|date',
             'bool_pub' => 'required|boolean',
-            'tipus_obj' => 'nullable|integer',
             'url_document' => 'nullable|string',
             'data_inicial' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicial',
+            'cat_noticia_id' => 'required|exists:int_cat_noticies,id',
         ]);
 
-        $data = $request->only([
-            'nom_noticia', 'descripcio_noticia', 'data_pub', 'bool_pub',
-            'tipus_obj', 'url_document', 'data_inicial', 'data_final'
-        ]);
+        $noticia = Noticia::findOrFail($id);
+        $noticia->nom = $validated['nom_noticia'];
+        $noticia->descripcio = $validated['descripcio_noticia'];
+        $noticia->data_publicacio = $validated['data_pub'];
+        $noticia->publicat = $validated['bool_pub'];
+        $noticia->url = $validated['url_document'] ?? null;
+        $noticia->data_inicial = $validated['data_inicial'];
+        $noticia->data_final = $validated['data_final'];
+        $noticia->cat_noticia_id = $validated['cat_noticia_id'];
 
-        $data['id'] = $id;
-
-        Noticia::updateNoticia($data);
-
-        logActivity('Edita Noticia', "ID: $id", "L'usuari ha editat la noticia Nº $id.");
-
-        return redirect()->route('noticias.index')->with('success', 'Notícia actualitzada');
+        try {
+            $noticia->save();
+            logActivity('Edita Noticia', "ID: $id", "L'usuari ha editat la noticia Nº $id.");
+            return redirect()->route('noticias.index')->with('success', 'Notícia actualitzada');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al guardar la notícia: ' . $e->getMessage()]);
+        }
     }
+
 
     public function destroy($id)
     {
