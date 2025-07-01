@@ -160,3 +160,42 @@ html, body {
     padding: 10px 18px;
     margin-bottom: 1rem;
 }
+.circular-filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center; /* <-- centra el contenido horizontalmente */
+  padding: 10px 0;
+  margin-bottom: 25px;
+}
+
+.circular-filter-form select {
+  background-color: #fff;
+  border: 2px solid #b03030;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23800000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+}
+
+.circular-filter-form select:focus {
+  outline: none;
+  border-color: #800000;
+  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
+}
+.circular-filter-form > label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #800000;
+  user-select: none;
+  text-align: center;
+  margin-bottom: 10px;
+}

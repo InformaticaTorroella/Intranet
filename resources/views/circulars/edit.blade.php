@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Editar Circular</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/circulars.css') }}">
 </head>
 <body>
@@ -40,17 +41,20 @@
                 <label for="url">URL:</label>
                 <input type="text" name="url" id="url" maxlength="255" value="{{ old('url', $circular->url) }}">
 
-                <label for="publicat">Publicat (0/1):</label>
-                <input type="number" name="publicat" id="publicat" min="0" max="1" value="{{ old('publicat', $circular->publicat) }}">
+                <select name="publicat" id="publicat">
+                    <option value="0" {{ old('publicat', $circular->publicat) == 0 ? 'selected' : '' }}>No</option>
+                    <option value="1" {{ old('publicat', $circular->publicat) == 1 ? 'selected' : '' }}>Sí</option>
+                </select>
 
-                <label for="fk_cat_circular">Categoria ID (fk_cat_circular):</label>
-                <input type="number" name="fk_cat_circular" id="fk_cat_circular" required value="{{ old('fk_cat_circular', $circular->fk_cat_circular) }}">
-
-                <label for="fk_tipus_obj">Tipus Objecte (fk_tipus_obj):</label>
-                <input type="number" name="fk_tipus_obj" id="fk_tipus_obj" required value="{{ old('fk_tipus_obj', $circular->fk_tipus_obj) }}">
-
-                <label for="trial689">Trial689:</label>
-                <input type="text" name="trial689" id="trial689" maxlength="1" value="{{ old('trial689', $circular->trial689) }}">
+                <label for="fk_cat_circular">Categoria:</label>
+                <select name="fk_cat_circular" id="fk_cat_circular" required>
+                    <option value="">-- Selecciona categoria --</option>
+                    @foreach ($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ old('fk_cat_circular', $circular->fk_cat_circular) == $cat->id ? 'selected' : '' }}>
+                            {{ $cat->nom }}
+                        </option>
+                    @endforeach
+                </select>
 
                 <button type="submit">Guardar</button>
                 <a href="{{ route('circulars.index') }}" class="btn-go-back">Tornar</a>
@@ -59,5 +63,6 @@
     </div>
 
     <x-footer />
+
 </body>
 </html>

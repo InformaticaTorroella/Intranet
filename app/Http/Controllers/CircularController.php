@@ -3,22 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Circular;
+use App\Models\CatCircular;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class CircularController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $circulars = Circular::orderBy('ordre', 'asc')->get();
-        return view('circulars.index', compact('circulars'));
+        $categories = CatCircular::all();
+
+        $query = Circular::query();
+
+        if ($request->has('categoria') && $request->categoria != '') {
+            $query->where('fk_cat_circular', $request->categoria);
+        }
+
+        $circulars = $query->orderBy('fk_cat_circular')->get();
+
+        return view('circulars.index', compact('circulars', 'categories'));
     }
+
 
     public function create()
     {
-        return view('circulars.create');
+        $categories = CatCircular::all();
+        return view('circulars.create', compact('categories'));
     }
+
+
+
 
     public function store(Request $request)
     {
@@ -28,9 +43,7 @@ class CircularController extends Controller
             'data_creacio' => 'required|date',
             'ordre' => 'required|integer',
             'fk_cat_circular' => 'required|integer',
-            'fk_tipus_obj' => 'required|integer',
             'publicat' => 'nullable|integer',
-            'trial689' => 'nullable|string|max:1',
         ]);
 
         $file = $request->file('file');
@@ -57,8 +70,6 @@ class CircularController extends Controller
             'url' => $url,
             'publicat' => $validated['publicat'] ?? 0,
             'fk_cat_circular' => $validated['fk_cat_circular'],
-            'fk_tipus_obj' => $validated['fk_tipus_obj'],
-            'trial689' => $validated['trial689'] ?? null,
         ]);
 
         logActivity('Crea Circular', "ID: {$circular->id}", "Usuari ha creat la circular Nº {$circular->id}.");
@@ -69,7 +80,8 @@ class CircularController extends Controller
     public function edit($id)
     {
         $circular = Circular::findOrFail($id);
-        return view('circulars.edit', compact('circular'));
+        $categories = CatCircular::all();
+        return view('circulars.edit', compact('circular', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -85,8 +97,6 @@ class CircularController extends Controller
             'url' => 'nullable|string|max:255',
             'publicat' => 'nullable|integer',
             'fk_cat_circular' => 'required|integer',
-            'fk_tipus_obj' => 'required|integer',
-            'trial689' => 'nullable|string|max:1',
         ]);
 
         $circular = Circular::findOrFail($id);
@@ -101,8 +111,6 @@ class CircularController extends Controller
         $circular->url = $validated['url'] ?? $circular->url;
         $circular->publicat = $validated['publicat'] ?? $circular->publicat;
         $circular->fk_cat_circular = $validated['fk_cat_circular'];
-        $circular->fk_tipus_obj = $validated['fk_tipus_obj'];
-        $circular->trial689 = $validated['trial689'] ?? $circular->trial689;
 
         $circular->save();
 
