@@ -13,7 +13,8 @@ class TelefonController extends Controller
     public function index(Request $request)
     {
         $equipament_id = $request->input('id_equipament');
-        $area_id = $request->input('area_id');
+        $area_id = $request->input('area_id');    
+        $nom = $request->input('nom'); 
         $orderBy = $request->input('order_by', 'nom'); 
         $order = $request->input('order', 'asc'); // asc o desc
 
@@ -35,10 +36,20 @@ class TelefonController extends Controller
             $query->where('fk_id_equipament', $equipament_id);
         }
 
+        // Aquí filtro con LIKE para el nombre, con coincidencia al inicio
+        if ($nom) {
+            $query->where('nom', 'LIKE', $nom . '%');
+        }
+
         $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->paginate(15);
+
+        if ($request->ajax()) {
+            return view('telefons.partials.telefons_table', compact('telefons', 'orderBy', 'order'))->render();
+        }
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }
+
 
     // Mostrar formulari de creacio
     public function create()

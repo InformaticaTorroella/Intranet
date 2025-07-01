@@ -13,9 +13,8 @@ use App\Http\Controllers\CircularController;
 use App\Http\Controllers\NoticiaCategoriaController;
 use App\Http\Controllers\DocumentCategoriaController;
 use App\Http\Controllers\CircularCategoriaController;
-
-
-
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\EdificiController;
 
 
 // Rutas de autenticació
@@ -321,3 +320,83 @@ Route::delete('/categoria-circulars/{id}', function ($id) {
     }
     return app(CircularCategoriaController::class)->destroy($id);
 })->name('categoria-circulars.destroy');
+
+// ♦️ Areas
+Route::get('/area-telefons', [AreaController::class, 'index'])->name('area-telefons.index');
+
+Route::get('/area-telefons/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(AreaController::class)->create();
+})->name('area-telefons.create');
+
+Route::post('/area-telefons', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(AreaController::class)->store(request());
+})->name('area-telefons.store');
+
+Route::get('/area-telefons/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(AreaController::class)->edit($id);
+})->name('area-telefons.edit');
+
+Route::put('/area-telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(AreaController::class)->update(request(), $id);
+})->name('area-telefons.update');
+
+Route::delete('/area-telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(AreaController::class)->destroy($id);
+})->name('area-telefons.destroy');
+
+// 🏘️ Edifici
+Route::get('/edifici-telefons', [EdificiController::class, 'index'])->name('edifici-telefons.index');
+
+Route::get('/edifici-telefons/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(EdificiController::class)->create();
+})->name('edifici-telefons.create');
+
+Route::post('/edifici-telefons', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(EdificiController::class)->store(request());
+})->name('edifici-telefons.store');
+
+Route::get('/edifici-telefons/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(EdificiController::class)->edit($id);
+})->name('edifici-telefons.edit');
+
+Route::put('/edifici-telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(EdificiController::class)->update(request(), $id);
+})->name('edifici-telefons.update');
+
+Route::delete('/edifici-telefons/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(EdificiController::class)->destroy($id);
+})->name('edifici-telefons.destroy');
