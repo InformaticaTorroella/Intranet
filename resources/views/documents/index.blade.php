@@ -27,6 +27,9 @@
                         </option>
                     @endforeach
                 </select>
+                @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+                    <a href="{{ route('categoria-documents.create') }}" class="btn-secondary">Afegir Categoria</a>                
+                @endif
             </form>
 
             <div class="documents-list">

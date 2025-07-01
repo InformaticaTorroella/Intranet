@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Editar Categoria</title>
-    <link rel="stylesheet" href="{{ asset('css/categoriaNoticia.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
 </head>
 <body>
 <x-header />

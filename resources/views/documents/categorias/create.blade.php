@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <title>Crear Categoria</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
 </head>
 <body>
 <x-header />
-
 <main class="categories-page-center">
     <div class="categories-container">
         <h1>Crear Categoria</h1>
@@ -22,21 +22,19 @@
             </div>
         @endif
 
-        <form action="{{ route('categories.store') }}" method="POST" class="category-form">
+        <form action="{{ route('categoria-documents.store') }}" method="POST" class="category-form">
             @csrf
 
-            <label for="nom">Nom de la Categoria:</label>
-            <input type="text" id="nom" name="nom" value="{{ old('nom') }}" required>
+            <label for="nom">Nom:</label>
+            <input type="text" name="nom" id="nom" value="{{ old('nom') }}" required>
 
             <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{ route('categories.index') }}" class="btn btn-primary">Tornar</a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+                <a href="{{ route('categoria-documents.index') }}" class="btn btn-primary">Tornar</a>
             </div>
-
         </form>
     </div>
 </main>
-
 <x-footer />
 </body>
 </html>

@@ -11,6 +11,8 @@ use App\Http\Controllers\TelefonController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\CircularController;
 use App\Http\Controllers\NoticiaCategoriaController;
+use App\Http\Controllers\DocumentCategoriaController;
+
 
 
 
@@ -198,9 +200,9 @@ Route::get('circulars/view/{id}/{action?}', function ($id, $action = 'download')
 
 // 🧮 Categoria Noticies
 
-Route::get('/categories', [NoticiaCategoriaController::class, 'index'])->name('categories.index');
+Route::get('/categories-noticias', [NoticiaCategoriaController::class, 'index'])->name('categories.index');
 
-Route::get('/categories/create', function () {
+Route::get('/categories-noticias/create', function () {
     if (!session()->has('username')) {
         session(['url.intended' => url()->current()]);
         return redirect()->route('login');
@@ -208,14 +210,14 @@ Route::get('/categories/create', function () {
     return app(NoticiaCategoriaController::class)->create();
 })->name('categories.create');
 
-Route::post('/categories', function () {
+Route::post('/categories-noticias', function () {
     if (!session()->has('username')) {
         return redirect()->route('login');
     }
     return app(NoticiaCategoriaController::class)->store(request());
 })->name('categories.store');
 
-Route::get('/categories/{id}/edit', function ($id) {
+Route::get('/categories-noticias/{id}/edit', function ($id) {
     if (!session()->has('username')) {
         session(['url.intended' => url()->current()]);
         return redirect()->route('login');
@@ -223,16 +225,58 @@ Route::get('/categories/{id}/edit', function ($id) {
     return app(NoticiaCategoriaController::class)->edit($id);
 })->name('categories.edit');
 
-Route::put('/categories/{id}', function ($id) {
+Route::put('/categories-noticias/{id}', function ($id) {
     if (!session()->has('username')) {
         return redirect()->route('login');
     }
     return app(NoticiaCategoriaController::class)->update(request(), $id);
 })->name('categories.update');
 
-Route::delete('/categories/{id}', function ($id) {
+Route::delete('/categories-noticias/{id}', function ($id) {
     if (!session()->has('username')) {
         return redirect()->route('login');
     }
     return app(NoticiaCategoriaController::class)->destroy($id);
 })->name('categories.destroy');
+
+
+// 📄 Categoria Documents
+
+Route::get('/categoria-documents', [DocumentCategoriaController::class, 'index'])->name('categoria-documents.index');
+
+Route::get('/categoria-documents/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(DocumentCategoriaController::class)->create();
+})->name('categoria-documents.create');
+
+Route::post('/categoria-documents', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(DocumentCategoriaController::class)->store(request());
+})->name('categoria-documents.store');
+
+Route::get('/categoria-documents/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(DocumentCategoriaController::class)->edit($id);
+})->name('categoria-documents.edit');
+
+Route::put('/categoria-documents/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(DocumentCategoriaController::class)->update(request(), $id);
+})->name('categoria-documents.update');
+
+Route::delete('/categoria-documents/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(DocumentCategoriaController::class)->destroy($id);
+})->name('categoria-documents.destroy');

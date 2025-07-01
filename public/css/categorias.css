@@ -1,18 +1,19 @@
 /* Reset básico y base */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #f8f1f1;
-  min-height: 100vh;
-  width: 100%;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f1f1;
+    min-height: 100vh;
+    width: 100%;
 }
 
 /* Estilos generales para la página de categorías */
 .categories-page-center {
     min-height: 100vh;
     display: flex;
-    align-items: flex-start; /* o 'center' si prefieres centrado vertical */
+    align-items: flex-start;
     justify-content: center;
     padding-top: 40px;
     box-sizing: border-box;
@@ -73,7 +74,7 @@ html, body {
 .category-action-links {
     display: flex;
     gap: 10px;
-    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    justify-content: flex-start;
 }
 
 .category-action-links a,
@@ -156,7 +157,8 @@ html, body {
     outline-color: #800000;
 }
 
-.category-form button.btn-primary {
+/* Botón guardar y botón tornar (comparten clase) */
+.btn-primary {
     padding: 14px;
     font-size: 18px;
     background-color: #800000;
@@ -167,26 +169,22 @@ html, body {
     transition: background-color 0.3s ease;
     width: 100%;
     max-width: 220px;
-    align-self: center;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
 }
 
-.category-form button.btn-primary:hover {
+.btn-primary:hover {
     background-color: #a00000;
 }
 
-/* Estilos para el enlace de "Volver" */
-.category-go-back-link {
-    display: inline-block;
-    padding: 12px 18px;
-    background-color: #f8f9fa;
-    color: #800000;
-    text-decoration: none;
-    border: 1px solid #800000;
-    border-radius: 7px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-top: 10px;
+.category-form .form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.category-go-back-link:hover {
-    background-color: #e2e3e5;
+.form-buttons .btn-primary {
+    width: 220px;
 }

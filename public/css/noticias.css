@@ -188,8 +188,19 @@ textarea {
   min-height: 80px;
 }
 
-/* Botones */
-button.btn-primary, .btn-go-back {
+/* Enlaces sin estilo por defecto */
+a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Hereda el color del texto del padre */
+  background-color: transparent; /* Asegura que no haya un fondo */
+  padding: 0; /* Elimina cualquier padding predeterminado */
+  margin: 0; /* Elimina cualquier margin predeterminado */
+  border: none; /* Elimina cualquier borde predeterminado */
+  cursor: pointer; /* Mantiene el cursor de puntero */
+}
+
+/* Botones (button) */
+button.btn-primary, .btn-go-back, button.btn-secondary {
   padding: 14px;
   font-size: 18px;
   background-color: #800000;
@@ -203,10 +214,32 @@ button.btn-primary, .btn-go-back {
   align-self: center;
 }
 
-button.btn-primary:hover, .btn-go-back:hover {
+button.btn-primary:hover, .btn-go-back:hover, button.btn-secondary:hover {
   background-color: #a00000;
 }
 
+/* Botones de enlace (a) */
+a.btn-primary, a.btn-secondary, a.btn-go-back {
+  display: inline-block;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #800000;
+  color: white;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  max-width: 220px;
+  text-align: center;
+  width: auto;
+}
+
+a.btn-primary:hover, a.btn-secondary:hover, a.btn-go-back:hover {
+  background-color: #a00000;
+  color: white;
+  text-decoration: none;
+}
+
+/* Botón peligro (danger) para button */
 button.btn-danger {
   padding: 12px;
   font-size: 18px;
@@ -226,7 +259,7 @@ button.btn-danger:hover {
   background-color: #800000;
 }
 
-/* Botones de acción */
+/* Botones de acción (enlaces) */
 .btn-editar, .btn-crear, .btn-ver {
   display: inline-block;
   margin-top: 10px;
@@ -235,6 +268,8 @@ button.btn-danger:hover {
   color: white;
   text-decoration: none;
   border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-editar:hover, .btn-crear:hover, .btn-ver:hover {
@@ -250,11 +285,13 @@ button.btn-danger:hover {
 .noticia h2 {
   margin: 0 0 10px 0;
 }
+
+/* Formulario filtro noticias */
 .noticias-filter-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center; /* <-- centra el contenido horizontalmente */
+  align-items: center; /* centra horizontalmente */
   padding: 10px 0;
   margin-bottom: 25px;
 }
@@ -281,6 +318,7 @@ button.btn-danger:hover {
   border-color: #800000;
   box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
 }
+
 .noticias-filter-form > label {
   font-size: 24px;
   font-weight: 600;
