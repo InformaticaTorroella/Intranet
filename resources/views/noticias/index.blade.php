@@ -24,6 +24,7 @@
                         </option>
                     @endforeach
                 </select>
+                <a href="{{ route('categories.create') }}" class="btn btn-secondary" style="margin-left: 10px;">Afegir Categoria</a>
             </form>
 
             @forelse ($noticias as $noticia)
