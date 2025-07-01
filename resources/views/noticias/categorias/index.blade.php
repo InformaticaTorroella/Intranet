@@ -3,47 +3,51 @@
 <head>
     <meta charset="UTF-8" />
     <title>Llistat de Categories</title>
-    <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categoriaNoticia.css') }}">
 </head>
 <body>
 <x-header />
 
-<main>
-    <h1>Categories de Notícies</h1>
+<main class="categories-page-center">
+    <div class="categories-container">
+        <h1>Categories de Notícies</h1>
 
-    @if(session('success'))
-        <div class="form-success">{{ session('success') }}</div>
-    @endif
+        @if(session('success'))
+            <div class="category-success-message">{{ session('success') }}</div>
+        @endif
 
-    <a href="{{ route('categories.create') }}" class="btn btn-primary">+ Nova Categoria</a>
+        <a href="{{ route('categories.create') }}" class="new-category-button">+ Nova Categoria</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Accions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($categories as $cat)
+        <table class="categories-table">
+            <thead>
                 <tr>
-                    <td>{{ $cat->id }}</td>
-                    <td>{{ $cat->nom }}</td>
-                    <td>
-                        <a href="{{ route('categories.edit', $cat->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('categories.destroy', $cat->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que vols eliminar aquesta categoria?')">Eliminar</button>
-                        </form>
-                    </td>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Accions</th>
                 </tr>
-            @empty
-                <tr><td colspan="3">No hi ha categories.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse($categories as $cat)
+                    <tr>
+                        <td>{{ $cat->id }}</td>
+                        <td>{{ $cat->nom }}</td>
+                        <td>
+                            <div class="category-action-links">
+                                <a href="{{ route('categories.edit', $cat->id) }}" class="btn-editar">Editar</a>
+                                <form action="{{ route('categories.destroy', $cat->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-danger" onclick="return confirm('Segur que vols eliminar aquesta categoria?')">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="3">No hi ha categories.</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <x-footer />

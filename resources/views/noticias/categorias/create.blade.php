@@ -3,33 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <title>Crear Categoria</title>
-    <link rel="stylesheet" href="{{ asset('css/noticias.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categoriaNoticia.css') }}">
 </head>
 <body>
 <x-header />
 
-<main>
-    <h1>Crear Categoria</h1>
+<main class="categories-page-center">
+    <div class="categories-container">
+        <h1>Crear Categoria</h1>
 
-    @if ($errors->any())
-        <div class="form-error">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        @if ($errors->any())
+            <div class="form-error">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <form action="{{ route('categories.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('categories.store') }}" method="POST" class="category-form">
+            @csrf
 
-        <label for="nom">Nom de la Categoria:</label>
-        <input type="text" id="nom" name="nom" value="{{ old('nom') }}" required>
+            <label for="nom">Nom de la Categoria:</label>
+            <input type="text" id="nom" name="nom" value="{{ old('nom') }}" required>
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('categories.index') }}" class="btn-go-back">Tornar</a>
-    </form>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ route('categories.index') }}" class="category-go-back-link">Tornar</a>
+        </form>
+    </div>
 </main>
 
 <x-footer />

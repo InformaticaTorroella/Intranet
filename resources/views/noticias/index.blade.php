@@ -24,6 +24,10 @@
                         </option>
                     @endforeach
                 </select>
+                @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+                    <button type="submit" class="btn-filtrar">Filtrar</button>
+                @endif
+            </form>
                 <a href="{{ route('categories.create') }}" class="btn btn-secondary" style="margin-left: 10px;">Afegir Categoria</a>
             </form>
 

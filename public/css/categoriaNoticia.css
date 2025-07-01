@@ -1,0 +1,192 @@
+/* Reset básico y base */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f1f1;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Estilos generales para la página de categorías */
+.categories-page-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start; /* o 'center' si prefieres centrado vertical */
+    justify-content: center;
+    padding-top: 40px;
+    box-sizing: border-box;
+    background: #f8f1f1;
+    width: 100%;
+}
+
+/* Contenedor principal de categorías */
+.categories-container {
+    background: white;
+    overflow-y: auto;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.25);
+    width: 50%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+/* Titulares de la página de categorías */
+.categories-container h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #800000;
+    user-select: none;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la tabla de categorías */
+.categories-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.categories-table th,
+.categories-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.categories-table th {
+    background-color: #f5f5f5;
+    color: #800000;
+    font-weight: 600;
+}
+
+.categories-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Estilos para los enlaces de acción (Editar, Eliminar) */
+.category-action-links {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+}
+
+.category-action-links a,
+.category-action-links button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.category-action-links a.btn-editar {
+    background-color: #007BFF;
+    color: white;
+}
+
+.category-action-links a.btn-editar:hover {
+    background-color: #0056b3;
+}
+
+.category-action-links button.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.category-action-links button.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Estilos para el botón de "Nueva Categoría" */
+.new-category-button {
+    display: inline-block;
+    padding: 12px 18px;
+    background-color: #800000;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.new-category-button:hover {
+    background-color: #a00000;
+}
+
+/* Estilos para mensajes de éxito */
+.category-success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el formulario de creación/edición de categorías */
+.category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.category-form label {
+    font-weight: 600;
+    color: #800000;
+}
+
+.category-form input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1.5px solid #b03030;
+    border-radius: 6px;
+    outline-color: #800000;
+}
+
+.category-form button.btn-primary {
+    padding: 14px;
+    font-size: 18px;
+    background-color: #800000;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 220px;
+    align-self: center;
+}
+
+.category-form button.btn-primary:hover {
+    background-color: #a00000;
+}
+
+/* Estilos para el enlace de "Volver" */
+.category-go-back-link {
+    display: inline-block;
+    padding: 12px 18px;
+    background-color: #f8f9fa;
+    color: #800000;
+    text-decoration: none;
+    border: 1px solid #800000;
+    border-radius: 7px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 10px;
+}
+
+.category-go-back-link:hover {
+    background-color: #e2e3e5;
+}
