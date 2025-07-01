@@ -7,11 +7,27 @@ use Illuminate\Http\Request;
 
 class AvisController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $avisos = Avis::orderBy('data_creacio', 'desc')->get();
+        $query = Avis::query();
+
+        if ($request->filled('filter_tipo')) {
+            if ($request->filter_tipo === 'info') {
+                $query->where('bool_avis_info', 1);
+            } elseif ($request->filter_tipo === 'alert') {
+                $query->where('bool_avis_alert', 1);
+            }
+        }
+
+        if ($request->filled('filter_solucionat')) {
+            $query->where('solucionat', $request->filter_solucionat);
+        }
+
+        $avisos = $query->orderBy('data_creacio', 'desc')->get();
+
         return view('avis.index', compact('avisos'));
     }
+
 
 
     public function create()
@@ -32,9 +48,14 @@ class AvisController extends Controller
             'data_solucionat' => 'nullable|date',
             'contingut_solucionat' => 'nullable|string',
             'titol_solucionat' => 'nullable|string|max:255',
-            'bool_correu' => 'nullable|boolean',
-            'trial633' => 'nullable|string|max:1',
         ]);
+
+        // Validar que solo uno de los dos bools esté activo
+        if (($validated['bool_avis_info'] ?? 0) + ($validated['bool_avis_alert'] ?? 0) !== 1) {
+            return back()
+                ->withInput()
+                ->withErrors(['bool_avis_info' => 'Has de seleccionar només una opció: informació o alerta.']);
+        }
 
         $avis = new Avis();
         $avis->titol = $validated['titol'];
@@ -46,14 +67,10 @@ class AvisController extends Controller
         $avis->data_solucionat = $validated['data_solucionat'] ?? null;
         $avis->contingut_solucionat = $validated['contingut_solucionat'] ?? null;
         $avis->titol_solucionat = $validated['titol_solucionat'] ?? null;
-        $avis->bool_correu = $validated['bool_correu'] ?? 0;
-        $avis->trial633 = $validated['trial633'] ?? null;
 
         $avis->save();
 
-        $id = $avis->id;
-
-        logActivity('Crea Avis', "ID: $id", "L'usuari ha creat l'avis Nº $id.");
+        logActivity('Crea Avis', "ID: {$avis->id}", "L'usuari ha creat l'avis Nº {$avis->id}.");
 
         return redirect()->route('avis.index')->with('success', 'Avís creat');
     }
@@ -83,12 +100,15 @@ class AvisController extends Controller
             'data_solucionat' => 'nullable|date',
             'contingut_solucionat' => 'nullable|string',
             'titol_solucionat' => 'nullable|string|max:255',
-            'bool_correu' => 'nullable|boolean',
-            'trial633' => 'nullable|string|max:1',
         ]);
 
-        $avis = Avis::findOrFail($id);
+        if (($validated['bool_avis_info'] ?? 0) + ($validated['bool_avis_alert'] ?? 0) !== 1) {
+            return back()
+                ->withInput()
+                ->withErrors(['bool_avis_info' => 'Has de seleccionar només una opció: informació o alerta.']);
+        }
 
+        $avis = Avis::findOrFail($id);
         $avis->titol = $validated['titol'];
         $avis->contingut = $validated['contingut'];
         $avis->bool_avis_info = $validated['bool_avis_info'] ?? 0;
@@ -98,18 +118,13 @@ class AvisController extends Controller
         $avis->data_solucionat = $validated['data_solucionat'] ?? null;
         $avis->contingut_solucionat = $validated['contingut_solucionat'] ?? null;
         $avis->titol_solucionat = $validated['titol_solucionat'] ?? null;
-        $avis->bool_correu = $validated['bool_correu'] ?? 0;
-        $avis->trial633 = $validated['trial633'] ?? null;
 
         $avis->save();
-
-        $username = session('username'); // Primer recuparem el nom del usuari
 
         logActivity('Edita Avis', "ID: $id", "L'usuari ha editat l'avis Nº $id.");
 
         return redirect()->route('avis.index')->with('success', 'Avís actualitzat');
     }
-
     public function destroy($id)
     {
         $avis = Avis::findOrFail($id);

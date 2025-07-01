@@ -47,16 +47,6 @@
         </div>
         @endif
 
-        <div class="detalle-item">
-            <strong>Enviar correu:</strong>
-            <div class="detalle-caja">{{ $avis->bool_correu ? 'Sí' : 'No' }}</div>
-        </div>
-
-        <div class="detalle-item">
-            <strong>Trial633:</strong>
-            <div class="detalle-caja">{{ $avis->trial633 }}</div>
-        </div>
-
         <a href="{{ route('avis.index') }}">Tornar</a> 
         @if(session()->has('username'))
         | <a href="{{ route('avis.edit', $avis->id) }}">Editar</a>
