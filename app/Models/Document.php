@@ -18,7 +18,7 @@ class Document extends Model
         'extensio',
         'ordre',
         'url',
-        'categoria_id'
+        'fk_id_cat_document'
     ];
 
     // GET documents ordered by tramit id and tipus

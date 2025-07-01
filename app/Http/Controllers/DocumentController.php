@@ -42,17 +42,16 @@ class DocumentController extends Controller
             'data_entrada' => 'required|date',
             'ordre' => 'required|integer',
             'categoria_id' => 'required|exists:int_cat_documents,id',
-
         ]);
 
         $file = $request->file('file');
-        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9_\-\.]/', '', $file->getClientOriginalName());
+        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9_\\-\\.]/', '', $file->getClientOriginalName());
         $ext = $file->getClientOriginalExtension();
 
         $folder = 'generals';
         if (session()->has('name')) {
             $name = str_replace(' ', '_', session('name'));
-            $folder = preg_replace('/[^A-Za-z0-9_\-]/', '', $name);
+            $folder = preg_replace('/[^A-Za-z0-9_\\-]/', '', $name);
         }
 
         $path = $file->storeAs("uploads/$folder", $filename, 'public');
@@ -61,13 +60,15 @@ class DocumentController extends Controller
         $dataEntrada = \Carbon\Carbon::parse($validated['data_entrada'])->format('Y-m-d H:i:s');
 
         $data = [
-            'nom_document' => $validated['nom_visual'],
+            'nom_visual' => $validated['nom_visual'],
             'nom_arxiu' => $filename,
             'extensio' => $ext,
             'data_entrada' => $dataEntrada,
             'ordre' => $validated['ordre'],
-            'url_document' => $url,
+            'url' => $url, // <-- canviat de 'url_document' a 'url'
+            'fk_id_cat_document' => $validated['categoria_id'], // <-- clau correcta
         ];
+
 
         $document = Document::create($data);
 
@@ -75,6 +76,7 @@ class DocumentController extends Controller
 
         return redirect()->back()->with('success', 'Document pujat correctament.');
     }
+
 
 
 
@@ -95,8 +97,9 @@ class DocumentController extends Controller
             'extensio' => 'nullable|string|max:10',
             'ordre' => 'required|integer',
             'url' => 'nullable|string|max:230',
-            'categoria_id' => 'required|exists:int_cat_documents,id',
+            'fk_id_cat_document' => 'required|exists:int_cat_documents,id',
         ]);
+
 
         $document = Document::findOrFail($id);
         $document->nom_visual = $validated['nom_visual'];
@@ -105,12 +108,14 @@ class DocumentController extends Controller
         $document->extensio = $validated['extensio'] ?? null;
         $document->ordre = $validated['ordre'];
         $document->url = $validated['url'] ?? null;
+        $document->fk_id_cat_document = $validated['fk_id_cat_document'];
         $document->save();
 
         logActivity('Edita Document', "ID: $id", "L'usuari ha editat el document Nº $id.");
 
         return redirect()->route('documents.index')->with('success', 'Document actualitzat');
     }
+
 
     public function destroy($id)
     {

@@ -46,13 +46,14 @@
 
         <label class="form-label">Categoria</label>
         <select name="categoria_id" class="form-select">
-        <option value="">-- Selecciona Categoria --</option>
-        @foreach ($categories as $categoria)
-            <option value="{{ $categoria->id }}" {{ old('categoria_id', $document->categoria_id ?? '') == $categoria->id ? 'selected' : '' }}>
-            {{ $categoria->nom }}
-            </option>
-        @endforeach
+            <option value="">-- Selecciona Categoria --</option>
+            @foreach ($categories as $categoria)
+                <option value="{{ $categoria->id }}" {{ old('categoria_id', $document->categoria_id ?? '') == $categoria->id ? 'selected' : '' }}>
+                    {{ $categoria->nom }}
+                </option>
+            @endforeach
         </select>
+
 
 
         <button class="btn btn-primary" type="submit">Crear Document</button>

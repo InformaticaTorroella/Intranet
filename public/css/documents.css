@@ -46,6 +46,15 @@ html, body {
   margin-bottom: 20px;
 }
 
+.category-filter-form > label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #800000;
+  user-select: none;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 /* Documento individual */
 .document {
   border-bottom: 1px solid #ccc;
@@ -95,11 +104,6 @@ form {
   width: 80%;
   margin: 0 auto;
   margin-bottom: 30px;
-}
-
-label {
-  font-weight: 600;
-  color: #800000;
 }
 
 select,
@@ -189,12 +193,6 @@ button.btn-danger:hover {
   align-items: center; /* <-- centra el contenido horizontalmente */
   padding: 10px 0;
   margin-bottom: 25px;
-}
-
-.category-filter-form label {
-  font-weight: 600;
-  color: #800000;
-  font-size: 16px;
 }
 
 .category-filter-form select {
