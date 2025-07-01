@@ -16,7 +16,7 @@
             <div class="category-success-message">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('categories.create') }}" class="new-category-button">+ Nova Categoria</a>
+        <a href="{{ route('categoria-noticias.create') }}" class="new-category-button">+ Nova Categoria</a>
 
         <table class="categories-table">
             <thead>
@@ -33,8 +33,8 @@
                         <td>{{ $cat->nom }}</td>
                         <td>
                             <div class="category-action-links">
-                                <a href="{{ route('categories.edit', $cat->id) }}" class="btn-editar">Editar</a>
-                                <form action="{{ route('categories.destroy', $cat->id) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('categoria-noticias.edit', $cat->id) }}" class="btn-editar">Editar</a>
+                                <form action="{{ route('categoria-noticias.destroy', $cat->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-danger" onclick="return confirm('Segur que vols eliminar aquesta categoria?')">Eliminar</button>

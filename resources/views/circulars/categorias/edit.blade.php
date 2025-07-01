@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ route('categoria-noticias.update', $categoria->id) }}" method="POST" class="category-form">
+        <form action="{{ route('categoria-circulars.update', $categoria->id) }}" method="POST" class="category-form">
             @csrf
             @method('PUT')
 
@@ -31,7 +31,7 @@
 
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Guardar</button>
-                <a href="{{ route('categoria-noticias.index') }}" class="btn-primary">Tornar</a>
+                <a href="{{ route('categoria-circulars.index') }}" class="btn-primary">Tornar</a>
             </div>
         </form>
 

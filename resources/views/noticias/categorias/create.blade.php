@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ route('categories.store') }}" method="POST" class="category-form">
+        <form action="{{ route('categoria-noticias.store') }}" method="POST" class="category-form">
             @csrf
 
             <label for="nom">Nom de la Categoria:</label>
@@ -30,7 +30,7 @@
 
             <div class="form-buttons">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{ route('categories.index') }}" class="btn btn-primary">Tornar</a>
+                <a href="{{ route('categoria-noticias.index') }}" class="btn btn-primary">Tornar</a>
             </div>
 
         </form>

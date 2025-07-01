@@ -24,7 +24,9 @@
                         </option>
                     @endforeach
                 </select>
-                <noscript><button type="submit">Filtrar</button></noscript>
+                @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+                    <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
+                @endif
             </form>
 
             @forelse ($circulars as $circular)

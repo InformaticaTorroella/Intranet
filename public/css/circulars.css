@@ -199,3 +199,33 @@ html, body {
   text-align: center;
   margin-bottom: 10px;
 }
+/* Enlaces sin estilo por defecto */
+a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Hereda el color del texto del padre */
+  background-color: transparent; /* Asegura que no haya un fondo */
+  padding: 0; /* Elimina cualquier padding predeterminado */
+  margin: 0; /* Elimina cualquier margin predeterminado */
+  border: none; /* Elimina cualquier borde predeterminado */
+  cursor: pointer; /* Mantiene el cursor de puntero */
+}
+/* Botones de enlace (a) */
+a.btn-primary, a.btn-secondary, a.btn-go-back {
+  display: inline-block;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #800000;
+  color: white;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  max-width: 220px;
+  text-align: center;
+  width: auto;
+}
+
+a.btn-primary:hover, a.btn-secondary:hover, a.btn-go-back:hover {
+  background-color: #a00000;
+  color: white;
+  text-decoration: none;
+}

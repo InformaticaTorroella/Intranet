@@ -43,7 +43,7 @@ class DocumentCategoriaController extends Controller
             'nom' => 'required|string|max:255',
         ]);
 
-        $categoria = CatDocuments::findOrFail($id);
+        $categoria = CatDocument::findOrFail($id);
         $categoria->nom = $request->input('nom');
         $categoria->save();
 

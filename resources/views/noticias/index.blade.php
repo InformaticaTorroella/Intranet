@@ -25,7 +25,7 @@
                     @endforeach
                 </select>
                 @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
-                    <a href="{{ route('categories.create') }}" class="btn-secondary">Afegir Categoria</a>
+                    <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
                 @endif
             </form>
 
