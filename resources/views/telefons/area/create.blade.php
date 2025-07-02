@@ -25,13 +25,16 @@
         <form action="{{ route('area-telefons.store') }}" method="POST" class="category-form">
             @csrf
 
-            <label for="nom">Nom de la Area:</label>
-            <input type="text" id="nom" name="nom" value="{{ old('nom') }}" required>
-            <label for="fk-edifici">Edifici:</label>
-            <select id="fk-edifici" name="fk-edifici" required>
-                <option value=""disabled>Selecciona un edifici</option>
+            <label for="Area">Nom de la Area:</label>
+            <input type="text" id="Area" name="Area" value="{{ old('Area') }}" required>
+
+            <label for="id_equimanent">Edifici:</label>
+            <select id="id_equimanent" name="id_equimanent" required>
+                <option value="" disabled selected>Selecciona un edifici</option>
                 @foreach ($edificis as $edifici)
-                    <option value="{{ $edifici->id_equipament }}" {{ old('fk-edifici') == $edifici->id ? 'selected' : '' }}>{{ $edifici->equipament }}</option>
+                    <option value="{{ $edifici->id_equimanent }}" {{ old('id_equimanent') == $edifici->id_equimanent ? 'selected' : '' }}>
+                        {{ $edifici->Equipament }}
+                    </option>
                 @endforeach
             </select>
 
@@ -39,7 +42,6 @@
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <a href="{{ route('area-telefons.index') }}" class="btn btn-primary">Tornar</a>
             </div>
-
         </form>
     </div>
 </main>

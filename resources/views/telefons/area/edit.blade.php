@@ -22,26 +22,29 @@
             </div>
         @endif
 
-        <form action="{{ route('area-telefons.update', $categoria->id) }}" method="POST" class="category-form">
+        <form action="{{ route('area-telefons.update', $area->IdArea) }}" method="POST" class="category-form">
             @csrf
             @method('PUT')
 
             <label for="nom">Nom de la Categoria:</label>
-            <input type="text" id="nom" name="nom" value="{{ old('nom', $categoria->nom) }}" required>
+            <input type="text" id="nom" name="nom" value="{{ old('nom', $area->Area) }}" required>
+
             <label for="fk-edifici">Edifici:</label>
             <select id="fk-edifici" name="fk-edifici" required>
                 <option value="" disabled>Selecciona un edifici</option>
                 @foreach ($edificis as $edifici)
-                    <option value="{{ $edifici->id }}" {{ old('fk-edifici', $categoria->fk_edifici) == $edifici->id ? 'selected' : '' }}>
-                        {{ $edifici->nom }}
+                    <option value="{{ $edifici->id_equimanent }}" {{ old('fk-edifici', $area->id_equimanent) == $edifici->id_equimanent ? 'selected' : '' }}>
+                        {{ $edifici->Equipament }}
                     </option>
                 @endforeach
             </select>
+
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Guardar</button>
                 <a href="{{ route('area-telefons.index') }}" class="btn-primary">Tornar</a>
             </div>
         </form>
+
 
     </div>
 </main>

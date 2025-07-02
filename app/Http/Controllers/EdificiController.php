@@ -9,7 +9,7 @@ class EdificiController extends Controller
 {
     public function index()
     {
-        $edificis = Equipament::orderBy('nom')->get();
+        $edificis = Equipament::orderBy('Equipament')->get();
         return view('telefons.edifici.index', compact('edificis'));
     }
 
@@ -21,11 +21,11 @@ class EdificiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'Equipament' => 'required|string|max:255',
         ]);
 
         $edifici = new Equipament();
-        $edifici->nom = $request->input('nom');
+        $edifici->Equipament = $request->input('Equipament');
         $edifici->save();
 
         return redirect()->route('telefons.edifici.index')->with('success', 'Edifici creada correctament');
@@ -40,11 +40,11 @@ class EdificiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'Equipament' => 'required|string|max:255',
         ]);
 
         $edifici = Equipament::findOrFail($id);
-        $edifici->nom = $request->input('nom');
+        $edifici->Equipament = $request->input('Equipament');
         $edifici->save();
 
         return redirect()->route('telefons.edifici.index')->with('success', 'Edifici actualitzada correctament');

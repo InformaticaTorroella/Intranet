@@ -12,7 +12,13 @@ class Area extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $fillable = ['Area'];
+    protected $fillable = ['Area', 'id_equimanent'];
+
+    public function equipament()
+    {
+        return $this->belongsTo(Equipament::class, 'id_equimanent', 'id_equimanent');
+    }
+
 
     // Funci oper treure els accents
     public static function removeAccents($str)

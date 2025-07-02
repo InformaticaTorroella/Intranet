@@ -16,7 +16,10 @@
             <div class="category-success-message">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('area-telefons.create') }}" class="new-category-button">+ Nova Categoria</a>
+        <div class="button-container">
+            <a href="{{ route('area-telefons.create') }}" class="new-category-button">+ Nova Categoria</a>
+            <a href="{{ route('telefons.index') }}" class="new-category-button">Tornar</a>
+        </div>
 
         <table class="categories-table">
             <thead>
@@ -27,14 +30,14 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($categories as $cat)
+                @forelse($areas as $area)
                     <tr>
-                        <td>{{ $cat->id }}</td>
-                        <td>{{ $cat->nom }}</td>
+                        <td>{{ $area->IdArea }}</td>
+                        <td>{{ $area->Area }}</td>
                         <td>
                             <div class="category-action-links">
-                                <a href="{{ route('area-telefons.edit', $cat->id) }}" class="btn-editar">Editar</a>
-                                <form action="{{ route('area-telefons.destroy', $cat->id) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('area-telefons.edit', $area->IdArea) }}" class="btn-editar">Editar</a>
+                                <form action="{{ route('area-telefons.destroy', $area->IdArea) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-danger" onclick="return confirm('Segur que vols eliminar aquesta categoria?')">Eliminar</button>
