@@ -33,6 +33,7 @@
         </option>
       @endforeach
     </select>
+
     @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
       <div>
         <a href="{{ route('area-telefons.create') }}" class="btn btn-secondary">+ Afegir Àrea</a>
@@ -55,7 +56,7 @@
   @if ($telefons->isEmpty())
     <p>No hi ha telèfons per a aquesta combinació d'equipament i àrea.</p>
   @else
-    <table class="table">
+    <table class="table" id="telefonsTable">
       @php
           $currentOrderBy = request('order_by');
           $currentOrder = request('order', 'asc');
@@ -118,7 +119,7 @@
       </thead>
 
       <tbody>
-        @foreach ($telefons as $telefon)
+        @forelse ($telefons as $telefon)
           <tr>
             <td>{{ $telefon->nom }}</td>
             <td>{{ $telefon->num_directe ?? 'No disponible' }}</td>
@@ -127,7 +128,6 @@
             <td>{{ $telefon->extensio_mobil ?? 'No disponible' }}</td>
             <td>{{ $telefon->area->Area ?? 'No disponible' }}</td>
             <td>{{ $telefon->equipament->Equipament ?? 'No disponible' }}</td>
-
             @if(session()->has('username') && in_array('Intranet_Telefons', session('user_groups', [])))
               <td class="actions">
                 <div class="action-wrapper">
@@ -141,8 +141,13 @@
               </td>
             @endif
           </tr>
-        @endforeach
+        @empty
+          <tr>
+            <td colspan="8">No s'han trobat telèfons per aquesta cerca.</td>
+          </tr>
+        @endforelse
       </tbody>
+
     </table>
 
     <div class="pagination">
@@ -154,8 +159,11 @@
 <x-footer />
 
 <script>
-  const nomInput = document.getElementById('nom');
-  const filterForm = document.getElementById('filterForm');
+  function submitForm() {
+    document.getElementById('filter-form').submit();
+  }
+
+  const filterForm = document.getElementById('filter-form');
   const telefonsTable = document.getElementById('telefonsTable');
 
   let timeout = null;
@@ -163,10 +171,8 @@
   nomInput.addEventListener('input', function() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      // Construimos la URL con los filtros actuales, pero con nom actualizado
       const formData = new FormData(filterForm);
       formData.set('nom', nomInput.value);
-
       const params = new URLSearchParams(formData).toString();
 
       fetch(`{{ route('telefons.index') }}?${params}`, {
@@ -174,9 +180,8 @@
       })
       .then(response => response.text())
       .then(html => {
-        telefonsTable.innerHTML = html;
       });
-    }, 300); // delay 300ms para no saturar peticiones
+    }, 300);
   });
 </script>
 
