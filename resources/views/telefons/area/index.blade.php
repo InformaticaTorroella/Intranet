@@ -17,8 +17,12 @@
         @endif
 
         <div class="button-container">
-            <a href="{{ route('area-telefons.create') }}" class="new-category-button">+ Nova Categoria</a>
-            <a href="{{ route('telefons.index') }}" class="new-category-button">Tornar</a>
+            <a href="{{ route('area-telefons.create') }}" class="new-category-button">
+                + Nova Categoria
+            </a>
+            <a href="{{ route('telefons.index') }}" class="new-category-button">
+                Tornar
+            </a>
         </div>
 
         <table class="categories-table">
@@ -26,6 +30,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
+                    <th>Edifici</th>
                     <th>Accions</th>
                 </tr>
             </thead>
@@ -34,6 +39,7 @@
                     <tr>
                         <td>{{ $area->IdArea }}</td>
                         <td>{{ $area->Area }}</td>
+                        <td>{{ $area->Equipament->Equipament ?? 'No té Edifici' }}</td>
                         <td>
                             <div class="category-action-links">
                                 <a href="{{ route('area-telefons.edit', $area->IdArea) }}" class="btn-editar">Editar</a>
@@ -46,7 +52,9 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="3">No hi ha categories.</td></tr>
+                    <tr>
+                        <td colspan="4">No hi ha categories.</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

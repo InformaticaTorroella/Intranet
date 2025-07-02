@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Area;
+
 use App\Models\Equipament;
 
 class AreaController extends Controller
 {
     public function index()
     {
-        $areas = Area::orderBy('Area')->get();
+        $areas = Area::with('Equipament')->orderBy('Area')->get();
         return view('telefons.area.index', compact('areas'));
     }
 
@@ -37,25 +38,23 @@ class AreaController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(string $id)
     {
-        $area = Area::findOrFail($id);
-        $edificis = Equipament::orderBy('equipament')->get();
-        return view('telefons.area.edit', compact('area', 'edificis'));
+        $equipament = Equipament::findOrFail($id);
+        return view('telefons.equipaments.edit', compact('equipament'));
     }
 
-
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'Area' => 'required|string|max:255',
+            'Equipament' => 'required|string|max:255',
         ]);
 
-        $area = Area::findOrFail($id);
-        $area->Area = $request->input('Area');
-        $area->save();
+        $equipament = Equipament::findOrFail($id);
+        $equipament->Equipament = $request->input('Equipament');
+        $equipament->save();
 
-        return redirect()->route('area-telefons.index')->with('success', 'Area actualitzada correctament');
+        return Redirect::route('equipaments.index')->with('success', 'Edifici actualitzat correctament');
     }
 
     public function destroy($id)

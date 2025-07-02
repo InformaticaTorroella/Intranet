@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Equipament;
-// en la db equipaments son els edificis
+
 class EdificiController extends Controller
 {
     public function index()
     {
-        $edificis = Equipament::orderBy('Equipament')->get();
-        return view('telefons.edifici.index', compact('edificis'));
+        $equipaments = Equipament::orderBy('Equipament')->get();
+        return view('telefons.edifici.index', compact('equipaments'));
     }
 
     public function create()
     {
-        return view('edifici=telefons.create');
+        return view('telefons.edifici.create');
     }
 
     public function store(Request $request)
@@ -24,37 +25,37 @@ class EdificiController extends Controller
             'Equipament' => 'required|string|max:255',
         ]);
 
-        $edifici = new Equipament();
-        $edifici->Equipament = $request->input('Equipament');
-        $edifici->save();
+        $equipament = new Equipament();
+        $equipament->Equipament = $request->input('Equipament');
+        $equipament->save();
 
-        return redirect()->route('telefons.edifici.index')->with('success', 'Edifici creada correctament');
+        return Redirect::route('edifici-telefons.index')->with('success', 'Edifici creat correctament');
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
-        $edifici = Equipament::findOrFail($id);
-        return view('telefons.edifici.edit', compact('edificis'));
+        $equipament = Equipament::findOrFail($id);
+        return view('telefons.edifici.edit', compact('equipament'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'Equipament' => 'required|string|max:255',
         ]);
 
-        $edifici = Equipament::findOrFail($id);
-        $edifici->Equipament = $request->input('Equipament');
-        $edifici->save();
+        $equipament = Equipament::findOrFail($id);
+        $equipament->Equipament = $request->input('Equipament');
+        $equipament->save();
 
-        return redirect()->route('telefons.edifici.index')->with('success', 'Edifici actualitzada correctament');
+        return Redirect::route('edifici-telefons.index')->with('success', 'Edifici actualitzat correctament');
     }
 
     public function destroy($id)
     {
-        $edifici = Equipament::findOrFail($id);
-        $edifici->delete();
+        $equipament = Equipament::findOrFail($id);
+        $equipament->delete();
 
-        return redirect()->route('telefons.edifici.index')->with('success', 'Edifici eliminada correctament');
+        return redirect()->route('edifici-telefons.index')->with('success', 'Edifici eliminat correctament');
     }
 }
