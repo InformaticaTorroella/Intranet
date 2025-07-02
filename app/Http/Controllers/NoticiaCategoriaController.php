@@ -28,6 +28,8 @@ class NoticiaCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        logActivity('Crea Categoria Noticia', "ID: $id", "L'usuari ha creat una categoria per les noticies Nº $id.");
+
         return redirect()->route('categories.index')->with('success', 'Categoria creada correctament');
     }
 
@@ -47,6 +49,8 @@ class NoticiaCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        logActivity('Edita Categoria Noticies', "ID: $id", "L'usuari ha editat una categoria per les noticies Nº $id.");
+
         return redirect()->route('categories.index')->with('success', 'Categoria actualitzada correctament');
     }
 
@@ -55,6 +59,8 @@ class NoticiaCategoriaController extends Controller
         $categoria = CatNoticia::findOrFail($id);
         $categoria->delete();
 
+        logActivity('Elimnar Categoria Noticies', "ID: $id", "L'usuari ha eliminat una categoria per les noticies Nº $id.");
+        
         return redirect()->route('categories.index')->with('success', 'Categoria eliminada correctament');
     }
 }

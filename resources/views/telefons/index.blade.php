@@ -34,10 +34,10 @@
       @endforeach
     </select>
     @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
-      <a href="{{ route('area-telefons.create') }}" class="btn btn-secondary">+ Afegir Àrea</a>
-    @endif
-    @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
-      <a href="{{ route('edifici-telefons.create') }}" class="btn btn-secondary">+ Afegir Edifici</a>
+      <div>
+        <a href="{{ route('area-telefons.create') }}" class="btn btn-secondary">+ Afegir Àrea</a>
+        <a href="{{ route('edifici-telefons.create') }}" class="btn btn-secondary">+ Afegir Edifici</a>
+      </div>
     @endif
 
     <input

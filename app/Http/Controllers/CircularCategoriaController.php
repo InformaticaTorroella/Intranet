@@ -28,6 +28,8 @@ class CircularCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        logActivity('Crear Categoria Circular', "ID: $id", "L'usuari ha creat una nova categoria per a circulars Nº $id.");
+
         return redirect()->route('categoria-circular.index')->with('success', 'Categoria creada correctament');
     }
 
@@ -47,6 +49,8 @@ class CircularCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        logActivity('Edita Categoria Circualr', "ID: $id", "L'usuari ha editat una categoria de circular Nº $id.");
+
         return redirect()->route('categoria-circular.index')->with('success', 'Categoria actualitzada correctament');
     }
 
@@ -54,6 +58,8 @@ class CircularCategoriaController extends Controller
     {
         $categoria = CatCircular::findOrFail($id);
         $categoria->delete();
+
+        logActivity('Eliminar Categoria Circualr', "ID: $id", "L'usuari ha eliminat una categoria de circular Nº $id.");
 
         return redirect()->route('categoria-circular.index')->with('success', 'Categoria eliminada correctament');
     }
