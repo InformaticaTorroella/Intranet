@@ -612,3 +612,44 @@ Route::delete('/tipologies-gial/{id}', function ($id) {
 })->name('tipologies-gial.destroy');
 
 
+// 🎞️ Quadres Classificacions Tipologies
+
+Route::get('/quadres-classificacions-tipologies', [QuadreClassificacioTipologiaController::class, 'index'])
+    ->name('quadres-classificacions-tipologies.index');
+
+Route::get('/quadres-classificacions-tipologies/create', function () {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioTipologiaController::class)->create();
+})->name('quadres-classificacions-tipologies.create');
+
+Route::post('/quadres-classificacions-tipologies', function () {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioTipologiaController::class)->store(request());
+})->name('quadres-classificacions-tipologies.store');
+
+Route::get('/quadres-classificacions-tipologies/{id}/edit', function ($id) {
+    if (!session()->has('username')) {
+        session(['url.intended' => url()->current()]);
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioTipologiaController::class)->edit($id);
+})->name('quadres-classificacions-tipologies.edit');
+
+Route::put('/quadres-classificacions-tipologies/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioTipologiaController::class)->update(request(), $id);
+})->name('quadres-classificacions-tipologies.update');
+
+Route::delete('/quadres-classificacions-tipologies/{id}', function ($id) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioTipologiaController::class)->destroy($id);
+})->name('quadres-classificacions-tipologies.destroy');

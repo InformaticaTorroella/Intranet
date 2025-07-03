@@ -12,7 +12,7 @@
 <div class="container">
     <h1 class="text-2xl font-bold mb-4">Editar Quadre</h1>
 
-    <form action="{{ route('quadres.update', $quadre) }}" method="POST">
+    <form action="{{ route('quadres.update', $quadre) }}" method="POST" style="display: inline-block;">
         @csrf
         @method('PUT')
 
@@ -52,9 +52,22 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualitzar</button>
-    </form>
-</div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <td class="table-cell">
+            <div class="btn-group">
+                <a href="{{ route('quadres.edit', $quadre) }}" class="btn btn-warning">Editar</a>
+                <a href="{{ route('quadres.index') }}" class="btn btn-warning">Tornar</a>
+                <form action="{{ route('quadres.destroy', $quadre->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Segur que vols eliminar aquest quadre?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </td>
 
+    </form>
+    </div>
+</div>
+<x-footer />
 </body>
 </html>

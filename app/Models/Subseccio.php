@@ -10,6 +10,8 @@ class Subseccio extends Model
 
     protected $primaryKey = 'id_subseccio';
     public $incrementing = false;
+    public $timestamps = false;
+
     protected $keyType = 'string';
 
     protected $fillable = ['id_subseccio', 'subseccio', 'fk_id_seccio'];

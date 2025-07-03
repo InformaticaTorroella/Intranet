@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\QuadreClassificacio;
 use App\Models\Seccio;
 use App\Models\Subseccio;
@@ -24,10 +25,25 @@ class QuadreClassificacioController extends Controller
             'tipologies' => TipologiaGial::all(),
         ]);
     }
-    public function store(Request $r) {
-        QuadreClassificacio::create($r->all());
+    public function store(Request $request)
+    {
+        // Crear el quadre primero
+        $quadre = QuadreClassificacio::create($request->only([
+            'fk_id_seccio', 
+            'fk_id_subseccio', 
+            'fk_id_serie'
+        ]));
+
+        // Asociar tipologies si hay
+        if ($request->has('tipologies')) {
+            $quadre->tipologies()->sync($request->input('tipologies'));
+        }
+
         return redirect()->route('quadres.index');
     }
+
+
+
     public function edit($id) {
         return view('quadres.edit', [
             'quadre' => QuadreClassificacio::findOrFail($id),

@@ -9,6 +9,8 @@ class Serie extends Model
     
     protected $primaryKey = 'id_serie';
     public $incrementing = false;
+    public $timestamps = false;
+
     protected $keyType = 'string';
 
     protected $fillable = ['id_serie', 'serie', 'fk_id_subseccio'];

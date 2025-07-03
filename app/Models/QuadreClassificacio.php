@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class QuadreClassificacio extends Model
 {
     protected $table = 'quadres_classificacions';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'fk_id_seccio',

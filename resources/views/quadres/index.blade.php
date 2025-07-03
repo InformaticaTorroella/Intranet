@@ -14,38 +14,44 @@
       $userGroups = session('user_groups', []);
   @endphp
 <div class="container">
-    <h1 class="text-2xl font-bold mb-4">Quadres</h1>
-    <a href="{{ route('quadres.create') }}" class="btn btn-primary mb-4">Crear Nou Quadre</a>
+  <h1 class="page-title">Quadres</h1>
+  <a href="{{ route('quadres.create') }}" class="btn btn-primary mb-4">Crear Nou Quadre</a>
+  <a href="{{ route('seccions.create') }}" class="btn btn-primary mb-4">Crear Nova Seccio</a>
+  <a href="{{ route('subseccions.create') }}" class="btn btn-primary mb-4">Crear Nova Subseccio</a>
+  <a href="{{ route('series.create') }}" class="btn btn-primary mb-4">Crear Nova Serie</a>
+  <a href="{{ route('tipologies-gial.create') }}" class="btn btn-primary mb-4">Crear Nova Tipologia GIAL</a>
 
-    <table class="table-auto w-full border">
-        <thead>
-            <tr>
-                <th class="border px-4 py-2">Secció</th>
-                <th class="border px-4 py-2">Subsecció</th>
-                <th class="border px-4 py-2">Sèrie</th>
-                <th class="border px-4 py-2">Tipologies GIAL</th>
-                <th class="border px-4 py-2">Accions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($quadres as $quadre)
-            <tr>
-                <td class="border px-4 py-2">{{ $quadre->seccio->seccio }}</td>
-                <td class="border px-4 py-2">{{ $quadre->subseccio->subseccio }}</td>
-                <td class="border px-4 py-2">{{ $quadre->serie->serie }}</td>
-                <td class="border px-4 py-2">
-                    @foreach($quadre->tipologies as $tipologia)
-                        <span class="inline-block bg-gray-200 px-2 py-1 mr-1">{{ $tipologia->codi }}</span>
-                    @endforeach
-                </td>
-                <td class="border px-4 py-2">
-                    <a href="{{ route('quadres.edit', $quadre) }}" class="btn btn-sm btn-warning">Editar</a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table-header">Secció</th>
+        <th class="table-header">Subsecció</th>
+        <th class="table-header">Sèrie</th>
+        <th class="table-header">Tipologies GIAL</th>
+        <th class="table-header">Accions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($quadres as $quadre)
+      <tr class="table-row">
+        <td class="table-cell">{{ $quadre->seccio->seccio }}</td>
+        <td class="table-cell">{{ $quadre->subseccio->subseccio }}</td>
+        <td class="table-cell">{{ $quadre->serie->serie }}</td>
+        <td class="table-cell">
+          @foreach($quadre->tipologies as $tipologia)
+          <span class="tag">{{ $tipologia->codi }}</span>
+          @endforeach
+        </td>
+        <td class="table-cell">
+          <a href="{{ route('quadres.edit', $quadre) }}" class="btn btn-sm btn-warning">Editar</a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>
+</main>
+<x-footer />
 
 </body>
 </html>
