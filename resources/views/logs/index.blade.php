@@ -12,10 +12,12 @@
     <x-header />
     @php
         $userGroups = session('user_groups', []);
-        $allowedGroups = ['Intranet_Informatica', 'Admin'];
+        $allowedGroups = ['Intranet_Avisos'];
     @endphp
-    @if(session()->has('username') && in_array($allowedGroups, $userGroups))
+    @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
         <main class="logs-container">
+            
+
             <h1 class="logs-title">Logs d'Activitat</h1>
 
             <table class="logs-table">

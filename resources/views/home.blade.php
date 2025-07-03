@@ -31,6 +31,7 @@
           <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
           <a href="{{ route('telefons.index') }}" class="enlace-panel">Telefons</a>
           <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
+          <a href="{{ route('quadres.index') }}" class="enlace-panel">Quadre de Classificacio</a>
         </div>
       </section>
 

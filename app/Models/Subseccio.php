@@ -7,15 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Subseccio extends Model
 {
     protected $table = 'subseccions';
+
     protected $primaryKey = 'id_subseccio';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'id_subseccio',
-        'subseccio',
-    ];
+    protected $fillable = ['id_subseccio', 'subseccio', 'fk_id_seccio'];
 
-    public function quadres_classificacions()
+    public function seccio()
     {
-        return $this->hasMany(QuadresClassificacio::class, 'fk_id_subseccio', 'id_subseccio');
+        return $this->belongsTo(Seccio::class, 'fk_id_seccio', 'id_seccio');
+    }
+
+    public function series()
+    {
+        return $this->hasMany(Serie::class, 'fk_id_subseccio', 'id_subseccio');
+    }
+
+    public function quadres()
+    {
+        return $this->hasMany(QuadreClassificacio::class, 'fk_id_subseccio', 'id_subseccio');
     }
 }

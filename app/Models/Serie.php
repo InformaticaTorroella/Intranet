@@ -6,16 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Serie extends Model
 {
-    protected $table = 'series';
+    
     protected $primaryKey = 'id_serie';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'id_serie',
-        'serie',
-    ];
+    protected $fillable = ['id_serie', 'serie', 'fk_id_subseccio'];
 
-    public function quadres_classificacions()
+    public function subseccio()
     {
-        return $this->hasMany(QuadresClassificacio::class, 'fk_id_serie', 'id_serie');
+        return $this->belongsTo(Subseccio::class, 'fk_id_subseccio', 'id_subseccio');
+    }
+
+    public function quadres()
+    {
+        return $this->hasMany(QuadreClassificacio::class, 'fk_id_serie', 'id_serie');
     }
 }

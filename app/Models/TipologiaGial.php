@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TipologiesGial extends Model
+class TipologiaGial extends Model
 {
     protected $table = 'tipologies_gial';
-    protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'codi',
-    ];
+    protected $fillable = ['codi'];
 
-    public function quadres_classificacions()
+    public function quadres()
     {
-        return $this->belongsToMany(QuadresClassificacio::class, 'quadres_gial', 'fk_tipus', 'fk_quadre');
+        return $this->belongsToMany(
+            QuadreClassificacio::class,
+            'quadres_classificacions_tipologies',
+            'fk_id_tipologia_gial',
+            'fk_id_quadre_classificacio'
+        );
     }
 }

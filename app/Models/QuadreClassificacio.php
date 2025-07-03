@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QuadresClassificacio extends Model
+class QuadreClassificacio extends Model
 {
-    protected $table = 'quadres_classificacions'; 
-    protected $primaryKey = 'id'; 
+    protected $table = 'quadres_classificacions';
 
     protected $fillable = [
         'fk_id_seccio',
         'fk_id_subseccio',
-        'fk_id_serie',
-        'fk_id_tipologia_gial',
+        'fk_id_serie'
     ];
 
     public function seccio()
@@ -31,8 +29,13 @@ class QuadresClassificacio extends Model
         return $this->belongsTo(Serie::class, 'fk_id_serie', 'id_serie');
     }
 
-    public function tipologies_gial()
+    public function tipologies()
     {
-        return $this->belongsToMany(TipologiesGial::class, 'quadres_gial', 'fk_quadre', 'fk_tipus');
+        return $this->belongsToMany(
+            TipologiaGial::class,
+            'quadres_classificacions_tipologies',
+            'fk_id_quadre_classificacio',
+            'fk_id_tipologia_gial'
+        );
     }
 }
