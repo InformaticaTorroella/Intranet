@@ -224,3 +224,47 @@ a:focus {
   text-decoration: underline;
   outline: none;
 }
+.search-input {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 2px solid #b03030;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #800000;
+  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.15);
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dual-listbox {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    select.form-multiselect {
+      width: 200px;
+      height: 180px;
+    }
+    .dual-listbox-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dual-listbox-buttons button {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }

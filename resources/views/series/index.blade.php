@@ -2,7 +2,8 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8" />
-  <title>Series - Llista</title>
+  <title>Series</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
 </head>
 <body>
@@ -12,6 +13,16 @@
   <h1 class="page-title">Llista de Series</h1>
 
   <a href="{{ route('series.create') }}" class="btn btn-primary">Nova Sèrie</a>
+  <form id="filter-form" method="GET" action="{{ route('series.index') }}">
+    <input 
+      type="text" 
+      name="serie" 
+      id="serieInput" 
+      placeholder="Filtrar per Sèrie" 
+      value="{{ request('serie') }}" 
+      class="search-input" 
+      onkeydown="if(event.key === 'Enter') this.form.submit()"
+    >
 
   <table class="table">
     <thead>
@@ -42,7 +53,9 @@
       @endforeach
     </tbody>
   </table>
-</div>
+              <a href="{{ route('quadres.index') }}" class="btn btn-primary" style="margin-top: 10px;">Tornar</a>
 
+</div>
+<x-footer />
 </body>
 </html>

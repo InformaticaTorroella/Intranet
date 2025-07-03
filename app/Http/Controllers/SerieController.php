@@ -14,8 +14,19 @@ use App\Models\QuadreClassificacioTipologia;
 // 📦 Series
 class SerieController extends Controller
 {
-    public function index() { 
-        return view('series.index', ['series' => Serie::with('subseccio')->get()]); 
+    public function index(Request $request)
+    {
+        $search = $request->input('serie');
+
+        $query = Serie::with('subseccio');
+
+        if ($search) {
+            $query->where('serie', 'like', '%' . $search . '%');
+        }
+
+        $series = $query->get();
+
+        return view('series.index', compact('series'));
     }
     public function create() { 
         return view('series.create', ['subseccions' => Subseccio::all()]); 

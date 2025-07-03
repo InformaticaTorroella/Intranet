@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Nova Sèrie</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
 </head>
 <body>
@@ -13,6 +14,10 @@
 
   <form action="{{ route('series.store') }}" method="POST">
     @csrf
+    <div class="mb-4">
+      <label for="id_serie">Id Sèrie</label>
+      <input type="text" name="id_serie" id="id_serie" class="form-select" required>
+    </div>
     <div class="mb-4">
       <label for="serie">Nom de la Sèrie</label>
       <input type="text" name="serie" id="serie" class="form-select" required>
@@ -32,6 +37,6 @@
     <a href="{{ route('series.index') }}" class="btn btn-warning" style="margin-left: 0.5rem;">Cancel·lar</a>
   </form>
 </div>
-
+<x-footer />
 </body>
 </html>

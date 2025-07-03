@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -410,13 +411,15 @@ Route::delete('/edifici-telefons/{id}', function ($id) {
 // 🐉 Quadres 
 Route::get('/quadres', [QuadreClassificacioController::class, 'index'])->name('quadres.index');
 
-Route::get('/quadres/create', function () {
+
+Route::get('/quadres/create', function (Request $request) {
     if (!session()->has('username')) {
         session(['url.intended' => url()->current()]);
         return redirect()->route('login');
     }
-    return app(QuadreClassificacioController::class)->create();
+    return app(QuadreClassificacioController::class)->create($request);
 })->name('quadres.create');
+
 
 Route::post('/quadres', function () {
     if (!session()->has('username')) {
@@ -653,3 +656,18 @@ Route::delete('/quadres-classificacions-tipologies/{id}', function ($id) {
     }
     return app(QuadreClassificacioTipologiaController::class)->destroy($id);
 })->name('quadres-classificacions-tipologies.destroy');
+
+
+Route::get('/api/subseccions/{seccioId}', function($seccioId) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return \App\Models\Subseccio::where('fk_id_seccio', $seccioId)->get();
+});
+
+Route::get('/api/series/{subseccioId}', function($subseccioId) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return \App\Models\Serie::where('fk_id_subseccio', $subseccioId)->get();
+});
