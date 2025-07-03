@@ -29,7 +29,7 @@
         </div>
     @endif
 -->
-    <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form" action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <label class="form-label">Nom Visual:</label>
@@ -60,3 +60,4 @@
     <x-footer />
 </body>
 </html>
+

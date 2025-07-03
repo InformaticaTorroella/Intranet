@@ -41,8 +41,7 @@
             <table class="documents-table">
             <thead>
                 <tr>
-                <th>Nom visual</th>
-                <th>Fitxer</th>
+                <th>Nom</th>
                 <th>Data entrada</th>
                 <th>Accions</th>
                 </tr>
@@ -51,7 +50,6 @@
                 @forelse ($documents as $document)
                 <tr>
                     <td>{{ $document->nom_visual }}</td>
-                    <td>{{ $document->nom_arxiu }}</td>
                     <td>{{ \Carbon\Carbon::parse($document->data_entrada)->format('d/m/Y H:i') }}</td>
                     <td class="actions">
                     <a href="{{ route('documents.view', ['id' => $document->id, 'action' => 'view']) }}"

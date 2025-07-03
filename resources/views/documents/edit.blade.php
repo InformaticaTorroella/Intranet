@@ -20,7 +20,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('documents.update', $document->id) }}">
+    <form class="form" method="POST" action="{{ route('documents.update', $document->id) }}">
         @csrf
         @method('PUT')
 
@@ -49,14 +49,15 @@
 
 
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('documents.index') }}'">Tornar</button>
+        <button class="btn-primary" type="button" onclick="window.location.href='{{ route('documents.index') }}'">Tornar</button>
+        <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="margin-top: 1rem;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que vols eliminar aquest document?')">Eliminar</button>
+        </form>
     </form>
 
-    <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="margin-top: 1rem;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Segur que vols eliminar aquest document?')">Eliminar</button>
-    </form>
+    
 
     <x-footer />
 </body>
