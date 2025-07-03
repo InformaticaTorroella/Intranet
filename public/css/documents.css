@@ -186,11 +186,12 @@ button.btn-danger:hover {
   color: white;
   text-decoration: none;
 }
+
 .category-filter-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center; /* <-- centra el contenido horizontalmente */
+  align-items: center;
   padding: 10px 0;
   margin-bottom: 25px;
 }
@@ -217,17 +218,19 @@ button.btn-danger:hover {
   border-color: #800000;
   box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
 }
+
 /* Enlaces sin estilo por defecto */
 a {
-  text-decoration: none; /* Elimina el subrayado */
-  color: inherit; /* Hereda el color del texto del padre */
-  background-color: transparent; /* Asegura que no haya un fondo */
-  padding: 0; /* Elimina cualquier padding predeterminado */
-  margin: 0; /* Elimina cualquier margin predeterminado */
-  border: none; /* Elimina cualquier borde predeterminado */
-  cursor: pointer; /* Mantiene el cursor de puntero */
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
 }
-/* Botones de enlace (a) */
+
+/* Botones de enlace */
 a.btn-primary, a.btn-secondary, a.btn-go-back {
   display: inline-block;
   padding: 14px;
@@ -246,4 +249,62 @@ a.btn-primary:hover, a.btn-secondary:hover, a.btn-go-back:hover {
   background-color: #a00000;
   color: white;
   text-decoration: none;
+}
+
+/* NUEVO: estilos para acciones alineadas */
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Formulario inline sin márgenes extra */
+.inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+/* Botones dentro del form alineados con los demás */
+.inline-form button,
+.btn-action {
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Estilos para íconos en los botones */
+.btn-action i {
+  font-size: 18px;
+  color: #800000;
+  transition: color 0.2s ease;
+}
+
+.btn-action:hover i {
+  color: #a00000;
+}
+.search-input {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 2px solid #b03030;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #800000;
+  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
 }

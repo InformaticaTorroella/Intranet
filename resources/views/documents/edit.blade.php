@@ -34,12 +34,6 @@
         <input type="datetime-local" name="data_entrada" class="form-control"
                value="{{ old('data_entrada', $document->data_entrada ? date('Y-m-d\TH:i', strtotime($document->data_entrada)) : '') }}">
 
-        <label class="form-label">Extensió</label>
-        <input type="text" name="extensio" maxlength="10" class="form-control" value="{{ old('extensio', $document->extensio) }}">
-
-        <label class="form-label">Ordre</label>
-        <input type="number" name="ordre" class="form-control" value="{{ old('ordre', $document->ordre) }}">
-
         <label class="form-label">URL</label>
         <input type="text" name="url" class="form-control" value="{{ old('url', $document->url) }}">
 

@@ -15,11 +15,10 @@ class Document extends Model
         'nom_visual',
         'nom_arxiu',
         'data_entrada',
-        'extensio',
-        'ordre',
         'url',
         'fk_id_cat_document'
     ];
+
 
     // GET documents ordered by tramit id and tipus
     public static function getOrdre($idtramit, $tipus)

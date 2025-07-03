@@ -18,14 +18,22 @@ class DocumentController extends Controller
 
         $documents = Document::query();
 
+        // Filtro por categoría
         if ($request->filled('categoria')) {
             $documents->where('fk_id_cat_document', $request->categoria);
         }
 
-        $documents = $documents->orderBy('ordre', 'asc')->get();
+        // Filtro por nombre visual
+        if ($request->filled('nom')) {
+            $documents->where('nom_visual', 'like', '%' . $request->nom . '%');
+        }
+
+        // Ordenar por fecha de entrada
+        $documents = $documents->orderBy('data_entrada', 'desc')->get();
 
         return view('documents.index', compact('documents', 'categories'));
     }
+
 
     public function create()
     {
@@ -40,9 +48,9 @@ class DocumentController extends Controller
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'nom_visual' => 'required|string|max:255',
             'data_entrada' => 'required|date',
-            'ordre' => 'required|integer',
             'categoria_id' => 'required|exists:int_cat_documents,id',
         ]);
+
 
         $file = $request->file('file');
         $filename = time() . '_' . preg_replace('/[^A-Za-z0-9_\\-\\.]/', '', $file->getClientOriginalName());
@@ -62,12 +70,11 @@ class DocumentController extends Controller
         $data = [
             'nom_visual' => $validated['nom_visual'],
             'nom_arxiu' => $filename,
-            'extensio' => $ext,
             'data_entrada' => $dataEntrada,
-            'ordre' => $validated['ordre'],
-            'url' => $url, // <-- canviat de 'url_document' a 'url'
-            'fk_id_cat_document' => $validated['categoria_id'], // <-- clau correcta
+            'url' => $url,
+            'fk_id_cat_document' => $validated['categoria_id'],
         ];
+
 
 
         $document = Document::create($data);
@@ -94,11 +101,10 @@ class DocumentController extends Controller
             'nom_visual' => 'required|string|max:200',
             'nom_arxiu' => 'nullable|string|max:200',
             'data_entrada' => 'required|date',
-            'extensio' => 'nullable|string|max:10',
-            'ordre' => 'required|integer',
             'url' => 'nullable|string|max:230',
             'fk_id_cat_document' => 'required|exists:int_cat_documents,id',
         ]);
+
 
 
         $document = Document::findOrFail($id);

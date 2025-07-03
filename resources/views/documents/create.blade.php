@@ -41,9 +41,6 @@
         <label class="form-label">Data Entrada:</label>
         <input class="form-control" type="datetime-local" name="data_entrada" value="{{ old('data_entrada') }}" required>
 
-        <label class="form-label">Ordre:</label>
-        <input class="form-control" type="number" name="ordre" value="{{ old('ordre') }}" required>
-
         <label class="form-label">Categoria</label>
         <select name="categoria_id" class="form-select">
             <option value="">-- Selecciona Categoria --</option>
