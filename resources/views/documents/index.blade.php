@@ -5,6 +5,7 @@
     <title>Documents</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/documents.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
     <x-header />
@@ -82,10 +83,14 @@
             </table>
 
             @if(session()->has('username') && in_array('Intranet_Documents', $userGroups))
-            <a href="{{ route('documents.create') }}" class="btn-create">Crear Document</a>
+                <a href="{{ route('documents.create') }}" class="btn-create">Crear Document</a>
             @else
-            <p>No tens permisos per crear documents. Contacta amb l’administrador.</p>
+                <p>No tens permisos per crear documents. Contacta amb l’administrador.</p>
             @endif
+            <div class="pagination">
+                {{ $documents->links() }}
+            </div>
+            </div>  
         </section>
         </div>
 

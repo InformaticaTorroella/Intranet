@@ -10,7 +10,7 @@ class EdificiController extends Controller
 {
     public function index()
     {
-        $equipaments = Equipament::orderBy('Equipament')->get();
+        $equipaments = Equipament::orderBy('Equipament')->paginate(10);
         return view('telefons.edifici.index', compact('equipaments'));
     }
 

@@ -40,10 +40,13 @@
                         <a href="{{ route('noticias.edit', ['id' => $noticia->id]) }}" class="btn-editar">Editar</a>
                     @endif
                 </article>
+                
             @empty
                 <p>No hi ha notícies disponibles.</p>
             @endforelse
-
+            <div class="pagination">
+                {{ $noticias->links() }}
+            </div>
             @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
                 <a href="{{ route('noticias.create') }}" class="btn-crear">Crear Notícia</a>
             @else

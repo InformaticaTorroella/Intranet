@@ -5,6 +5,7 @@
     <title>Avisos</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/avis.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
     <x-header />
@@ -61,7 +62,11 @@
                         <a href="{{ route('login') }}">inicia sessió</a>.
                     </p>
                 @endif
+                <div class="pagination">
+                    {{ $avisos->links() }}
+                </div>
             </section>
+            
         </div>
     </main>
     <x-footer />

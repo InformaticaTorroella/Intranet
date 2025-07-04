@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <title>Llistat de Edificis</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
 <x-header />
@@ -56,6 +58,9 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="pagination-container">
+            {{ $equipaments->links() }}
+        </div>
     </div>
 </main>
 

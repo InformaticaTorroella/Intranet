@@ -5,6 +5,7 @@
     <title>Categorias de Documents</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/paginate.css') }}">
 </head>
 <body>
 <x-header />
@@ -43,6 +44,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="pagination">
+            {{ $categories->links() }}
+        </div>
     </div>
 </main>
 <x-footer />

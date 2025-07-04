@@ -9,7 +9,7 @@ class DocumentCategoriaController extends Controller
 {
     public function index()
     {
-        $categories = CatDocument::orderBy('nom')->get();
+        $categories = CatDocument::orderBy('nom')->paginate(10);
         return view('documents.categorias.index', compact('categories'));
     }
 

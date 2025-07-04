@@ -14,7 +14,9 @@ use App\Models\QuadreClassificacioTipologia;
 class SubseccioController extends Controller
 {
     public function index() { 
-        return view('subseccions.index', ['subseccions' => Subseccio::with('seccio')->get()]); 
+
+        $subseccions = Subseccio::orderBy('subseccio')->paginate(10); 
+        return view('subseccions.index', compact('subseccions')); 
     }
 
     public function create() { 

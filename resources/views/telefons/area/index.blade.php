@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <title>Llistat de Areas</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
 <x-header />
@@ -58,6 +60,9 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="pagination-container">
+            {{ $areas->links() }}
+        </div>
     </div>
 </main>
 

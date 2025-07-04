@@ -14,7 +14,8 @@ use App\Models\QuadreClassificacioTipologia;
 class SeccioController extends Controller
 {
     public function index() { 
-        return view('seccions.index', ['seccions' => Seccio::all()]); 
+        $seccions = Seccio::orderby('seccio')->paginate(10); 
+        return view('seccions.index', compact('seccions')); 
     }
 
     public function create() { 

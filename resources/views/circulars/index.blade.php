@@ -5,6 +5,7 @@
     <title>Circulars</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/circulars.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
     <x-header />
@@ -25,7 +26,7 @@
                     @endforeach
                 </select>
                 @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
-                    <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
+                    <a href="{{ route('categoria-circulars.create') }}" class="btn-secondary">Afegir Categoria</a>
                 @endif
             </form>
 
@@ -58,7 +59,11 @@
             @if(session()->has('username') && in_array('Intranet_Circulars', $userGroups))
                 <a href="{{ route('circulars.create') }}" class="btn-crear">Crear Circular</a>
             @endif
+            <div class="pagination">
+                {{ $circulars->links() }}
+            </div>
         </div>
+        
     </div>
 
     <x-footer />

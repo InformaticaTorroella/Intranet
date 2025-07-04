@@ -6,6 +6,7 @@
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <title>Intranet de Torroella de Montgrí</title>
     <link rel="stylesheet" href="{{ asset('css/logs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>

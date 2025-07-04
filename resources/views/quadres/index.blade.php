@@ -6,6 +6,7 @@
   <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/pagination.css') }}" />
 </head>
 <body>
 <x-header />
@@ -79,13 +80,18 @@
           <span class="tag">{{ $tipologia->codi }}</span>
           @endforeach
         </td>
+        @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
         <td class="table-cell">
           <a href="{{ route('quadres.edit', $quadre) }}" class="btn btn-sm btn-warning">Editar</a>
         </td>
+        @endif
       </tr>
       @endforeach
     </tbody>
   </table>
+  <div class="pagination">
+    {{ $quadres->links() }}
+  </div>
 </div>
 
 <script>

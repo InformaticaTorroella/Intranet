@@ -20,7 +20,7 @@ class CircularController extends Controller
             $query->where('fk_cat_circular', $request->categoria);
         }
 
-        $circulars = $query->orderBy('fk_cat_circular')->get();
+        $circulars = $query->orderBy('fk_cat_circular')->paginate(15);
 
         return view('circulars.index', compact('circulars', 'categories'));
     }

@@ -12,7 +12,7 @@ class AreaController extends Controller
 {
     public function index()
     {
-        $areas = Area::with('Equipament')->orderBy('Area')->get();
+        $areas = Area::with('Equipament')->orderBy('Area')->paginate(10);
         return view('telefons.area.index', compact('areas'));
     }
 

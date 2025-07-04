@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Tipologies GIAL - Llista</title>
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
 <x-header />
@@ -40,6 +41,11 @@
       @endforeach
     </tbody>
   </table>
+  <a href="{{ route('quadres.index') }}" class="btn btn-primary">Tornar</a>
+  <br>
+  <div class="pagination">
+    {{ $tipologies->links() }}
+</div>
 </div>
 
 </body>

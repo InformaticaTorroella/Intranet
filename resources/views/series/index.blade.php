@@ -5,6 +5,7 @@
   <title>Series</title>
   <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
 <x-header />
@@ -23,6 +24,7 @@
       class="search-input" 
       onkeydown="if(event.key === 'Enter') this.form.submit()"
     >
+  </form>
 
   <table class="table">
     <thead>
@@ -53,7 +55,11 @@
       @endforeach
     </tbody>
   </table>
-              <a href="{{ route('quadres.index') }}" class="btn btn-primary" style="margin-top: 10px;">Tornar</a>
+  <a href="{{ route('quadres.index') }}" class="btn btn-primary" style="margin-top: 10px;">Tornar</a>
+  <br>
+  <div class="pagination">
+    {{ $series->links() }}
+  </div>
 
 </div>
 <x-footer />

@@ -31,7 +31,7 @@ class NoticiaController extends Controller
         }
 
         // Agafar resultats ordenats per data de publicació desc
-        $noticias = $query->orderBy('data_publicacio', 'desc')->get();
+        $noticias = $query->orderBy('data_publicacio', 'desc')->paginate(10);
 
         return view('noticias.index', compact('noticias', 'categories'));
     }

@@ -9,7 +9,7 @@ class NoticiaCategoriaController extends Controller
 {
     public function index()
     {
-        $categories = CatNoticia::orderBy('nom')->get();
+        $categories = CatNoticia::orderBy('nom')->paginate(10);
         return view('noticias.categorias.index', compact('categories'));
     }
 
@@ -28,9 +28,10 @@ class NoticiaCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        $id = $categoria->id;
         logActivity('Crea Categoria Noticia', "ID: $id", "L'usuari ha creat una categoria per les noticies Nº $id.");
 
-        return redirect()->route('categories.index')->with('success', 'Categoria creada correctament');
+        return redirect()->route('categoria-noticias.index')->with('success', 'Categoria creada correctament');
     }
 
     public function edit($id)
@@ -51,7 +52,7 @@ class NoticiaCategoriaController extends Controller
 
         logActivity('Edita Categoria Noticies', "ID: $id", "L'usuari ha editat una categoria per les noticies Nº $id.");
 
-        return redirect()->route('categories.index')->with('success', 'Categoria actualitzada correctament');
+        return redirect()->route('categoria-noticias.index')->with('success', 'Categoria actualitzada correctament');
     }
 
     public function destroy($id)
@@ -61,6 +62,6 @@ class NoticiaCategoriaController extends Controller
 
         logActivity('Elimnar Categoria Noticies', "ID: $id", "L'usuari ha eliminat una categoria per les noticies Nº $id.");
         
-        return redirect()->route('categories.index')->with('success', 'Categoria eliminada correctament');
+        return redirect()->route('categoria-noticias.index')->with('success', 'Categoria eliminada correctament');
     }
 }

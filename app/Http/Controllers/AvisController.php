@@ -23,7 +23,7 @@ class AvisController extends Controller
             $query->where('solucionat', $request->filter_solucionat);
         }
 
-        $avisos = $query->orderBy('data_creacio', 'desc')->get();
+        $avisos = Avis::orderBy('data_creacio', 'desc')->paginate(10);
 
         return view('avis.index', compact('avisos'));
     }

@@ -9,7 +9,7 @@ class CircularCategoriaController extends Controller
 {
     public function index()
     {
-        $categories = CatCircular::orderBy('nom')->get();
+        $categories = CatCircular::orderBy('nom')->paginate(10);
         return view('circulars.categorias.index', compact('categories'));
     }
 

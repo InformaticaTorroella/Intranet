@@ -29,7 +29,7 @@ class DocumentController extends Controller
         }
 
         // Ordenar por fecha de entrada
-        $documents = $documents->orderBy('data_entrada', 'desc')->get();
+        $documents = $documents->orderBy('data_entrada', 'desc')->paginate(15);
 
         return view('documents.index', compact('documents', 'categories'));
     }

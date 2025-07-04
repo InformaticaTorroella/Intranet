@@ -15,13 +15,13 @@ body {
   min-height: 100vh;
 }
 
-main {
+main, body .container {
   flex: 1; /* Ocupa el espacio disponible */
 }
 
 /* Container */
 .container {
-  max-width: 900px;
+  max-width: 90%;
   margin: 2rem auto;
   padding: 1rem 20px;
   font-family: Arial, sans-serif;
@@ -249,22 +249,23 @@ a:focus {
 }
 
 .dual-listbox {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    select.form-multiselect {
-      width: 200px;
-      height: 180px;
-    }
-    .dual-listbox-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .dual-listbox-buttons button {
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+select.form-multiselect {
+  width: 200px;
+  height: 180px;
+}
+.dual-listbox-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dual-listbox-buttons button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+

@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Seccions - Llista</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
 <body>
 <x-header />
@@ -40,7 +42,12 @@
       @endforeach
     </tbody>
   </table>
+  <a href="{{ route('quadres.index') }}" class="btn btn-primary" style="margin-top: 10px;">Tornar</a>
+  <br>
+  <div class="pagination">
+    {{ $seccions->links() }}
+  </div>  
 </div>
-
+<x-footer />
 </body>
 </html>

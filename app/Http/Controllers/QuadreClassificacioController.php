@@ -27,7 +27,7 @@ class QuadreClassificacioController extends Controller
 
         $quadres = QuadreClassificacio::with(['seccio', 'subseccio', 'serie'])
             ->orderBy($orderBy, $order)
-            ->get();
+            ->paginate(25);
 
         return view('quadres.index', compact('quadres', 'orderBy', 'order'));
     }

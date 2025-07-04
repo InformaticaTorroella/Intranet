@@ -13,7 +13,8 @@ use App\Models\QuadreClassificacioTipologia;
 class TipologiaGialController extends Controller
 {
     public function index() { 
-        return view('tipologies_gial.index', ['tipologies' => TipologiaGial::all()]); 
+        $tipologies = TipologiaGial::orderBy('codi')->paginate(10);
+        return view('tipologies_gial.index', compact('tipologies')); 
     }
 
     public function create() { 
