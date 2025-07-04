@@ -95,6 +95,10 @@ class QuadreClassificacioController extends Controller
             $quadre->tipologies()->sync($request->input('tipologies'));
         }
 
+        $id = $quadre->id;
+
+        logActivity('Crear Quadre De Classificacio', "ID: $id", "L'usuari ha creat un quadre de classificacio la circular Nº $id.");
+
         return redirect()->route('quadres.index');
     }
 
@@ -128,11 +132,16 @@ class QuadreClassificacioController extends Controller
             $quadre->tipologies()->sync($r->input('tipologies'));
         }
 
+        logActivity('Editar Quadre de Classificacio', "ID: $id", "L'usuari ha editar un quadre de classificacio Nº $id.");
+
         return redirect()->route('quadres.index');
     }
 
     public function destroy($id) {
         QuadreClassificacio::destroy($id);
+
+        logActivity('Elimina Quadre de Classificacio', "ID: $id", "L'usuari ha eliminat un quadre de classificacio Nº $id.");
+
         return redirect()->route('quadres.index');
     }
 

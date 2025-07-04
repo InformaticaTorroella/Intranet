@@ -9,7 +9,7 @@ class Subseccio extends Model
     protected $table = 'subseccions';
 
     protected $primaryKey = 'id_subseccio';
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
 
     protected $keyType = 'string';

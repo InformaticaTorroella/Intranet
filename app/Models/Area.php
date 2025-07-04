@@ -10,7 +10,7 @@ class Area extends Model
     protected $table = 'int_area';
     protected $primaryKey = 'IdArea';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = ['Area', 'id_equimanent'];
 

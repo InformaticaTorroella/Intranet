@@ -8,7 +8,7 @@ class Serie extends Model
 {
     
     protected $primaryKey = 'id_serie';
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
 
     protected $keyType = 'string';

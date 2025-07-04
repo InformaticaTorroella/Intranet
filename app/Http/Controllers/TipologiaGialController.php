@@ -22,7 +22,9 @@ class TipologiaGialController extends Controller
     }
 
     public function store(Request $r) { 
-        TipologiaGial::create($r->all()); 
+        $tipologia = TipologiaGial::create($r->all());
+        $id = $tipologia->codi; 
+        logActivity('Crear Tipologia GIAL', "ID: $id", "L'usuari ha creat una tipologia GIAL Nº $id.");
         return redirect()->route('tipologies-gial.index'); 
     }
 
@@ -32,11 +34,13 @@ class TipologiaGialController extends Controller
 
     public function update(Request $r, $id) { 
         TipologiaGial::findOrFail($id)->update($r->all()); 
+        logActivity('Editar Tipologia GIAL', "ID: $id", "L'usuari ha editat la tipologia GIAL Nº $id.");
         return redirect()->route('tipologies-gial.index'); 
     }
 
     public function destroy($id) { 
         TipologiaGial::destroy($id); 
+        logActivity('Eliminar Tipologia GIAL', "ID: $id", "L'usuari ha eliminat la tipologia GIAL Nº $id.");
         return redirect()->route('tipologies-gial.index'); 
     }
 }

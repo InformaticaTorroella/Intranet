@@ -29,6 +29,10 @@ class EdificiController extends Controller
         $equipament->Equipament = $request->input('Equipament');
         $equipament->save();
 
+        $id = $equipament->id_equipament;
+
+        logActivity('Crea Edifici', "ID: $id", "L'usuari ha creat l'edifici Nº $id.");
+
         return Redirect::route('edifici-telefons.index')->with('success', 'Edifici creat correctament');
     }
 
@@ -48,6 +52,8 @@ class EdificiController extends Controller
         $equipament->Equipament = $request->input('Equipament');
         $equipament->save();
 
+        logActivity('Editar Edifici', "ID: $id", "L'usuari ha editat l'edifici Nº $id.");
+
         return Redirect::route('edifici-telefons.index')->with('success', 'Edifici actualitzat correctament');
     }
 
@@ -55,6 +61,8 @@ class EdificiController extends Controller
     {
         $equipament = Equipament::findOrFail($id);
         $equipament->delete();
+
+        logActivity('Eliminar Edifici', "ID: $id", "L'usuari ha eliminate l'edifici Nº $id.");
 
         return redirect()->route('edifici-telefons.index')->with('success', 'Edifici eliminat correctament');
     }

@@ -23,7 +23,11 @@ class SeccioController extends Controller
     }
 
     public function store(Request $r) { 
-        Seccio::create($r->all()); 
+        $seccio = Seccio::create($r->all());
+        $id = $seccio->seccio; 
+        logActivity('Crear Seccio', "Seccio: $id", "L'usuari ha creat la secció $id.");
+
+
         return redirect()->route('seccions.index'); 
     }
 
@@ -33,11 +37,15 @@ class SeccioController extends Controller
 
     public function update(Request $r, $id) { 
         Seccio::findOrFail($id)->update($r->all()); 
+        logActivity('Elimina Seccio', "ID: $id", "L'usuari ha editat una seccio Nº $id.");
+
         return redirect()->route('seccions.index'); 
     }
 
     public function destroy($id) { 
         Seccio::destroy($id); 
+        logActivity('Elimina Seccio', "ID: $id", "L'usuari ha eliminat una seccio Nº $id.");
+
         return redirect()->route('seccions.index'); 
     }
 }

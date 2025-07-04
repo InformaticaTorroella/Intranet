@@ -65,6 +65,10 @@ class CircularController extends Controller
             }
         }
 
+        $id = $circular->id;
+
+        logActivity('Elimina Circular', "ID: $id", "L'usuari ha eliminat la circular Nº $id.");
+
         return redirect()->route('circulars.index')->with('success', 'Circular creada.');
     }
 
@@ -119,6 +123,9 @@ class CircularController extends Controller
             }
         }
 
+        logActivity('Editar Circular', "ID: $id", "L'usuari ha editat el circular Nº $id.");
+
+
         return redirect()->route('circulars.index')->with('success', 'Circular actualitzada.');
     }
 
@@ -156,10 +163,14 @@ class CircularController extends Controller
         if (!file_exists($fullPath)) abort(404, 'Fitxer no trobat');
 
         if ($action === 'view') {
+            logActivity('Veure Circular', "ID: $id", "L'usuari ha vist el circular Nº $id.");
+
             return response()->file($fullPath, [
                 'Content-Type' => 'application/pdf',
             ]);
         }
+
+        logActivity('Descarregar Circular', "ID: $id", "L'usuari sha descarregat el circular Nº $id.");
 
         return response()->download($fullPath, $circular->nom_arxiu, [
             'Content-Type' => 'application/pdf',

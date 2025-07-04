@@ -15,6 +15,10 @@
   <form action="{{ route('seccions.store') }}" method="POST">
     @csrf
     <div class="mb-4">
+      <label for="id_seccio">ID de la Secció</label>
+      <input type="text" name="id_seccio" id="id_seccio" class="form-select" required>
+    </div>
+    <div class="mb-4">
       <label for="seccio">Nom de la Secció</label>
       <input type="text" name="seccio" id="seccio" class="form-select" required>
     </div>

@@ -75,7 +75,7 @@ class TelefonController extends Controller
             $data['data_edicio'] = date('Y-m-d');
         }
 
-        $telefon = Telefon::create($data);  // Asumiendo que el modelo tiene fillable configurado
+        $telefon = Telefon::create($data);  
 
         $id = $telefon->id;
 

@@ -20,7 +20,7 @@
 
         <div class="button-container">
             <a href="{{ route('area-telefons.create') }}" class="new-category-button">
-                + Nova Categoria
+                + Nova Area
             </a>
             <a href="{{ route('telefons.index') }}" class="new-category-button">
                 Tornar
@@ -48,14 +48,14 @@
                                 <form action="{{ route('area-telefons.destroy', $area->IdArea) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-danger" onclick="return confirm('Segur que vols eliminar aquesta categoria?')">Eliminar</button>
+                                    <button type="submit" class="btn-danger" onclick="return confirm('Segur que vols eliminar aquesta area?')">Eliminar</button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">No hi ha categories.</td>
+                        <td colspan="4">No hi ha Areas.</td>
                     </tr>
                 @endforelse
             </tbody>

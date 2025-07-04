@@ -9,7 +9,7 @@ class Seccio extends Model
     protected $table = 'seccions';
     
     protected $primaryKey = 'id_seccio';
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
 
     protected $keyType = 'string';

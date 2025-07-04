@@ -28,6 +28,10 @@ class DocumentCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        $id = $categoria->id;
+
+        logActivity('Crear Categoria Document', "ID: $id", "L'usuari ha creat una categoria per els documetns Nº $id.");
+
         return redirect()->route('categoria-documents.index')->with('success', 'Categoria creada correctament');
     }
 
@@ -47,6 +51,8 @@ class DocumentCategoriaController extends Controller
         $categoria->nom = $request->input('nom');
         $categoria->save();
 
+        logActivity('Editar Categoria Document', "ID: $id", "L'usuari ha editat una categoria per els documetns Nº $id.");
+
         return redirect()->route('categoria-documents.index')->with('success', 'Categoria actualitzada correctament');
     }
 
@@ -54,6 +60,8 @@ class DocumentCategoriaController extends Controller
     {
         $categoria = CatDocument::findOrFail($id);
         $categoria->delete();
+
+        logActivity('Elimina Categoria Document', "ID: $id", "L'usuari ha eliminat la categoria de documetns Nº $id.");
 
         return redirect()->route('categoria-documents.index')->with('success', 'Categoria eliminada correctament');
     }

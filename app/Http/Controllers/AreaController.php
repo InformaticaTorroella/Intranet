@@ -34,6 +34,10 @@ class AreaController extends Controller
         $area->id_equimanent = $request->input('id_equimanent');
         $area->save();
 
+        $id = $area->IdArea;
+
+        logActivity('Crea Area', "ID: $id", "L'usuari ha creat l'area Nº $id.");
+
         return Redirect::route('area-telefons.index')->with('success', 'Area creada correctament');
     }
 
@@ -58,6 +62,8 @@ class AreaController extends Controller
         $area->id_equimanent = $request->input('id_equimanent');
         $area->save(); 
 
+        logActivity('Edita Area', "ID: $id", "L'usuari ha creat l'area Nº $id.");
+
         return Redirect::route('area-telefons.index')->with('success', 'Àrea actualitzada correctament');
     }
 
@@ -67,6 +73,8 @@ class AreaController extends Controller
     {
         $area = Area::findOrFail($id);
         $area->delete();
+
+        logActivity('Eliminar Area', "ID: $id", "L'usuari ha creat l'area Nº $id.");
 
         return redirect()->route('area-telefons.index')->with('success', 'Area eliminada correctament');
     }

@@ -24,7 +24,9 @@ class SubseccioController extends Controller
     }
 
     public function store(Request $r) { 
-        Subseccio::create($r->all()); 
+        $subseccio = Subseccio::create($r->all());
+        $id = $subseccio->subseccio; 
+        logActivity('Crear Subsecció', "ID: $id", "L'usuari ha creat la subsecció Nº $id."); 
         return redirect()->route('subseccions.index'); 
     }
 
@@ -34,11 +36,13 @@ class SubseccioController extends Controller
 
     public function update(Request $r, $id) { 
         Subseccio::findOrFail($id)->update($r->all()); 
+        logActivity('Editar Subsecció', "ID: $id", "L'usuari ha editat la subsecció Nº $id.");
         return redirect()->route('subseccions.index'); 
     }
 
     public function destroy($id) { 
         Subseccio::destroy($id); 
+        logActivity('Eliminar Subsecció', "ID: $id", "L'usuari ha eliminat la subsecció Nº $id.");
         return redirect()->route('subseccions.index'); 
     }
 
