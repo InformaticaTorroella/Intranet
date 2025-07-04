@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Crear Area</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
 </head>
 <body>
@@ -29,7 +30,7 @@
             <input type="text" id="Area" name="Area" value="{{ old('Area') }}" required>
 
             <label for="id_equimanent">Edifici:</label>
-            <select id="id_equimanent" name="id_equimanent" required>
+            <select id="id_equimanent" name="id_equimanent" class="form-select" required>
                 <option value="" disabled selected>Selecciona un edifici</option>
                 @foreach ($edificis as $edifici)
                     <option value="{{ $edifici->id_equimanent }}" {{ old('id_equimanent') == $edifici->id_equimanent ? 'selected' : '' }}>

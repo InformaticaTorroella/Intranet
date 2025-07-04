@@ -27,10 +27,10 @@
             @method('PUT')
 
             <label for="nom">Nom de la Categoria:</label>
-            <input type="text" id="nom" name="nom" value="{{ old('nom', $area->Area) }}" required>
+            <input type="text" id="nom" name="Area" value="{{ old('Area', $area->Area) }}" required>
 
             <label for="fk-edifici">Edifici:</label>
-            <select id="fk-edifici" name="fk-edifici" required>
+            <select id="fk-edifici" name="id_equimanent" required class="form-select">
                 <option value="" disabled>Selecciona un edifici</option>
                 @foreach ($edificis as $edifici)
                     <option value="{{ $edifici->id_equimanent }}" {{ old('fk-edifici', $area->id_equimanent) == $edifici->id_equimanent ? 'selected' : '' }}>
