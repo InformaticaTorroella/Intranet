@@ -6,28 +6,6 @@
   <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}" />
-  <style>
-    .dual-listbox {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    select.form-multiselect {
-      width: 200px;
-      height: 180px;
-    }
-    .dual-listbox-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .dual-listbox-buttons button {
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
 <x-header />

@@ -2,6 +2,7 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <title>Crear Categoria</title>
     <link rel="stylesheet" href="{{ asset('css/categorias.css') }}">
 </head>

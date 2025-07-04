@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Editar Subsecció</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
   <link rel="stylesheet" href="{{ asset('css/quadres.css') }}">
 </head>
 <body>
@@ -33,6 +34,6 @@
     <a href="{{ route('subseccions.index') }}" class="btn btn-warning" style="margin-left: 0.5rem;">Cancel·lar</a>
   </form>
 </div>
-
+<x-footer />
 </body>
 </html>
