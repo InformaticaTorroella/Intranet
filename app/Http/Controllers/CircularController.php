@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Circular;
 use App\Models\CatCircular;
+use App\Models\CircularFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -13,111 +13,118 @@ class CircularController extends Controller
     public function index(Request $request)
     {
         $categories = CatCircular::all();
+        $circulars = Circular::query();
 
-        $query = Circular::query();
-
-        if ($request->has('categoria') && $request->categoria != '') {
-            $query->where('fk_cat_circular', $request->categoria);
+        if ($request->filled('categoria')) {
+            $circulars->where('fk_cat_circular', $request->categoria);
         }
 
-        $circulars = $query->orderBy('fk_cat_circular')->paginate(15);
+        if ($request->filled('nom')) {
+            $circulars->where('nom_visual', 'like', '%' . $request->nom . '%');
+        }
+
+        $circulars = $circulars->orderByDesc('data_creacio')->paginate(15);
 
         return view('circulars.index', compact('circulars', 'categories'));
     }
 
-
     public function create()
     {
-        $categories = CatCircular::all();
+        $categories = CatCircular::orderBy('nom')->get();
         return view('circulars.create', compact('categories'));
     }
 
-
-
-
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+        $request->validate([
             'nom_visual' => 'required|string|max:200',
-            'data_creacio' => 'required|date',
-            'ordre' => 'required|integer',
-            'fk_cat_circular' => 'required|integer',
-            'publicat' => 'nullable|integer',
+            'fk_cat_circular' => 'nullable|exists:int_cat_circulars,id',
+            'arxius.*' => 'required|file|max:10240',
+            'descripcion' => 'nullable|string',
         ]);
 
-        $file = $request->file('file');
-        $filename = time() . '_' . preg_replace('/[^A-Za-z0-9_\-\.]/', '', $file->getClientOriginalName());
-        $ext = $file->getClientOriginalExtension();
-
-        $folder = 'circulars';
-        if (session()->has('name')) {
-            $name = str_replace(' ', '_', session('name'));
-            $folder = preg_replace('/[^A-Za-z0-9_\-]/', '', $name);
-        }
-
-        $path = $file->storeAs("uploads/$folder", $filename, 'public');
-        $url = asset("storage/uploads/$folder/$filename");
 
         $circular = Circular::create([
-            'nom_visual' => $validated['nom_visual'],
-            'nom_arxiu' => $filename,
-            'data_creacio' => Carbon::parse($validated['data_creacio'])->format('Y-m-d H:i:s'),
-            'data_edicio' => null,
-            'data_publicacio' => null,
-            'extensio' => $ext,
-            'ordre' => $validated['ordre'],
-            'url' => $url,
-            'publicat' => $validated['publicat'] ?? 0,
-            'fk_cat_circular' => $validated['fk_cat_circular'],
+            'nom_visual' => $request->nom_visual,
+            'fk_cat_circular' => $request->fk_cat_circular,
+            'descripcion' => $request->descripcion,
+            'data_creacio' => now(),
         ]);
 
-        logActivity('Crea Circular', "ID: {$circular->id}", "Usuari ha creat la circular Nº {$circular->id}.");
 
-        return redirect()->route('circulars.index')->with('success', 'Circular creada correctament.');
+        if ($request->hasFile('arxius')) {
+            foreach ($request->file('arxius') as $file) {
+                $path = $file->store('uploads/circulars', 'public');
+
+                CircularFile::create([
+                    'circular_id' => $circular->id,
+                    'nom_arxiu' => $file->getClientOriginalName(),
+                    'url' => $path, 
+                ]);
+
+            }
+        }
+
+        return redirect()->route('circulars.index')->with('success', 'Circular creada.');
     }
 
     public function edit($id)
     {
         $circular = Circular::findOrFail($id);
-        $categories = CatCircular::all();
+        $categories = CatCircular::orderBy('nom')->get();
         return view('circulars.edit', compact('circular', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nom_visual' => 'required|string|max:200',
-            'nom_arxiu' => 'nullable|string|max:200',
-            'data_creacio' => 'required|date',
-            'data_edicio' => 'nullable|date',
-            'data_publicacio' => 'nullable|date',
-            'extensio' => 'nullable|string|max:10',
-            'ordre' => 'required|integer',
-            'url' => 'nullable|string|max:255',
-            'publicat' => 'nullable|integer',
-            'fk_cat_circular' => 'required|integer',
-        ]);
-
         $circular = Circular::findOrFail($id);
 
-        $circular->nom_visual = $validated['nom_visual'];
-        $circular->nom_arxiu = $validated['nom_arxiu'] ?? $circular->nom_arxiu;
-        $circular->data_creacio = Carbon::parse($validated['data_creacio'])->format('Y-m-d H:i:s');
-        $circular->data_edicio = $validated['data_edicio'] ? Carbon::parse($validated['data_edicio'])->format('Y-m-d H:i:s') : $circular->data_edicio;
-        $circular->data_publicacio = $validated['data_publicacio'] ? Carbon::parse($validated['data_publicacio'])->format('Y-m-d H:i:s') : $circular->data_publicacio;
-        $circular->extensio = $validated['extensio'] ?? $circular->extensio;
-        $circular->ordre = $validated['ordre'];
-        $circular->url = $validated['url'] ?? $circular->url;
-        $circular->publicat = $validated['publicat'] ?? $circular->publicat;
-        $circular->fk_cat_circular = $validated['fk_cat_circular'];
+        $request->validate([
+            'nom_visual' => 'required|string|max:200',
+            'fk_cat_circular' => 'required|exists:int_cat_circulars,id',
+            'arxius.*' => 'nullable|file|max:10240',
+            'descripcion' => 'nullable|string',
+            'delete_files' => 'nullable|array',
+            'delete_files.*' => 'integer|exists:int_circular_files,id',
+        ]);
 
-        $circular->save();
+        $circular->update([
+            'nom_visual' => $request->nom_visual,
+            'fk_cat_circular' => $request->fk_cat_circular,
+            'descripcion' => $request->descripcion,
+            'data_edicio' => now(),
+        ]);
 
-        logActivity('Edita Circular', "ID: $id", "Usuari ha editat la circular Nº $id.");
+        // Eliminar archivos marcados
+        if ($request->filled('delete_files')) {
+            $filesToDelete = CircularFile::whereIn('id', $request->delete_files)->get();
+            foreach ($filesToDelete as $file) {
+                if (Storage::exists($file->url)) {
+                    Storage::delete($file->url);
+                }
+                $file->delete();
+            }
+        }
+
+        // Añadir nuevos archivos si hay
+        if ($request->hasFile('arxius')) {
+            foreach ($request->file('arxius') as $file) {
+                $path = $file->store('uploads/circulars', 'public');
+
+                CircularFile::create([
+                    'circular_id' => $circular->id,
+                    'nom_arxiu' => $file->getClientOriginalName(),
+                    'url' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('circulars.index')->with('success', 'Circular actualitzada.');
     }
+
+
+
+
 
     public function destroy($id)
     {
@@ -134,20 +141,14 @@ class CircularController extends Controller
 
         $circular->delete();
 
-        logActivity('Elimina Circular', "ID: $id", "Usuari ha eliminat la circular Nº $id.");
+        logActivity('Elimina Circular', "ID: $id", "L'usuari ha eliminat la circular Nº $id.");
 
         return redirect()->route('circulars.index')->with('success', 'Circular eliminada correctament.');
     }
 
     public function view($id, $action = 'download')
     {
-        if (!session()->has('username')) {
-            abort(403, 'Inicia sessió per accedir al document');
-        }
-
-        $circular = Circular::find($id);
-        if (!$circular) abort(404, 'Circular no trobada');
-
+        $circular = Circular::findOrFail($id);
         $parsedUrl = parse_url($circular->url, PHP_URL_PATH);
         $filePath = preg_replace('#^/storage/#', 'public/', $parsedUrl);
         $fullPath = storage_path('app/' . $filePath);
@@ -165,5 +166,4 @@ class CircularController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $circular->nom_arxiu . '"',
         ]);
     }
-
 }
