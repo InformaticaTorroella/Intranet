@@ -33,8 +33,9 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Home
 Route::get('/home', function () {
-    $noticias = \App\Models\Noticia::orderBy('data_creacio', 'desc')->take(10)->get();
-    return view('home', compact('noticias'));
+    $noticias = \App\Models\Noticia::orderBy('data_publicacio', 'desc')->take(4)->get();
+    $circulars = \App\Models\Circular::orderBy('data_creacio', 'desc')->take(4)->get();
+    return view('home', compact('noticias', 'circulars'));
 })->name('home');
 
 

@@ -15,8 +15,11 @@ class TelefonController extends Controller
         $equipament_id = $request->input('id_equipament');
         $area_id = $request->input('area_id');    
         $nom = $request->input('nom'); 
-        $orderBy = $request->input('order_by', 'nom'); 
+        $orderBy = $request->input('order_by');
         $order = $request->input('order', 'asc');
+
+        
+
 
         $equipaments = Equipament::orderBy('Equipament')->get();
 
@@ -30,6 +33,10 @@ class TelefonController extends Controller
 
         $query = Telefon::query();
 
+        // Join para poder ordenar por nombre de área
+        $query->leftJoin('int_area', 'int_telefons.fk_id_area', '=', 'int_area.IdArea');
+
+        // Filtrado
         if ($area_id) {
             $query->where('fk_id_area', $area_id);
         } elseif ($equipament_id) {
@@ -37,10 +44,15 @@ class TelefonController extends Controller
         }
 
         if ($nom) {
-            $query->where('nom', 'LIKE', $nom . '%');
+            $query->where('nom', 'LIKE', '%' . $nom . '%');
         }
 
-        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->paginate(15);
+        // Ordenar por nombre de área (areas.Area) y luego por edificio (fk_id_equipament)
+        $telefons = $query
+            ->orderByRaw('int_area.Area IS NULL, int_area.Area ASC')  // Primero las que tienen área, ordenadas alfabéticamente
+            ->orderBy('fk_id_equipament', 'asc')                // Dentro del área, ordenamos por edificio
+            ->paginate(50);
+
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }

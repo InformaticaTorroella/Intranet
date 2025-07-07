@@ -14,7 +14,6 @@
       $userGroups = session('user_groups', []);
   @endphp
   <h2>Telèfons</h2>
-
   <form id="filter-form" method="GET" action="{{ route('telefons.index') }}">
     <select id="equipament-select" name="id_equipament" onchange="submitForm()">
       <option value="">-- Selecciona Edifici --</option>
@@ -34,7 +33,7 @@
       @endforeach
     </select>
 
-    @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+      @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
       <div>
         <a href="{{ route('area-telefons.create') }}" class="btn btn-secondary">+ Afegir Àrea</a>
         <a href="{{ route('edifici-telefons.create') }}" class="btn btn-secondary">+ Afegir Edifici</a>
@@ -71,6 +70,12 @@
       <thead>
         <tr>
           <th>
+            <span onclick="location.href='{{ route('telefons.index', array_merge(request()->all(), ['order_by' => 'fk_id_area', 'order' => ($currentOrderBy == 'fk_id_area' && $currentOrder == 'asc') ? 'desc' : 'asc'])) }}'" style="cursor:pointer;">
+              Àrea
+              <i class="fas {{ sortIcon('fk_id_area', $currentOrderBy, $currentOrder) }}"></i>
+            </span>
+          </th>
+          <th>
             <span onclick="location.href='{{ route('telefons.index', array_merge(request()->all(), ['order_by' => 'nom', 'order' => ($currentOrderBy == 'nom' && $currentOrder == 'asc') ? 'desc' : 'asc'])) }}'" style="cursor:pointer;">
               Persona / Càrrec
               <i class="fas {{ sortIcon('nom', $currentOrderBy, $currentOrder) }}"></i>
@@ -100,19 +105,14 @@
               <i class="fas {{ sortIcon('extensio_mobil', $currentOrderBy, $currentOrder) }}"></i>
             </span>
           </th>
-          <th>
-            <span onclick="location.href='{{ route('telefons.index', array_merge(request()->all(), ['order_by' => 'fk_id_area', 'order' => ($currentOrderBy == 'fk_id_area' && $currentOrder == 'asc') ? 'desc' : 'asc'])) }}'" style="cursor:pointer;">
-              Àrea
-              <i class="fas {{ sortIcon('fk_id_area', $currentOrderBy, $currentOrder) }}"></i>
-            </span>
-          </th>
+          
           <th>
             <span onclick="location.href='{{ route('telefons.index', array_merge(request()->all(), ['order_by' => 'fk_id_equipament', 'order' => ($currentOrderBy == 'fk_id_equipament' && $currentOrder == 'asc') ? 'desc' : 'asc'])) }}'" style="cursor:pointer;">
               Edifici
               <i class="fas {{ sortIcon('fk_id_equipament', $currentOrderBy, $currentOrder) }}"></i>
             </span>
           </th>
-          @if(session()->has('username') && in_array('Intranet_Telefons', session('user_groups', [])))
+          @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
           <th>Accions</th>
           @endif
         </tr>
@@ -121,14 +121,14 @@
       <tbody>
         @forelse ($telefons as $telefon)
           <tr>
+            <td>{{ $telefon->area->Area ?? '' }}</td>
             <td>{{ $telefon->nom }}</td>
-            <td>{{ $telefon->num_directe ?? 'No disponible' }}</td>
-            <td>{{ $telefon->extensio_voip ?? 'No disponible' }}</td>
-            <td>{{ $telefon->num_directe_mobil ?? 'No disponible' }}</td>
-            <td>{{ $telefon->extensio_mobil ?? 'No disponible' }}</td>
-            <td>{{ $telefon->area->Area ?? 'No disponible' }}</td>
-            <td>{{ $telefon->equipament->Equipament ?? 'No disponible' }}</td>
-            @if(session()->has('username') && in_array('Intranet_Telefons', session('user_groups', [])))
+            <td>{{ $telefon->num_directe ?? '' }}</td>
+            <td>{{ $telefon->extensio_voip ?? '' }}</td>
+            <td>{{ $telefon->num_directe_mobil ?? '' }}</td>
+            <td>{{ $telefon->extensio_mobil ?? '' }}</td>
+            <td>{{ $telefon->equipament->Equipament ?? '' }}</td>
+            @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
               <td class="actions">
                 <div class="action-wrapper">
                   <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>

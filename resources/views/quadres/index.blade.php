@@ -41,6 +41,16 @@
       class="search-input" 
       onkeydown="if(event.key === 'Enter') this.form.submit()"
     >
+  <form id="filter-form" method="GET" action="{{ route('quadres.index') }}">
+    <input 
+      type="text" 
+      name="tipologia_gial" 
+      id="serieInput" 
+      placeholder="Filtrar per Tipologia GIAL" 
+      value="{{ request('fk_id_tipologia_gial') }}" 
+      class="search-input" 
+      onkeydown="if(event.key === 'Enter') this.form.submit()"
+    >
     <input type="hidden" name="order_by" value="{{ request('order_by', '') }}">
     <input type="hidden" name="order" value="{{ request('order', '') }}">
   </form>
