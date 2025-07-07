@@ -15,7 +15,7 @@
   <form action="{{ route('subseccions.store') }}" method="POST">
     @csrf
     <div class="mb-4">
-      <label for="id_subseccio">Nom de la Subsecció</label>
+      <label for="id_subseccio">Id  Subsecció</label>
       <input type="text" name="id_subseccio" id="id_subseccio" class="form-select" required>
     </div>
     <div class="mb-4">
