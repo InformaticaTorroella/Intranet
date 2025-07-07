@@ -8,16 +8,16 @@ use App\Models\Seccio;
 use App\Models\Subseccio;
 use App\Models\Serie;
 use App\Models\TipologiaGial;
-use App\Models\QuadreClassificacioTipologia; // añadir para usar
+use App\Models\QuadreClassificacioTipologia;
 
-// 📊 Quadres Classificacions
 class QuadreClassificacioController extends Controller
 {
-    public function index(Request $request) {
-        $orderBy = $request->get('order_by', 'id'); // columna por defecto
-        $order = $request->get('order', 'asc');    // dirección por defecto
+    public function index(Request $request)
+    {
+        $orderBy = $request->get('order_by', 'id');
+        $order = $request->get('order', 'asc');
 
-        $allowedOrderColumns = ['id', 'fk_id_seccio', 'fk_id_serie']; // columnas permitidas para ordenar
+        $allowedOrderColumns = ['id', 'fk_id_seccio', 'fk_id_serie'];
         if (!in_array($orderBy, $allowedOrderColumns)) {
             $orderBy = 'id';
         }
@@ -25,7 +25,19 @@ class QuadreClassificacioController extends Controller
             $order = 'asc';
         }
 
-        $quadres = QuadreClassificacio::with(['seccio', 'subseccio', 'serie'])
+        $quadres = QuadreClassificacio::with(['seccio', 'subseccio', 'serie', 'tipologies'])
+            ->when($request->filled('tipologia_gial'), function ($query) use ($request) {
+                $search = $request->input('tipologia_gial');
+                $query->whereHas('tipologies', function ($q) use ($search) {
+                    $q->where('codi', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($request->filled('serie'), function ($query) use ($request) {
+                $search = $request->input('serie');
+                $query->whereHas('serie', function ($q) use ($search) {
+                    $q->where('serie', 'like', '%' . $search . '%');
+                });
+            })
             ->orderBy($orderBy, $order)
             ->paginate(25);
 
@@ -66,7 +78,6 @@ class QuadreClassificacioController extends Controller
             }
         }
 
-        // Excluir tipologies GIAL ya vinculadas a cualquier quadre
         $usedTipologiesIds = QuadreClassificacioTipologia::pluck('fk_id_tipologia_gial')->toArray();
         $tipologies = TipologiaGial::whereNotIn('id', $usedTipologiesIds)->get();
 
@@ -83,14 +94,12 @@ class QuadreClassificacioController extends Controller
 
     public function store(Request $request)
     {
-        // Crear el quadre primero
         $quadre = QuadreClassificacio::create($request->only([
             'fk_id_seccio',
             'fk_id_subseccio',
             'fk_id_serie'
         ]));
 
-        // Asociar tipologies si hay
         if ($request->has('tipologies')) {
             $quadre->tipologies()->sync($request->input('tipologies'));
         }
@@ -106,11 +115,9 @@ class QuadreClassificacioController extends Controller
     {
         $quadre = QuadreClassificacio::findOrFail($id);
 
-        // Tipologies GIAL usadas en otros quadres (excluir)
         $usedTipologiesIds = QuadreClassificacioTipologia::where('fk_id_quadre_classificacio', '!=', $id)
             ->pluck('fk_id_tipologia_gial')->toArray();
 
-        // Permitir incluir las tipologies ya asignadas a este quadre
         $tipologies = TipologiaGial::whereNotIn('id', $usedTipologiesIds)
             ->orWhereIn('id', $quadre->tipologies->pluck('id')->toArray())
             ->get();
@@ -124,7 +131,8 @@ class QuadreClassificacioController extends Controller
         ]);
     }
 
-    public function update(Request $r, $id) {
+    public function update(Request $r, $id)
+    {
         $quadre = QuadreClassificacio::findOrFail($id);
         $quadre->update($r->all());
 
@@ -137,7 +145,8 @@ class QuadreClassificacioController extends Controller
         return redirect()->route('quadres.index');
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         QuadreClassificacio::destroy($id);
 
         logActivity('Elimina Quadre de Classificacio', "ID: $id", "L'usuari ha eliminat un quadre de classificacio Nº $id.");
@@ -163,5 +172,4 @@ class QuadreClassificacioController extends Controller
             'seccio_id' => $serie->subseccio->fk_id_seccio,
         ]);
     }
-
 }

@@ -13,6 +13,8 @@
 <main>
   @php
       $userGroups = session('user_groups', []);
+      $hasAccess = session()->has('username') && (in_array('Intranet_QuadreClassificacions', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+
       function sortIcon($col, $currentOrderBy, $currentOrder) {
           if ($currentOrderBy === $col) {
               return $currentOrder === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
@@ -23,7 +25,7 @@
 
 <div class="container">
   <h1 class="page-title">Quadres</h1>
-  @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
+  @if($hasAccess)
     <a href="{{ route('quadres.create') }}" class="btn btn-primary mb-4">Crear Nou Quadre</a>
     <a href="{{ route('seccions.create') }}" class="btn btn-primary mb-4">Crear Nova Secció</a>
     <a href="{{ route('subseccions.create') }}" class="btn btn-primary mb-4">Crear Nova Subsecció</a>
@@ -32,28 +34,28 @@
   @endif
 
   <form id="filter-form" method="GET" action="{{ route('quadres.index') }}">
-    <input 
-      type="text" 
-      name="serie" 
-      id="serieInput" 
-      placeholder="Filtrar per Sèrie" 
-      value="{{ request('serie') }}" 
-      class="search-input" 
-      onkeydown="if(event.key === 'Enter') this.form.submit()"
-    >
-  <form id="filter-form" method="GET" action="{{ route('quadres.index') }}">
-    <input 
-      type="text" 
-      name="tipologia_gial" 
-      id="serieInput" 
-      placeholder="Filtrar per Tipologia GIAL" 
-      value="{{ request('fk_id_tipologia_gial') }}" 
-      class="search-input" 
-      onkeydown="if(event.key === 'Enter') this.form.submit()"
-    >
-    <input type="hidden" name="order_by" value="{{ request('order_by', '') }}">
-    <input type="hidden" name="order" value="{{ request('order', '') }}">
-  </form>
+  <input 
+    type="text" 
+    name="serie" 
+    placeholder="Filtrar per Sèrie" 
+    value="{{ request('serie') }}" 
+    class="search-input" 
+    onkeydown="if(event.key === 'Enter') this.form.submit()"
+  >
+
+  <input 
+    type="text" 
+    name="tipologia_gial" 
+    placeholder="Filtrar per Tipologia GIAL" 
+    value="{{ request('tipologia_gial') }}" 
+    class="search-input" 
+    onkeydown="if(event.key === 'Enter') this.form.submit()"
+  >
+
+  <input type="hidden" name="order_by" value="{{ request('order_by', '') }}">
+  <input type="hidden" name="order" value="{{ request('order', '') }}">
+</form>
+
 
   <table class="table">
     <thead>
@@ -74,7 +76,7 @@
           Tipologies GIAL
           <i class="fas {{ sortIcon('fk_id_tipologia_gial', request('order_by'), request('order')) }}"></i>
         </th>
-        @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
+        @if($hasAccess)
           <th class="table-header">Accions</th>
         @endif
       </tr>
@@ -90,7 +92,7 @@
           <span class="tag">{{ $tipologia->codi }}</span>
           @endforeach
         </td>
-        @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
+        @if($hasAccess)
         <td class="table-cell">
           <a href="{{ route('quadres.edit', $quadre) }}" class="btn btn-sm btn-warning">Editar</a>
         </td>

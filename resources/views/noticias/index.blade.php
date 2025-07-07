@@ -9,7 +9,8 @@
 <body>
     <x-header />
     @php
-      $userGroups = session('user_groups', []);
+        $userGroups = session('user_groups', []);
+        $hasAccess = session()->has('username') && (in_array('Intranet_Noticias', $userGroups) || in_array('Intranet_Administracio', $userGroups));
     @endphp
     <div class="noticias-page-center">
         <section class="noticias-container">
@@ -24,7 +25,7 @@
                         </option>
                     @endforeach
                 </select>
-                @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+                @if($hasAccess)
                     <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
                 @endif
             </form>
@@ -36,7 +37,7 @@
                     <p class="noticia-data">Publicada: {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
                     <a href="{{ route('noticias.show', $noticia->id) }}" class="btn-ver">Veure</a>
 
-                    @if(session()->has('username') && in_array('Intranet_Noticies', $userGroups) && isset($noticia->id))
+                    @if($hasAccess)
                         <a href="{{ route('noticias.edit', ['id' => $noticia->id]) }}" class="btn-editar">Editar</a>
                     @endif
                 </article>
@@ -47,7 +48,7 @@
             <div class="pagination">
                 {{ $noticias->links() }}
             </div>
-            @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+            @if($hasAccess)
                 <a href="{{ route('noticias.create') }}" class="btn-crear">Crear Notícia</a>
             @else
                 <p>

@@ -12,6 +12,8 @@
 <main>
   @php
       $userGroups = session('user_groups', []);
+      $hasAccess = session()->has('username') && (in_array('Intranet_Telefons', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+
   @endphp
   <h2>Telèfons</h2>
   <form id="filter-form" method="GET" action="{{ route('telefons.index') }}">
@@ -33,7 +35,7 @@
       @endforeach
     </select>
 
-      @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
+      @if($hasAccess)
       <div>
         <a href="{{ route('area-telefons.create') }}" class="btn btn-secondary">+ Afegir Àrea</a>
         <a href="{{ route('edifici-telefons.create') }}" class="btn btn-secondary">+ Afegir Edifici</a>
@@ -49,8 +51,9 @@
       autocomplete="off"
     />
   </form>
-
-  <a href="{{ route('telefons.create') }}" class="btn btn-primary">+ Nou telèfon</a>
+  @if($hasAccess)
+    <a href="{{ route('telefons.create') }}" class="btn btn-primary">+ Nou telèfon</a>
+  @endif
 
   @if ($telefons->isEmpty())
     <p>No hi ha telèfons per a aquesta combinació d'equipament i àrea.</p>
@@ -112,7 +115,7 @@
               <i class="fas {{ sortIcon('fk_id_equipament', $currentOrderBy, $currentOrder) }}"></i>
             </span>
           </th>
-          @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
+          @if($hasAccess)
           <th>Accions</th>
           @endif
         </tr>
@@ -128,7 +131,7 @@
             <td>{{ $telefon->num_directe_mobil ?? '' }}</td>
             <td>{{ $telefon->extensio_mobil ?? '' }}</td>
             <td>{{ $telefon->equipament->Equipament ?? '' }}</td>
-            @if(session()->has('username') && (in_array('Intranet_Administracio', $userGroups) || in_array('Intranet_Telefons', $userGroups)))
+            @if($hasAccess)
               <td class="actions">
                 <div class="action-wrapper">
                   <a href="{{ route('telefons.edit', $telefon->id) }}" class="btn btn-warning">Editar</a>

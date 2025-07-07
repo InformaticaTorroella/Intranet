@@ -12,6 +12,7 @@
 
     @php
         $userGroups = session('user_groups', []);
+        $hasAccess = session()->has('username') && (in_array('Intranet_Documents', $userGroups) || in_array('Intranet_Administracio', $userGroups));
     @endphp
 
     <div class="documents-page-center">
@@ -32,7 +33,7 @@
 
                 <input type="text" name="nom" id="nomInput" placeholder="Cerca per nom..." value="{{ request('nom') }}" class="search-input">
 
-                @if(session()->has('username') && in_array('Intranet_Telefons', $userGroups))
+                @if($hasAccess)
                     <a href="{{ route('categoria-documents.create') }}" class="btn-secondary">Afegir Categoria</a>
                 @endif
             </form>
@@ -61,7 +62,7 @@
                         class="btn-action btn-download" title="Descarregar">
                         <i class="icon-download fas fa-download"></i>
                     </a>
-                    @if(session()->has('username') && in_array('Intranet_Documents', $userGroups))
+                    @if($hasAccess)
                         <a href="{{ route('documents.edit', ['id' => $document->id]) }}"
                         class="btn-action btn-edit" title="Editar">
                         <i class="icon-edit fas fa-edit"></i>
@@ -82,7 +83,7 @@
             </tbody>
             </table>
 
-            @if(session()->has('username') && in_array('Intranet_Documents', $userGroups))
+            @if($hasAccess)
                 <a href="{{ route('documents.create') }}" class="btn-create">Crear Document</a>
             @else
                 <p>No tens permisos per crear documents. Contacta amb l’administrador.</p>

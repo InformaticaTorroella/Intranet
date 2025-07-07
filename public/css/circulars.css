@@ -428,3 +428,9 @@ button.btn-danger:hover {
 .ck-editor__editable_inline {
   min-height: 300px !important;
 }
+.btn-create-category {
+    width: 100%;
+    justify-content: center;
+    max-width: 280px;
+    text-align: center;
+}

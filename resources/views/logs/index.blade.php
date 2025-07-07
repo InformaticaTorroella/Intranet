@@ -13,9 +13,9 @@
     <x-header />
     @php
         $userGroups = session('user_groups', []);
-        $allowedGroups = ['Intranet_Avisos'];
+        $hasAccess = session()->has('username') && in_array('Intranet_Administracio', $userGroups);
     @endphp
-    @if(session()->has('username') && in_array('Intranet_Avisos', $userGroups))
+    @if($hasAccess)
         <main class="logs-container">
             
 

@@ -47,11 +47,13 @@ class TelefonController extends Controller
             $query->where('nom', 'LIKE', '%' . $nom . '%');
         }
 
-        // Ordenar por nombre de área (areas.Area) y luego por edificio (fk_id_equipament)
         $telefons = $query
-            ->orderByRaw('int_area.Area IS NULL, int_area.Area ASC')  // Primero las que tienen área, ordenadas alfabéticamente
-            ->orderBy('fk_id_equipament', 'asc')                // Dentro del área, ordenamos por edificio
+            ->orderByRaw('int_area.Area IS NULL, int_area.Area ASC') // 1. Àrees no null primer, ordenades A-Z
+            ->orderBy('nom', 'asc')                                  // 2. Noms de telèfon
+            ->orderBy('fk_id_equipament', 'asc')                     // 3. Equipaments
+            ->select('int_telefons.*')                               // assegurem que només agafem columnes de telefons
             ->paginate(50);
+
 
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));

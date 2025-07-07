@@ -45,7 +45,10 @@
 <body>
     <x-header />
 
-    @php $userGroups = session('user_groups', []); @endphp
+    @php
+        $userGroups = session('user_groups', []);
+        $hasAccess = session()->has('username') && (in_array('Intranet_Circulars', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+    @endphp
 
     <div class="documents-page-center">
         <section class="documents-container">
@@ -61,8 +64,14 @@
                         </option>
                     @endforeach
                 </select>
+
                 <input type="text" name="nom" id="nomInput" placeholder="Cerca per nom..." value="{{ request('nom') }}" class="search-input">
+
+                @if($hasAccess)
+                    <a href="{{ route('categoria-circulars.create') }}" class="btn-secondary btn-create-category">Afegir Categoria</a>
+                @endif
             </form>
+
 
             <div>
                 @forelse ($circulars as $circular)
@@ -72,7 +81,7 @@
                             <div class="circular-date">{{ \Carbon\Carbon::parse($circular->data_entrada)->format('d/m/Y H:i') }}</div>
                             <div class="circular-name" title="{{ $circular->nom_visual }}">{{ $circular->nom_visual }}</div>
                             <div class="actions">
-                                @if(session()->has('username') && in_array('Intranet_Documents', $userGroups))
+                                @if($hasAccess)
                                     <a href="{{ route('circulars.edit', ['id' => $circular->id]) }}" class="btn-action btn-edit" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -111,7 +120,7 @@
                 @endforelse
             </div>
 
-            @if(session()->has('username') && in_array('Intranet_Documents', $userGroups))
+            @if($hasAccess)
                 <a href="{{ route('circulars.create') }}" class="btn-create">Crear Circular</a>
             @endif
 
