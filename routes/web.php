@@ -666,10 +666,25 @@ Route::get('/api/subseccions/{seccioId}', function($seccioId) {
     return \App\Models\Subseccio::where('fk_id_seccio', $seccioId)->get();
 });
 
+Route::get('/api/subseccions/{seccioId}', function ($seccioId) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioController::class)->getSubseccions($seccioId);
+});
+
 Route::get('/api/series/{subseccioId}', function ($subseccioId) {
     if (!session()->has('username')) {
         return redirect()->route('login');
     }
     return app(QuadreClassificacioController::class)->getSeries($subseccioId);
 });
+
+Route::get('/api/serie-info/{serieId}', function ($serieId) {
+    if (!session()->has('username')) {
+        return redirect()->route('login');
+    }
+    return app(QuadreClassificacioController::class)->getSerieInfo($serieId);
+});
+
 

@@ -46,7 +46,12 @@ class QuadreClassificacioController extends Controller
 
     public function create(Request $request)
     {
-        $seccions = Seccio::all();
+        $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
+
+        // Seccions que tengan subseccions con series no asignadas en quadres
+        $seccions = Seccio::whereHas('subseccions.series', function ($q) use ($usedSeriesIds) {
+            $q->whereNotIn('id_serie', $usedSeriesIds);
+        })->get();
 
         $fk_id_seccio = $request->input('fk_id_seccio');
         $fk_id_subseccio = $request->input('fk_id_subseccio');
@@ -56,11 +61,14 @@ class QuadreClassificacioController extends Controller
         $series = collect();
 
         if ($fk_id_seccio) {
-            $subseccions = Subseccio::where('fk_id_seccio', $fk_id_seccio)->get();
+            $subseccions = Subseccio::where('fk_id_seccio', $fk_id_seccio)
+                ->whereHas('series', function ($q) use ($usedSeriesIds) {
+                    $q->whereNotIn('id_serie', $usedSeriesIds);
+                })
+                ->get();
         }
 
         if ($fk_id_subseccio) {
-            $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
             $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)
                 ->whereNotIn('id_serie', $usedSeriesIds)
                 ->get();
@@ -73,11 +81,14 @@ class QuadreClassificacioController extends Controller
                 $fk_id_seccio = $serie->subseccio->fk_id_seccio;
 
                 if ($subseccions->isEmpty()) {
-                    $subseccions = Subseccio::where('fk_id_seccio', $fk_id_seccio)->get();
+                    $subseccions = Subseccio::where('fk_id_seccio', $fk_id_seccio)
+                        ->whereHas('series', function ($q) use ($usedSeriesIds) {
+                            $q->whereNotIn('id_serie', $usedSeriesIds);
+                        })
+                        ->get();
                 }
 
                 if ($series->isEmpty()) {
-                    $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
                     $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)
                         ->whereNotIn('id_serie', $usedSeriesIds)
                         ->get();
@@ -98,7 +109,6 @@ class QuadreClassificacioController extends Controller
             'tipologies'
         ));
     }
-
 
     public function store(Request $request)
     {
@@ -147,7 +157,6 @@ class QuadreClassificacioController extends Controller
         ]);
     }
 
-
     public function update(Request $r, $id)
     {
         $quadre = QuadreClassificacio::findOrFail($id);
@@ -171,23 +180,31 @@ class QuadreClassificacioController extends Controller
         return redirect()->route('quadres.index');
     }
 
+    // API: subseccions disponibles (solo con series no asignadas)
     public function getSubseccions($seccioId)
     {
-        return Subseccio::where('fk_id_seccio', $seccioId)->get();
+        $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
+
+        $subseccions = Subseccio::where('fk_id_seccio', $seccioId)
+            ->whereHas('series', function ($q) use ($usedSeriesIds) {
+                $q->whereNotIn('id_serie', $usedSeriesIds);
+            })
+            ->get();
+
+        return response()->json($subseccions);
     }
 
+    // API: series disponibles (no asignadas)
     public function getSeries($subseccioId)
     {
         $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
 
         $series = Serie::where('fk_id_subseccio', $subseccioId)
-                    ->whereNotIn('id_serie', $usedSeriesIds)
-                    ->get();
+            ->whereNotIn('id_serie', $usedSeriesIds)
+            ->get();
 
         return response()->json($series);
     }
-
-
 
     public function getSerieInfo($serieId)
     {
