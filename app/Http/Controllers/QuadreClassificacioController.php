@@ -60,7 +60,10 @@ class QuadreClassificacioController extends Controller
         }
 
         if ($fk_id_subseccio) {
-            $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)->get();
+            $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
+            $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)
+                ->whereNotIn('id_serie', $usedSeriesIds)
+                ->get();
         }
 
         if ($fk_id_serie) {
@@ -72,8 +75,12 @@ class QuadreClassificacioController extends Controller
                 if ($subseccions->isEmpty()) {
                     $subseccions = Subseccio::where('fk_id_seccio', $fk_id_seccio)->get();
                 }
+
                 if ($series->isEmpty()) {
-                    $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)->get();
+                    $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
+                    $series = Serie::where('fk_id_subseccio', $fk_id_subseccio)
+                        ->whereNotIn('id_serie', $usedSeriesIds)
+                        ->get();
                 }
             }
         }
@@ -91,6 +98,7 @@ class QuadreClassificacioController extends Controller
             'tipologies'
         ));
     }
+
 
     public function store(Request $request)
     {
@@ -122,14 +130,23 @@ class QuadreClassificacioController extends Controller
             ->orWhereIn('id', $quadre->tipologies->pluck('id')->toArray())
             ->get();
 
+        $usedSeriesIds = QuadreClassificacio::where('id', '!=', $id)
+            ->pluck('fk_id_serie')
+            ->toArray();
+
+        $series = Serie::whereNotIn('id_serie', $usedSeriesIds)
+            ->orWhere('id_serie', $quadre->fk_id_serie)
+            ->get();
+
         return view('quadres.edit', [
             'quadre' => $quadre,
             'seccions' => Seccio::all(),
             'subseccions' => Subseccio::all(),
-            'series' => Serie::all(),
+            'series' => $series,
             'tipologies' => $tipologies,
         ]);
     }
+
 
     public function update(Request $r, $id)
     {
@@ -161,8 +178,16 @@ class QuadreClassificacioController extends Controller
 
     public function getSeries($subseccioId)
     {
-        return Serie::where('fk_id_subseccio', $subseccioId)->get();
+        $usedSeriesIds = QuadreClassificacio::pluck('fk_id_serie')->toArray();
+
+        $series = Serie::where('fk_id_subseccio', $subseccioId)
+                    ->whereNotIn('id_serie', $usedSeriesIds)
+                    ->get();
+
+        return response()->json($series);
     }
+
+
 
     public function getSerieInfo($serieId)
     {

@@ -658,7 +658,7 @@ Route::delete('/quadres-classificacions-tipologies/{id}', function ($id) {
     return app(QuadreClassificacioTipologiaController::class)->destroy($id);
 })->name('quadres-classificacions-tipologies.destroy');
 
-
+// crec que ja no es fa us
 Route::get('/api/subseccions/{seccioId}', function($seccioId) {
     if (!session()->has('username')) {
         return redirect()->route('login');
@@ -666,6 +666,7 @@ Route::get('/api/subseccions/{seccioId}', function($seccioId) {
     return \App\Models\Subseccio::where('fk_id_seccio', $seccioId)->get();
 });
 
+// per no mostrar les serie que ja estan al quadre de classificacio
 Route::get('/api/series/{subseccioId}', function($subseccioId) {
     if (!session()->has('username')) {
         return redirect()->route('login');
