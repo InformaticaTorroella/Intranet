@@ -666,10 +666,10 @@ Route::get('/api/subseccions/{seccioId}', function($seccioId) {
     return \App\Models\Subseccio::where('fk_id_seccio', $seccioId)->get();
 });
 
-// per no mostrar les serie que ja estan al quadre de classificacio
-Route::get('/api/series/{subseccioId}', function($subseccioId) {
+Route::get('/api/series/{subseccioId}', function ($subseccioId) {
     if (!session()->has('username')) {
         return redirect()->route('login');
     }
-    return \App\Models\Serie::where('fk_id_subseccio', $subseccioId)->get();
+    return app(QuadreClassificacioController::class)->getSeries($subseccioId);
 });
+
