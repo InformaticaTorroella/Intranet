@@ -25,7 +25,6 @@ class AdminController extends Controller
         $noticias = Noticia::getNoticiesIntranet()->take(2);
         $circulars = Circular::orderBy('data_creacio', 'desc')->take(2)->get();
         
-        dd($circulars); // debug
         return view('home', compact('noticias', 'circulars'));
     }
 
