@@ -132,3 +132,68 @@ main {
   color: #fff;
   transform: scale(1.03);
 }
+/* FAQ home styles */
+.faq-item h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #660000;
+  margin-bottom: 0.3rem;
+}
+
+.faq-item p {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0 0 0.2rem 0;
+}
+
+/* Botón "Veure i respondre" */
+.faq-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background-color: #660000;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.8rem;  /* Menos padding para hacerlo más pequeño */
+  font-weight: 600;
+  font-size: 0.85rem;      /* Texto un poco más pequeño */
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;
+  min-width: 80px;         /* Ancho mínimo para consistencia */
+}
+
+.faq-btn:hover {
+  background-color: #800000;
+  color: #fff;
+}
+
+
+
+/* Contenedor para centrar botón "Nova FAQ" */
+.faq-create-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Botón "Nova FAQ" */
+.faq-create-btn {
+  background-color: #28a745; /* Verde */
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.faq-create-btn:hover {
+  background-color: #218838;
+  color: #fff;
+}
+
