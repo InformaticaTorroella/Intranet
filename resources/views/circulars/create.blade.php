@@ -1,49 +1,74 @@
+<!-- resources/views/circulars/create.blade.php -->
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Crear Circular</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/circulars.css') }}">
+    <!-- CKEditor 5 Classic Build -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+
+    <style>
+        /* Para que el editor tenga una altura mínima visible */
+        .ck-editor__editable_inline {
+            min-height: 300px !important;
+        }
+    </style>
 </head>
 <body>
     <x-header />
 
-    <div class="circulars-page-center">
-        <div class="circulars-container">
-            <h1 class="form-title">Crear Circular</h1>
+    <h1 class="form-title">Crear Circular</h1>
 
-            <form action="{{ route('circulars.store') }}" method="POST" enctype="multipart/form-data" class="circulars-form">
-                @csrf
+    <form action="{{ route('circulars.store') }}" method="POST" enctype="multipart/form-data" class="form">
+        @csrf
 
-                <label for="file">Fitxer (pdf, doc, jpg...):</label>
-                <input type="file" name="file" id="file" required>
+        <label class="form-label" for="nom_visual">Nom Visual</label>
+        <input type="text" name="nom_visual" id="nom_visual" class="form-control" required>
 
-                <label for="nom_visual">Nom Visual:</label>
-                <input type="text" name="nom_visual" id="nom_visual" maxlength="200" required value="{{ old('nom_visual') }}">
+        <label class="form-label" for="descripcion">Descripció</label>
+        <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
 
-                <label for="data_creacio">Data Creació:</label>
-                <input type="datetime-local" name="data_creacio" id="data_creacio" required value="{{ old('data_creacio') }}">
+        <label class="form-label" for="fk_cat_circular">Categoria</label>
+        <select name="fk_cat_circular" id="fk_cat_circular" class="form-control">
+            @foreach($categories as $categoria)
+                <option value="{{ $categoria->id }}">{{ $categoria->nom }}</option>
+            @endforeach
+        </select>
 
-                <label for="ordre">Ordre:</label>
-                <input type="number" name="ordre" id="ordre" required value="{{ old('ordre') }}">
+        <label class="form-label" for="arxius">Arxius (pots pujar més d'un)</label>
+        <input type="file" name="arxius[]" id="arxius" class="form-control" multiple required>
 
-                <label for="fk_cat_circular">Categoria ID (fk_cat_circular):</label>
-                <input type="number" name="fk_cat_circular" id="fk_cat_circular" required value="{{ old('fk_cat_circular') }}">
-
-                <label for="fk_tipus_obj">Tipus Objecte (fk_tipus_obj):</label>
-                <input type="number" name="fk_tipus_obj" id="fk_tipus_obj" required value="{{ old('fk_tipus_obj') }}">
-
-                <label for="publicat">Publicat (0/1):</label>
-                <input type="number" name="publicat" id="publicat" min="0" max="1" value="{{ old('publicat', 0) }}">
-
-                <label for="trial689">Trial689:</label>
-                <input type="text" name="trial689" id="trial689" maxlength="1" value="{{ old('trial689') }}">
-
-                <button type="submit">Guardar</button>
-            </form>
-        </div>
-    </div>
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="{{ route('circulars.index') }}" class="btn-secondary">Cancelar</a>
+    </form>
 
     <x-footer />
+
+<script>
+let editor;
+
+ClassicEditor
+    .create(document.querySelector('#descripcion'))
+    .then(ed => {
+        editor = ed;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+const form = document.querySelector('form');
+form.addEventListener('submit', e => {
+    form.descripcion.value = editor.getData().trim();
+
+    if (!form.descripcion.value) {
+        e.preventDefault();
+        alert('La Descripció és obligatòria.');
+        editor.editing.view.focus();
+    }
+});
+</script>
+
 </body>
 </html>

@@ -15,19 +15,15 @@ class Document extends Model
         'nom_visual',
         'nom_arxiu',
         'data_entrada',
-        'extensio',
-        'ordre',
         'url',
-        'fk_id_obj',
-        'fk_id_tipus_obj',
+        'fk_id_cat_document'
     ];
+
 
     // GET documents ordered by tramit id and tipus
     public static function getOrdre($idtramit, $tipus)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tramit', $idtramit)
-            ->where('FK_id_tipus_tramit', $tipus)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -36,8 +32,6 @@ class Document extends Model
     public static function getOrdreUltim($id, $tipus)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_obj', $tipus)
-            ->where('FK_id_obj', $id)
             ->orderByDesc('id')
             ->limit(1)
             ->get();
@@ -64,8 +58,6 @@ class Document extends Model
     public static function getDocumentsTramit($id)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_tramit', 1)
-            ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -74,8 +66,6 @@ class Document extends Model
     public static function getDocumentsExpedient($id, $tipus_tramit)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tramit', $id)
-            ->where('FK_id_tipus_tramit', $tipus_tramit)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -84,8 +74,6 @@ class Document extends Model
     public static function getDocumentsNormativa($id)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_tramit', 3)
-            ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -94,8 +82,6 @@ class Document extends Model
     public static function getDocumentsProces($id)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_tramit', 2)
-            ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -104,8 +90,6 @@ class Document extends Model
     public static function getDocumentsServei($id)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_tramit', 5)
-            ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -114,8 +98,6 @@ class Document extends Model
     public static function getDocumentsConcessionaria($id)
     {
         return DB::table('int_documents')
-            ->where('FK_id_tipus_tramit', 6)
-            ->where('FK_id_tramit', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -125,8 +107,6 @@ class Document extends Model
     {
         return DB::table('int_documents')
             ->select('id', 'nom_visual', 'url', 'extensio', 'ordre', 'data_entrada')
-            ->where('FK_id_tipus_obj', 1)
-            ->where('FK_id_obj', $id)
             ->orderBy('ordre', 'asc')
             ->get();
     }
@@ -153,8 +133,8 @@ class Document extends Model
             'extensio'        => $arr['extensio'],
             'ordre'           => $arr['ordre'],
             'url'             => $arr['url_document'],
-            'fk_id_obj'       => $arr['id_obj'],
-            'fk_id_tipus_obj' => $arr['tipus_obj'],
+            'categoria_id'    => $arr['categoria_id'],
+
         ]);
         return $id;
     }
@@ -171,8 +151,8 @@ class Document extends Model
                 'extensio'        => $arr['extensio'],
                 'ordre'           => $arr['ordre'],
                 'url'             => $arr['url_document'],
-                'fk_id_obj'       => $arr['id_obj'],
-                'fk_id_tipus_obj' => $arr['tipus_obj'],
+                'categoria_id'    => $arr['categoria_id'],
+
             ]);
     }
 
@@ -181,7 +161,6 @@ class Document extends Model
     {
         return DB::table('int_documents')
             ->where('id', $arr['id_document'])
-            ->where('FK_id_tramit', $id)
             ->update(['nom_arxiu' => $arr['nom_arxiu']]);
     }
 

@@ -3,7 +3,7 @@
 return [
     'connections' => [
         'default' => [
-            'hosts' => [env('LDAP_HOST', '192.168.5.72')],
+            'hosts' => [env('LDAP_HOST', '192.168.5.6')],
             'username' => env('LDAP_USERNAME', 'cn=administrador,dc=torroella,dc=local'),
             'password' => env('LDAP_PASSWORD', 'Mont<Pla1596'),
             'base_dn' => env('LDAP_BASE_DN', 'dc=torroella,dc=local'),

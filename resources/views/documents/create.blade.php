@@ -29,7 +29,7 @@
         </div>
     @endif
 -->
-    <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form" action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <label class="form-label">Nom Visual:</label>
@@ -41,14 +41,17 @@
         <label class="form-label">Data Entrada:</label>
         <input class="form-control" type="datetime-local" name="data_entrada" value="{{ old('data_entrada') }}" required>
 
-        <label class="form-label">Ordre:</label>
-        <input class="form-control" type="number" name="ordre" value="{{ old('ordre') }}" required>
+        <label class="form-label">Categoria</label>
+        <select name="categoria_id" class="form-select">
+            <option value="">-- Selecciona Categoria --</option>
+            @foreach ($categories as $categoria)
+                <option value="{{ $categoria->id }}" {{ old('categoria_id', $document->categoria_id ?? '') == $categoria->id ? 'selected' : '' }}>
+                    {{ $categoria->nom }}
+                </option>
+            @endforeach
+        </select>
 
-        <label class="form-label">ID Objecte:</label>
-        <input class="form-control" type="number" name="fk_id_obj" value="{{ old('fk_id_obj') }}" required>
 
-        <label class="form-label">Tipus Objecte:</label>
-        <input class="form-control" type="number" name="fk_id_tipus_obj" value="{{ old('fk_id_tipus_obj') }}" required>
 
         <button class="btn btn-primary" type="submit">Crear Document</button>
         <button class="btn-go-back" type="button" onclick="window.location.href='{{ route('documents.index') }}'">Tornar</button>
@@ -57,3 +60,4 @@
     <x-footer />
 </body>
 </html>
+

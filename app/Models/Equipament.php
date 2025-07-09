@@ -10,7 +10,7 @@ class Equipament extends Model
     protected $table = 'int_equipaments';
     protected $primaryKey = 'id_equimanent'; 
     public $timestamps = false;
-    public $incrementing = false; 
+    public $incrementing = true; 
 
     protected $fillable = ['Equipament'];
 

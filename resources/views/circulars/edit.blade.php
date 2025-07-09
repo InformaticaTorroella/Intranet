@@ -1,63 +1,76 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Editar Circular</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/circulars.css') }}">
+    <!-- CKEditor 5 Classic Build -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
 </head>
 <body>
     <x-header />
+    
+    <h1 class="form-title">Editar Circular</h1>
 
-    <div class="circulars-page-center">
-        <div class="circulars-container">
-            <h1 class="form-title">Editar Circular</h1>
-
-            <form action="{{ route('circulars.update', $circular->id) }}" method="POST" class="circulars-form">
-                @csrf
-                @method('PUT')
-
-                <label for="nom_visual">Nom Visual:</label>
-                <input type="text" name="nom_visual" id="nom_visual" maxlength="200" required value="{{ old('nom_visual', $circular->nom_visual) }}">
-
-                <label for="nom_arxiu">Nom Arxiu:</label>
-                <input type="text" name="nom_arxiu" id="nom_arxiu" maxlength="200" value="{{ old('nom_arxiu', $circular->nom_arxiu) }}">
-
-                <label for="data_creacio">Data Creació:</label>
-                <input type="datetime-local" name="data_creacio" id="data_creacio" required value="{{ old('data_creacio', \Carbon\Carbon::parse($circular->data_creacio)->format('Y-m-d\TH:i')) }}">
-
-                <label for="data_edicio">Data Edició:</label>
-                <input type="datetime-local" name="data_edicio" id="data_edicio" value="{{ old('data_edicio', $circular->data_edicio ? \Carbon\Carbon::parse($circular->data_edicio)->format('Y-m-d\TH:i') : '') }}">
-
-                <label for="data_publicacio">Data Publicació:</label>
-                <input type="datetime-local" name="data_publicacio" id="data_publicacio" value="{{ old('data_publicacio', $circular->data_publicacio ? \Carbon\Carbon::parse($circular->data_publicacio)->format('Y-m-d\TH:i') : '') }}">
-
-                <label for="extensio">Extensió:</label>
-                <input type="text" name="extensio" id="extensio" maxlength="10" value="{{ old('extensio', $circular->extensio) }}">
-
-                <label for="ordre">Ordre:</label>
-                <input type="number" name="ordre" id="ordre" required value="{{ old('ordre', $circular->ordre) }}">
-
-                <label for="url">URL:</label>
-                <input type="text" name="url" id="url" maxlength="255" value="{{ old('url', $circular->url) }}">
-
-                <label for="publicat">Publicat (0/1):</label>
-                <input type="number" name="publicat" id="publicat" min="0" max="1" value="{{ old('publicat', $circular->publicat) }}">
-
-                <label for="fk_cat_circular">Categoria ID (fk_cat_circular):</label>
-                <input type="number" name="fk_cat_circular" id="fk_cat_circular" required value="{{ old('fk_cat_circular', $circular->fk_cat_circular) }}">
-
-                <label for="fk_tipus_obj">Tipus Objecte (fk_tipus_obj):</label>
-                <input type="number" name="fk_tipus_obj" id="fk_tipus_obj" required value="{{ old('fk_tipus_obj', $circular->fk_tipus_obj) }}">
-
-                <label for="trial689">Trial689:</label>
-                <input type="text" name="trial689" id="trial689" maxlength="1" value="{{ old('trial689', $circular->trial689) }}">
-
-                <button type="submit">Guardar</button>
-                <a href="{{ route('circulars.index') }}" class="btn-go-back">Tornar</a>
-            </form>
+    @if ($errors->any())
+        <div style="color: red; margin-bottom: 1rem;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
+    @endif
+
+    <form action="{{ route('circulars.update', $circular->id) }}" method="POST" enctype="multipart/form-data" class="form">
+        @csrf 
+        @method('PUT')
+
+        <label class="form-label" for="nom_visual">Nom Visual</label>
+        <input type="text" name="nom_visual" id="nom_visual" class="form-control" value="{{ old('nom_visual', $circular->nom_visual) }}" required>
+
+        <label class="form-label" for="descripcion">Descripció</label>
+        <textarea name="descripcion" id="descripcion" class="form-control" required>{{ old('descripcion', $circular->descripcion) }}</textarea>
+
+        <label class="form-label" for="fk_cat_circular">Categoria</label>
+        <select name="fk_cat_circular" id="fk_cat_circular" class="form-control" required>
+            @foreach($categories as $categoria)
+                <option value="{{ $categoria->id }}" {{ $categoria->id == old('fk_cat_circular', $circular->fk_cat_circular) ? 'selected' : '' }}>
+                    {{ $categoria->nom }}
+                </option>
+            @endforeach
+        </select>
+
+        <label class="form-label" for="arxius">Arxius (pots pujar més d'un)</label>
+        <input type="file" name="arxius[]" id="arxius" class="form-control" multiple>
+
+        @if($circular->files->count())
+            <h3>Arxius actuals:</h3>
+            <ul>
+                @foreach($circular->files as $file)
+                    <li>
+                        <label>
+                            <input type="checkbox" name="delete_files[]" value="{{ $file->id }}">
+                            Eliminar
+                        </label>
+                        <a href="{{ asset('storage/' . $file->url) }}" target="_blank">{{ $file->nom_arxiu }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        <button type="submit" class="btn-primary">Desar</button>
+    </form>
 
     <x-footer />
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#descripcion'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 </body>
 </html>

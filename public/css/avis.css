@@ -311,3 +311,55 @@ form.form-container {
 form.form-container button.btn-danger {
   width: 220px;
 }
+
+.avis-filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center; /* <-- centra el contenido horizontalmente */
+  padding: 10px 0;
+  margin-bottom: 25px;
+}
+
+.avis-filter-form select {
+  background-color: #fff;
+  border: 2px solid #b03030;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23800000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+}
+
+.avis-filter-form select:focus {
+  outline: none;
+  border-color: #800000;
+  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
+}
+.avis-filter-form > label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #800000;
+  user-select: none;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.filter-button {
+  padding: 10px 20px;
+  background-color: #800000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.filter-button:hover {
+  background-color: #660000;
+}

@@ -7,21 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Circular extends Model
 {
     protected $table = 'int_circulars';
-    public $timestamps = false;
+
     protected $primaryKey = 'id';
+
+    public $timestamps = false;
 
     protected $fillable = [
         'nom_visual',
         'nom_arxiu',
         'data_creacio',
         'data_edicio',
-        'data_publicacio',
-        'extensio',
-        'ordre',
         'url',
-        'publicat',
+        'descripcion',
         'fk_cat_circular',
-        'fk_tipus_obj',
-        'trial689',
     ];
+
+    public function categoria()
+    {
+        return $this->belongsTo(CatCircular::class, 'fk_cat_circular');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(CircularFile::class, 'circular_id');
+    }
 }

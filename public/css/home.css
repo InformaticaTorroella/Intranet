@@ -1,85 +1,91 @@
 /* === MAIN === */
-body {
-  overflow-x: hidden;
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body {
+  flex-direction: column;
 }
 
 main {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
   padding: 20px 40px;
   background: #fff;
   width: 100vw;
   box-sizing: border-box;
+  flex: 1 0 auto; /* Ocupa espacio para sticky footer */
 }
 
-/* Noticias */
-.noticias-container {
+/* === GRID HOME === */
+.grid-home {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 2rem;
   width: 100%;
-  padding: 0 20px;
   box-sizing: border-box;
 }
 
-.noticias-container h1 {
-  margin-bottom: 20px;
-  color: #800000;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: center;
+/* Separadores verticales entre cada columna */
+.grid-home > .home-box:not(:last-child) {
+  border-right: 1px solid #ccc;
+  padding-right: 1rem;
+  margin-right: 1rem;
 }
 
-.noticias-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* === BOXES === */
+.home-box {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.home-box h2 {
+  font-size: 1.4rem;       /* Más grande */
+  margin-bottom: 1rem;
+  font-weight: 700;        /* Más llamativo */
+  color: #800000;          /* Color burdeos para destacar */
+  text-shadow: 1px 1px 2px rgba(128, 0, 0, 0.4); /* Sombra suave */
+}
+
+.home-item {
+  cursor: pointer;         /* Indicador de clic */
+  padding: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.home-item:hover {
+  background-color: #ffe6e6; /* Fondo suave al pasar mouse */
+}
+
+.home-item h3 {
+  font-size: 1.15rem;      /* Texto un poco más grande */
+  margin: 0;
+  font-weight: 600;
+  color: #660000;          /* Burdeos oscuro para el texto */
+}
+
+.home-item p {
+  margin: 0;
+  font-size: 0.9rem;       /* Más grande */
+  color: #444;             /* Más oscuro */
 }
 
 .noticia-link {
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s ease;
+  display: block;          /* Para que todo el área sea clicable */
 }
 
-.noticia-link:hover {
-  transform: scale(1.02);
-}
-
-.noticia {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.noticia-link:hover .noticia {
-  border-color: #800000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.noticia-titulo {
-  color: #800000;
-  margin-top: 0;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.noticia-descripcio {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.noticia-data {
-  font-size: 14px;
-  color: #666;
-}
-
-/* Espacio superior si se usa */
+/* === ENLACES === */
 .espacio-superior {
   width: 100%;
   padding: 0 40px;
@@ -87,7 +93,6 @@ main {
   box-sizing: border-box;
 }
 
-/* Panel enlaces */
 .panel-enlaces {
   padding: 40px 20px;
   text-align: center;

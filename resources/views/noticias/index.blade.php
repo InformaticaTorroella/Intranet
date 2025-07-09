@@ -8,9 +8,27 @@
 </head>
 <body>
     <x-header />
+    @php
+        $userGroups = session('user_groups', []);
+        $hasAccess = session()->has('username') && (in_array('Intranet_Noticias', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+    @endphp
     <div class="noticias-page-center">
         <section class="noticias-container">
             <h1>Notícies</h1>
+            <form method="GET" action="{{ route('noticias.index') }}" class="noticias-filter-form">
+                <label for="filter_categoria">Categoria:</label>
+                <select name="filter_categoria" id="filter_categoria" onchange="this.form.submit()">
+                    <option value="" {{ request('filter_categoria') == '' ? 'selected' : '' }}>Totes</option>
+                    @foreach($categories as $categoria)
+                        <option value="{{ $categoria->id }}" {{ request('filter_categoria') == $categoria->id ? 'selected' : '' }}>
+                            {{ $categoria->nom }}
+                        </option>
+                    @endforeach
+                </select>
+                @if($hasAccess)
+                    <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
+                @endif
+            </form>
 
             @forelse ($noticias as $noticia)
                 <article class="noticia">
@@ -19,20 +37,23 @@
                     <p class="noticia-data">Publicada: {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
                     <a href="{{ route('noticias.show', $noticia->id) }}" class="btn-ver">Veure</a>
 
-                    @if(session()->has('username') && isset($noticia->id))
+                    @if($hasAccess)
                         <a href="{{ route('noticias.edit', ['id' => $noticia->id]) }}" class="btn-editar">Editar</a>
                     @endif
                 </article>
+                
             @empty
                 <p>No hi ha notícies disponibles.</p>
             @endforelse
-
-            @if(session()->has('username'))
+            <div class="pagination">
+                {{ $noticias->links() }}
+            </div>
+            @if($hasAccess)
                 <a href="{{ route('noticias.create') }}" class="btn-crear">Crear Notícia</a>
             @else
                 <p>
-                  Per crear un notícia, si us plau,
-                  <a href="{{ route('login') }}">inicia sessió</a>.
+                  No tens permisos per crear notícies. <br>
+                  Si vols crear notícies, contacta amb el seu administrador.
                 </p>
             @endif
         </section>

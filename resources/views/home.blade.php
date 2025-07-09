@@ -1,49 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
-    <title>Intranet de Torroella de Montgrí</title>
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
+  <title>Intranet de Torroella de Montgrí</title>
+  <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <x-header />
+  <x-header />
 
-    
-    <div class="espacio-superior">
-      <section class="panel-enlaces">
-        <div class="enlaces-grid">
-          <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
-          <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
-          <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
-          <a href="{{ route('telefons.index') }}" class="enlace-panel">Telefons</a>
-          <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
-        </div>
+  <div class="espacio-superior">
+    <section class="panel-enlaces">
+      <div class="enlaces-grid">
+        <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
+        <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
+        <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
+        <a href="{{ route('telefons.index') }}" class="enlace-panel">Telèfons</a>
+        <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
+        <a href="{{ route('quadres.index') }}" class="enlace-panel">Quadre de Classificació</a>
+      </div>
+    </section>
+  </div>
+
+  <main>
+    <div class="grid-home">
+      <!-- 📰 Últimes Notícies -->
+      <section class="home-box">
+        <h2>📄 Últimes Circulars</h2>
+        <a href="{{ route('circulars.index') }}" class="noticia-link">
+          @forelse ($circulars as $circular)
+            <article class="home-item">
+              <h3>{{ $circular->nom_visual }}</h3>
+              <p>{{ \Carbon\Carbon::parse($circular->data_creacio)->format('d/m/Y') }}</p>
+            </article>
+          @empty
+            <p>No hi ha circulars.</p>
+          @endforelse
+        </a>
       </section>
 
-    </div>
-    <main>
-
-      <section class="noticias-container">
-        <h1>Notícies Recents</h1>
-        <div class="noticias-grid">
+      <!-- Últimes Notícies con enlace al index -->
+      <section class="home-box">
+        <h2>📰 Últimes Notícies</h2>
+        <a href="{{ route('noticias.index') }}" class="noticia-link">
           @forelse ($noticias as $noticia)
-            <a href="{{ route('noticias.show', $noticia->id) }}" class="noticia-link">
-              <article class="noticia">
-                <h2 class="noticia-titulo">{{ $noticia->nom }}</h2>
-                <p class="noticia-data">Publicada: {{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
-              </article>
-            </a>
+            <div class="home-item">
+              <h3>{{ $noticia->nom }}</h3>
+              <p>{{ \Carbon\Carbon::parse($noticia->data_publicacio)->format('d/m/Y') }}</p>
+            </div>
           @empty
             <p>No hi ha notícies disponibles.</p>
           @endforelse
-        </div>
+        </a>
       </section>
-    </main>
 
-    <x-footer />
+
+
+      <!-- 🧩 Secció buida -->
+      <section class="home-box">
+        <h2>🧩 Altres</h2>
+        <p>Espai reservat per contingut extra...</p>
+      </section>
+    </div>
+  </main>
+
+  <x-footer />
 </body>
 </html>

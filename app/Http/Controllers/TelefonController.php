@@ -13,9 +13,13 @@ class TelefonController extends Controller
     public function index(Request $request)
     {
         $equipament_id = $request->input('id_equipament');
-        $area_id = $request->input('area_id');
-        $orderBy = $request->input('order_by', 'nom'); 
-        $order = $request->input('order', 'asc'); // asc o desc
+        $area_id = $request->input('area_id');    
+        $nom = $request->input('nom'); 
+        $orderBy = $request->input('order_by');
+        $order = $request->input('order', 'asc');
+
+        
+
 
         $equipaments = Equipament::orderBy('Equipament')->get();
 
@@ -29,16 +33,33 @@ class TelefonController extends Controller
 
         $query = Telefon::query();
 
+        // Join para poder ordenar por nombre de área
+        $query->leftJoin('int_area', 'int_telefons.fk_id_area', '=', 'int_area.IdArea');
+
+        // Filtrado
         if ($area_id) {
             $query->where('fk_id_area', $area_id);
         } elseif ($equipament_id) {
             $query->where('fk_id_equipament', $equipament_id);
         }
 
-        $telefons = $query->orderByRaw('LOWER(' . $orderBy . ') ' . $order)->paginate(15);
+        if ($nom) {
+            $query->where('nom', 'LIKE', '%' . $nom . '%');
+        }
+
+        $telefons = $query
+            ->orderByRaw('int_area.Area IS NULL, int_area.Area ASC') // 1. Àrees no null primer, ordenades A-Z
+            ->orderBy('nom', 'asc')                                  // 2. Noms de telèfon
+            ->orderBy('fk_id_equipament', 'asc')                     // 3. Equipaments
+            ->select('int_telefons.*')                               // assegurem que només agafem columnes de telefons
+            ->paginate(50);
+
+
 
         return view('telefons.index', compact('telefons', 'equipaments', 'arees', 'order', 'orderBy'));
     }
+
+
 
     // Mostrar formulari de creacio
     public function create()
@@ -68,7 +89,7 @@ class TelefonController extends Controller
             $data['data_edicio'] = date('Y-m-d');
         }
 
-        $telefon = Telefon::create($data);  // Asumiendo que el modelo tiene fillable configurado
+        $telefon = Telefon::create($data);  
 
         $id = $telefon->id;
 
