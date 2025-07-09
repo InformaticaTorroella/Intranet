@@ -18,12 +18,13 @@
     <input 
       type="text" 
       name="serie" 
-      id="serieInput" 
       placeholder="Filtrar per Sèrie" 
       value="{{ request('serie') }}" 
       class="search-input" 
       onkeydown="if(event.key === 'Enter') this.form.submit()"
     >
+    <input type="hidden" name="order_by" value="{{ request('order_by', '') }}">
+    <input type="hidden" name="order" value="{{ request('order', '') }}">
   </form>
 
   <table class="table">

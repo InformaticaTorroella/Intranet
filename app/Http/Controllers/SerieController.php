@@ -24,9 +24,7 @@ class SerieController extends Controller
             $query->where('serie', 'like', '%' . $search . '%');
         }
 
-        $series = $query->get();
-
-        $series = Serie::orderBy('serie')->paginate(10);
+        $series = $query->orderBy('serie')->paginate(10);
 
 
         return view('series.index', compact('series'));
