@@ -13,7 +13,7 @@
 <main>
   @php
       $userGroups = session('user_groups', []);
-      $hasAccess = session()->has('username') && (in_array('Intranet_QuadreClassificacions', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+      $hasAccess = session()->has('username') && (in_array('Intranet_Arxiver', $userGroups) || in_array('Intranet_Administracio', $userGroups));
 
       function sortIcon($col, $currentOrderBy, $currentOrder) {
           if ($currentOrderBy === $col) {
