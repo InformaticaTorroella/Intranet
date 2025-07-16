@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QuadreClassificacio;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class ExportController extends Controller
@@ -20,16 +18,17 @@ class ExportController extends Controller
                 ss.id_subseccio,
                 ss.subseccio,
                 q.fk_id_serie,
+                se.serie,          -- añadido nombre serie
                 t.codi
             FROM quadres_classificacions q
             JOIN seccions s ON q.fk_id_seccio = s.id_seccio
             JOIN subseccions ss ON q.fk_id_subseccio = ss.id_subseccio
+            JOIN series se ON q.fk_id_serie = se.id_serie  -- join para nombre serie
             LEFT JOIN quadres_classificacions_tipologies qct ON q.id = qct.fk_id_quadre_classificacio
             LEFT JOIN tipologies_gial t ON qct.fk_id_tipologia_gial = t.id
             ORDER BY q.id
         ");
 
-        // Agrupar tipologías por cuadro
         $grouped = [];
         foreach ($data as $row) {
             $id = $row->id_quadre;
@@ -39,8 +38,8 @@ class ExportController extends Controller
                     'seccio' => $row->seccio,
                     'id_subseccio' => $row->id_subseccio,
                     'subseccio' => $row->subseccio,
-                    'id_quadre' => $row->id_quadre,
                     'fk_id_serie' => $row->fk_id_serie,
+                    'serie' => $row->serie,   
                     'tipologies' => [],
                 ];
             }
@@ -49,7 +48,6 @@ class ExportController extends Controller
             }
         }
 
-        // Calcular máximo número de tipologías para columnas
         $maxTipologies = 0;
         foreach ($grouped as $item) {
             $count = count($item['tipologies']);
@@ -65,24 +63,19 @@ class ExportController extends Controller
 
         $callback = function () use ($grouped, $maxTipologies) {
             $file = fopen('php://output', 'w');
-
-            // Escribir BOM UTF-8 para que Excel lo detecte bien
             fwrite($file, "\xEF\xBB\xBF");
 
-            // Encabezados básicos
             $header = [
                 'ID Seccio',
                 'Seccio',
                 'ID Subseccio',
-                'Subsecció',
-                'ID Quadre',
+                'Subseccio',
                 'ID Serie',
+                'Serie',
             ];
-            // Añadir encabezados para cada tipología
             for ($i = 1; $i <= $maxTipologies; $i++) {
                 $header[] = "Tipología $i";
             }
-            // Usar ; como delimitador en fputcsv:
             fputcsv($file, $header, ';');
 
             foreach ($grouped as $row) {
@@ -91,14 +84,12 @@ class ExportController extends Controller
                     $row['seccio'],
                     $row['id_subseccio'],
                     $row['subseccio'],
-                    $row['id_quadre'],
                     $row['fk_id_serie'],
+                    $row['serie'],
                 ];
-                // Añadir tipologías, rellenando con '' si no hay suficientes
                 for ($i = 0; $i < $maxTipologies; $i++) {
                     $line[] = $row['tipologies'][$i] ?? '';
                 }
-
                 fputcsv($file, $line, ';');
             }
 
