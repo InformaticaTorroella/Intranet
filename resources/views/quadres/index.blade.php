@@ -31,6 +31,8 @@
     <a href="{{ route('subseccions.create') }}" class="btn btn-primary mb-4">Crear Nova Subsecció</a>
     <a href="{{ route('series.create') }}" class="btn btn-primary mb-4">Crear Nova Sèrie</a>
     <a href="{{ route('tipologies-gial.create') }}" class="btn btn-primary mb-4">Crear Nova Tipologia GIAL</a>
+    <br>
+    <a href="{{ url('/export-csv') }}" class="btn btn-primary mb-4">Descargar CSV</a>
   @endif
 
   <form id="filter-form" method="GET" action="{{ route('quadres.index') }}">

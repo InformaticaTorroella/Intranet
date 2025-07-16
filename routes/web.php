@@ -24,6 +24,7 @@ use App\Http\Controllers\QuadreClassificacioController;
 use App\Http\Controllers\QuadreClassificacioTipologiaController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RespostaController;
+use App\Http\Controllers\ExportController;
 
 use App\Http\Middleware\CheckSessionUsername;
 use Illuminate\Support\Facades\Route;
@@ -163,6 +164,7 @@ Route::middleware('check.session')->group(function () {
     Route::get('/quadres/{id}/edit', [QuadreClassificacioController::class, 'edit'])->name('quadres.edit');
     Route::put('/quadres/{id}', [QuadreClassificacioController::class, 'update'])->name('quadres.update');
     Route::delete('/quadres/{id}', [QuadreClassificacioController::class, 'destroy'])->name('quadres.destroy');
+    Route::get('/export-csv', [ExportController::class, 'exportCsv']);
 
     // 🦁 Seccions
     Route::get('/seccions/create', [SeccioController::class, 'create'])->name('seccions.create');
