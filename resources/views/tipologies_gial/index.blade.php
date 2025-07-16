@@ -15,6 +15,17 @@
 
   <a href="{{ route('tipologies-gial.create') }}" class="btn btn-primary">Nova Tipologia</a>
 
+  <form id="filter-form" method="GET" action="{{ route('tipologies-gial.index') }}">
+    <input 
+      type="text" 
+      name="codi" 
+      placeholder="Filtrar per Tipologia GIAL" 
+      value="{{ request('codi') }}" 
+      class="search-input" 
+      onkeydown="if(event.key === 'Enter') this.form.submit()"
+    >
+  </form>
+
   <table class="table">
     <thead>
       <tr>

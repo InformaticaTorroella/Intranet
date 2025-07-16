@@ -12,10 +12,17 @@ use App\Models\QuadreClassificacioTipologia;
 
 class TipologiaGialController extends Controller
 {
-    public function index() { 
-        $tipologies = TipologiaGial::orderBy('codi')->paginate(10);
-        return view('tipologies_gial.index', compact('tipologies')); 
+    public function index(Request $request) {
+        $tipologies = TipologiaGial::query()
+            ->when($request->filled('codi'), function ($query) use ($request) {
+                $query->where('codi', 'like', '%' . $request->input('codi') . '%');
+            })
+            ->paginate(40); // o el nombre que vulguis
+
+        return view('tipologies_gial.index', compact('tipologies'));
     }
+
+
 
     public function create() { 
         return view('tipologies_gial.create'); 
