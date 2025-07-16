@@ -1,0 +1,154 @@
+/* Estils addicionals FAQ */
+.faq-box {
+    background: white;
+    border: 1px solid #b03030;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.1);
+}
+.faq-box p {
+    margin: 0.4rem 0;
+    color: #333;
+}
+.faq-box .author {
+    font-size: 0.85rem;
+    color: #800000;
+    user-select: none;
+    margin-bottom: 0.5rem;
+}
+.resposta {
+    background: #f0dede;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin-left: 1.5rem;
+    margin-top: 0.7rem;
+    border: 1px solid #b03030;
+    color: #800000;
+    font-size: 0.95rem;
+    position: relative;
+}
+.resposta-nivell2 {
+    background: #f9e6e6;
+    border-radius: 4px;
+    padding: 0.6rem 0.9rem;
+    margin-left: 3rem;
+    margin-top: 0.5rem;
+    border: 1px solid #b03030;
+    color: #800000;
+    font-size: 0.9rem;
+}
+.form-resposta {
+    margin-top: 1rem;
+    margin-left: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.form-resposta textarea {
+    flex: 1;
+    border: 2px solid #b03030;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-resposta textarea:focus {
+    outline: none;
+    border-color: #800000;
+    box-shadow: 0 0 6px rgba(128, 0, 0, 0.3);
+}
+.form-resposta button.btn-success {
+    background-color: #800000;
+    border: none;
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.form-resposta button.btn-success:hover,
+.form-resposta button.btn-success:focus {
+    background-color: #5a0000;
+    outline: none;
+}
+/* Estils addicionals formulari crear */
+    form {
+      background: white;
+      padding: 1.5rem 2rem;
+      border: 1px solid #b03030;
+      border-radius: 6px;
+      max-width: 600px;
+      margin: 2rem auto;
+      box-shadow: 0 4px 12px rgba(128, 0, 0, 0.15);
+    }
+    label {
+      font-weight: 700;
+      color: #800000;
+      user-select: none;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid #b03030;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+      color: #333;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+      resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #800000;
+      box-shadow: 0 0 6px rgba(128, 0, 0, 0.3);
+    }
+    .btn-primary {
+      display: inline-block;
+      background-color: #800000;
+      color: white;
+      padding: 0.5rem 1.25rem;
+      font-weight: 600;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #5a0000;
+      outline: none;
+    }
+    .btn-secondary {
+      background-color: #ccc;
+      color: #333;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: #999;
+      outline: none;
+    }
+    .btn-group {
+      margin-top: 1rem;
+      text-align: center;
+    }

@@ -58,11 +58,31 @@
 
 
 
-      <!-- 🧩 Secció buida -->
+      <!-- ❓ Última FAQ -->
       <section class="home-box">
-        <h2>🧩 Altres</h2>
-        <p>Espai reservat per contingut extra...</p>
+        <h2>❓ Última Pregunta</h2>
+        @if ($ultimaFaq)
+          <div class="home-item faq-item">
+            <h3>{{ $ultimaFaq->pregunta }}</h3>
+            <p>Feta per: {{ $ultimaFaq->usuari->name ?? 'Anònim' }}</p>
+            <p>{{ $ultimaFaq->created_at->format('d/m/Y H:i') }}</p>
+          </div>
+
+          <a href="{{ route('faqs.show', $ultimaFaq->id) }}" class="btn btn-secondary faq-btn">
+            Veure i respondre
+          </a>
+        @else
+          <p>No hi ha cap FAQ.</p>
+        @endif
+
+        <div class="faq-create-container">
+          <a href="{{ route('faqs.create') }}" class="btn faq-btn btn-success faq-create-btn">
+            Nova FAQ
+          </a>
+        </div>
       </section>
+
+
     </div>
   </main>
 
