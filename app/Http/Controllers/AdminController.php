@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Noticia;
 use App\Models\Circular;
-use App\Models\Faq;
+use App\Models\op_Ad;
+use App\Models\op_Usuari;
 use Carbon\Carbon;
 
 
@@ -14,20 +15,13 @@ class AdminController extends Controller
 {
     public function home()
     {
-        $ultimaFaq = Faq::orderBy('created_at', 'desc')->first();
-
-        if ($ultimaFaq) {
-            try {
-                $ultimaFaq->created_at = Carbon::parse($ultimaFaq->created_at);
-            } catch (\Exception $e) {
-                $ultimaFaq->created_at = now();
-            }
-        }
+        // Últim registre AD amb responsable carregat
+        $ultimaAd = op_Ad::with('responsable')->latest('data')->first();
 
         $noticias = Noticia::orderBy('data_publicacio', 'desc')->take(4)->get();
         $circulars = Circular::orderBy('data_creacio', 'desc')->take(4)->get();
 
-        return view('home', compact('noticias', 'circulars', 'ultimaFaq'));
+        return view('home', compact('noticias', 'circulars', 'ultimaAd'));
     }
 
 

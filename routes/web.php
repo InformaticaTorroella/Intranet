@@ -25,6 +25,11 @@ use App\Http\Controllers\QuadreClassificacioTipologiaController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RespostaController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\op_PartidaController;
+use App\Http\Controllers\op_TercerController;
+use App\Http\Controllers\op_UsuariController;
+use App\Http\Controllers\op_AdController;
+
 
 use App\Http\Middleware\CheckSessionUsername;
 use Illuminate\Support\Facades\Route;
@@ -77,9 +82,6 @@ Route::get('/tipologies-gial', [TipologiaGialController::class, 'index'])->name(
 
 Route::get('/quadres-classificacions-tipologies', [QuadreClassificacioTipologiaController::class, 'index'])->name('quadres-classificacions-tipologies.index');
 
-Route::get('faqs', [FaqController::class, 'index'])->name('faqs.index');
-Route::get('faqs/{id}', [FaqController::class, 'show'])->name('faqs.show');
-
 
 // Rutas protegidas con middleware check.session
 Route::middleware('check.session')->group(function () {
@@ -92,7 +94,6 @@ Route::middleware('check.session')->group(function () {
     Route::delete('noticias/{id}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 
     // Documents
-
     Route::get('documents/create', [DocumentController::class, 'create'])->name('documents.create');
     Route::post('documents', [DocumentController::class, 'store'])->name('documents.store');
     Route::get('documents/{id}/edit', [DocumentController::class, 'edit'])->name('documents.edit');
@@ -206,11 +207,39 @@ Route::middleware('check.session')->group(function () {
     Route::get('/api/series/{subseccioId}', [QuadreClassificacioController::class, 'getSeries']);
     Route::get('/api/serie-info/{serieId}', [QuadreClassificacioController::class, 'getSerieInfo']);
 
-    // 🔐 FAQs
-    Route::get('faqs/create', [FaqController::class, 'create'])->name('faqs.create');
-    Route::post('faqs', [FaqController::class, 'store'])->name('faqs.store');
+    // 🔐 Operacio (op rc)
+        // Partides
+        Route::get('op_partides', [op_PartidaController::class, 'index'])->name('op_partides.index');
+        Route::get('op_partides/create', [op_PartidaController::class, 'create'])->name('op_partides.create');
+        Route::post('op_partides', [op_PartidaController::class, 'store'])->name('op_partides.store');
+        Route::get('op_partides/{op_partide}/edit', [op_PartidaController::class, 'edit'])->name('op_partides.edit');
+        Route::put('op_partides/{op_partide}', [op_PartidaController::class, 'update'])->name('op_partides.update');
+        Route::delete('op_partides/{op_partide}', [op_PartidaController::class, 'destroy'])->name('op_partides.destroy');
 
-    Route::post('/respostes', [RespostaController::class, 'store'])->name('respostes.store');
+        // Tercers
+        Route::get('op_tercers', [op_TercerController::class, 'index'])->name('op_tercers.index');
+        Route::get('op_tercers/create', [op_TercerController::class, 'create'])->name('op_tercers.create');
+        Route::post('op_tercers', [op_TercerController::class, 'store'])->name('op_tercers.store');
+        Route::get('op_tercers/{op_tercer}/edit', [op_TercerController::class, 'edit'])->name('op_tercers.edit');
+        Route::put('op_tercers/{op_tercer}', [op_TercerController::class, 'update'])->name('op_tercers.update');
+        Route::delete('op_tercers/{op_tercer}', [op_TercerController::class, 'destroy'])->name('op_tercers.destroy');
+
+        // Usuaris
+        Route::get('op_usuaris', [op_UsuariController::class, 'index'])->name('op_usuaris.index');
+        Route::get('op_usuaris/create', [op_UsuariController::class, 'create'])->name('op_usuaris.create');
+        Route::post('op_usuaris', [op_UsuariController::class, 'store'])->name('op_usuaris.store');
+        Route::get('op_usuaris/{op_usuari}/edit', [op_UsuariController::class, 'edit'])->name('op_usuaris.edit');
+        Route::put('op_usuaris/{op_usuari}', [op_UsuariController::class, 'update'])->name('op_usuaris.update');
+        Route::delete('op_usuaris/{op_usuari}', [op_UsuariController::class, 'destroy'])->name('op_usuaris.destroy');
+
+        // Ads
+        Route::get('op_ads', [op_AdController::class, 'index'])->name('op_ads.index');
+        Route::get('op_ads/create', [op_AdController::class, 'create'])->name('op_ads.create');
+        Route::post('op_ads', [op_AdController::class, 'store'])->name('op_ads.store');
+        Route::get('op_ads/{op_ad}/edit', [op_AdController::class, 'edit'])->name('op_ads.edit');
+        Route::put('op_ads/{ad}', [op_AdController::class, 'update'])->name('op_ads.update');
+        Route::delete('op_ads/{op_ad}', [op_AdController::class, 'destroy'])->name('op_ads.destroy');
+
 });
 
 

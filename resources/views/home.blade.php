@@ -58,29 +58,30 @@
 
 
 
-      <!-- ❓ Última FAQ -->
+      <!-- 🧾 Últim registre AD -->
       <section class="home-box">
-        <h2>❓ Última Pregunta</h2>
-        @if ($ultimaFaq)
-          <div class="home-item faq-item">
-            <h3>{{ $ultimaFaq->pregunta }}</h3>
-            <p>Feta per: {{ $ultimaFaq->usuari->name ?? 'Anònim' }}</p>
-            <p>{{ $ultimaFaq->created_at->format('d/m/Y H:i') }}</p>
+        <h2>🧾 Últim registre AD</h2>
+        @if ($ultimaAd)
+          <div class="home-item ad-item">
+            <h3>{{ $ultimaAd->concepte_despesa }}</h3>
+            <p>Responsable: {{ $ultimaAd->responsable->nom ?? '—' }}</p>
+            <p>{{ \Carbon\Carbon::parse($ultimaAd->data)->format('d/m/Y') }}</p>
           </div>
 
-          <a href="{{ route('faqs.show', $ultimaFaq->id) }}" class="btn btn-secondary faq-btn">
-            Veure i respondre
+          <a href="{{ route('op_ads.edit', $ultimaAd->id) }}" class="btn btn-secondary ad-btn">
+            Editar registre
           </a>
         @else
-          <p>No hi ha cap FAQ.</p>
+          <p>No hi ha cap registre AD.</p>
         @endif
 
-        <div class="faq-create-container">
-          <a href="{{ route('faqs.create') }}" class="btn faq-btn btn-success faq-create-btn">
-            Nova FAQ
+        <div class="ad-create-container">
+          <a href="{{ route('op_ads.create') }}" class="btn ad-btn btn-success ad-create-btn">
+            Nou registre AD
           </a>
         </div>
       </section>
+
 
 
     </div>

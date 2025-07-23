@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\op_Tercer;
+use Illuminate\Http\Request;
+
+class op_TercerController extends Controller
+{
+    public function index()
+    {
+        $tercers = op_Tercer::paginate(15);
+        return view('op_tercers.index', compact('tercers'));
+    }
+
+    public function create()
+    {
+        return view('op_tercers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'ter_doc' => 'required|string|max:20|unique:op_tercers,ter_doc',
+            'ter_nom' => 'required|string|max:255',
+            'ter_dom' => 'nullable|string|max:255',
+            'ter_pob' => 'nullable|string|max:100',
+            'ter_cpo' => 'nullable|integer',
+            'ter_pro' => 'nullable|string|max:100',
+            'ter_tlf' => 'nullable|string|max:50',
+            'ter_fax' => 'nullable|string|max:50',
+            'ter_dce' => 'nullable|string|max:255',
+        ]);
+
+        op_Tercer::create($request->all());
+
+        return redirect()->route('op_tercers.index')->with('success', 'Tercer creat correctament');
+    }
+
+    public function edit(op_Tercer $op_tercer)
+    {
+        return view('op_tercers.edit', compact('op_tercer'));
+    }
+
+    public function update(Request $request, op_Tercer $op_tercer)
+    {
+        $request->validate([
+            'ter_doc' => 'required|string|max:20|unique:op_tercers,ter_doc,' . $op_tercer->ter_doc . ',ter_doc',
+            'ter_nom' => 'required|string|max:255',
+            'ter_dom' => 'nullable|string|max:255',
+            'ter_pob' => 'nullable|string|max:100',
+            'ter_cpo' => 'nullable|integer',
+            'ter_pro' => 'nullable|string|max:100',
+            'ter_tlf' => 'nullable|string|max:50',
+            'ter_fax' => 'nullable|string|max:50',
+            'ter_dce' => 'nullable|string|max:255',
+        ]);
+
+        $op_tercer->update($request->all());
+
+        return redirect()->route('op_tercers.index')->with('success', 'Tercer actualitzat correctament');
+    }
+
+    public function destroy(op_Tercer $op_tercer)
+    {
+        $op_tercer->delete();
+        return redirect()->route('op_tercers.index')->with('success', 'Tercer eliminat');
+    }
+}
