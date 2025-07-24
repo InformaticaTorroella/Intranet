@@ -1,62 +1,70 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <title>Llista Tercers</title>
+  <meta charset="UTF-8">
+  <title>Llista Tercers</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/op.css') }}">
 </head>
 <body>
-    <h1>Tercers</h1>
+  <x-header />
+  <div class="container">
+    <h1 class="page-title">Tercers</h1>
 
-    <p><a href="{{ route('op_tercers.create') }}">Crear Tercer</a></p>
+    <a href="{{ route('op_tercers.create') }}" class="btn btn-primary">Crear Tercer</a>
 
     @if(session('success'))
-        <div style="color:green;">{{ session('success') }}</div>
+      <div class="success-box">{{ session('success') }}</div>
     @endif
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Document</th>
-                <th>Nom</th>
-                <th>Adreça</th>
-                <th>Població</th>
-                <th>Codi Postal</th>
-                <th>Provincia</th>
-                <th>Telèfon</th>
-                <th>Fax</th>
-                <th>DCE</th>
-                <th>Accions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($tercers as $tercer)
-            <tr>
-                <td>{{ $tercer->ter_doc }}</td>
-                <td>{{ $tercer->ter_nom }}</td>
-                <td>{{ $tercer->ter_dom }}</td>
-                <td>{{ $tercer->ter_pob }}</td>
-                <td>{{ $tercer->ter_cpo }}</td>
-                <td>{{ $tercer->ter_pro }}</td>
-                <td>{{ $tercer->ter_tlf }}</td>
-                <td>{{ $tercer->ter_fax }}</td>
-                <td>{{ $tercer->ter_dce }}</td>
-                <td>
-                    <a href="{{ route('op_tercers.edit', $tercer) }}">Editar</a>
-                    <form action="{{ route('op_tercers.destroy', $tercer) }}" method="POST" style="display:inline;" onsubmit="return confirm('Segur?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="background:none;border:none;color:red;cursor:pointer;">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="table-header">Document</th>
+          <th class="table-header">Nom</th>
+          <th class="table-header">Adreça</th>
+          <th class="table-header">Població</th>
+          <th class="table-header">Codi Postal</th>
+          <th class="table-header">Provincia</th>
+          <th class="table-header">Telèfon</th>
+          <th class="table-header">Fax</th>
+          <th class="table-header">DCE</th>
+          <th class="table-header">Accions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($tercers as $tercer)
+        <tr>
+          <td class="table-cell">{{ $tercer->ter_doc }}</td>
+          <td class="table-cell">{{ $tercer->ter_nom }}</td>
+          <td class="table-cell">{{ $tercer->ter_dom }}</td>
+          <td class="table-cell">{{ $tercer->ter_pob }}</td>
+          <td class="table-cell">{{ $tercer->ter_cpo }}</td>
+          <td class="table-cell">{{ $tercer->ter_pro }}</td>
+          <td class="table-cell">{{ $tercer->ter_tlf }}</td>
+          <td class="table-cell">{{ $tercer->ter_fax }}</td>
+          <td class="table-cell">{{ $tercer->ter_dce }}</td>
+          <td class="table-cell">
+            <div class="btn-group">
+              <a href="{{ route('op_tercers.edit', $tercer) }}" class="btn-warning">Editar</a>
+              <form action="{{ route('op_tercers.destroy', $tercer) }}" method="POST" class="inline-form" onsubmit="return confirm('Segur?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-danger">Eliminar</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
     </table>
 
-    <div style="margin-top:10px;">
-        {{ $tercers->links() }}
+    <div class="pagination">
+      {{ $tercers->links() }}
     </div>
 
-    <p><a href="{{ url('/') }}">Tornar a l'inici</a></p>
+    <a href="{{ route('op_ads.index') }}" class="back-link">Tornar enrere</a>
+  </div>
+  <x-footer />
 </body>
 </html>

@@ -42,16 +42,21 @@ class op_AdController extends Controller
         return redirect()->route('op_ads.index')->with('success', 'Registre creat correctament.');
     }
 
-    public function edit(op_Ad $ad)
+    public function edit(op_Ad $op_ad)
     {
-        $usuaris = op_Usuari::all();
-        $partides = op_Partida::all();
-        $tercers = op_Tercer::all();
-        return view('op_ads.edit', compact('ad', 'usuaris', 'partides', 'tercers'));
+        return view('op_ads.edit', [
+            'ad' => $op_ad, // <- esta es la variable que usas en la vista
+            'usuaris' => op_Usuari::all(),
+            'partides' => op_Partida::all(),
+            'tercers' => op_Tercer::all(),
+        ]);
     }
 
-    public function update(Request $request, op_Ad $ad)
+
+    public function update(Request $request, $id)
     {
+        $ad = op_Ad::findOrFail($id);
+
         $validated = $request->validate([
             'data' => 'required|date',
             'responsable_id' => 'required|exists:op_usuaris,id',
@@ -63,10 +68,15 @@ class op_AdController extends Controller
             'rc' => 'nullable|string',
         ]);
 
-        $ad->update($validated);
+
+        $ad->fill($validated);
+        $ad->save();
 
         return redirect()->route('op_ads.index')->with('success', 'Registre actualitzat correctament.');
     }
+
+
+
 
     public function destroy(op_Ad $ad)
     {

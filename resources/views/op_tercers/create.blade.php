@@ -3,61 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Tercer</title>
+    <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ asset('css/op.css') }}">
 </head>
 <body>
-    <h1>Crear Tercer</h1>
+    <x-header />
 
-    <form action="{{ route('op_tercers.store') }}" method="POST">
-        @csrf
+    <div class="container">
+        <h1 class="page-title">Crear Tercer</h1>
 
-        <label>Document (ter_doc):</label><br>
-        <input type="text" name="ter_doc" value="{{ old('ter_doc') }}" required maxlength="20">
-        @error('ter_doc') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+        <form action="{{ route('op_tercers.store') }}" method="POST" class="form-grid">
+            @csrf
 
-        <label>Nom (ter_nom):</label><br>
-        <input type="text" name="ter_nom" value="{{ old('ter_nom') }}" required maxlength="255">
-        @error('ter_nom') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_doc">Document (ter_doc):</label>
+                <input type="text" name="ter_doc" id="ter_doc" class="form-select" value="{{ old('ter_doc') }}" required maxlength="20">
+                @error('ter_doc') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Adreça (ter_dom):</label><br>
-        <input type="text" name="ter_dom" value="{{ old('ter_dom') }}" maxlength="255">
-        @error('ter_dom') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_nom">Nom (ter_nom):</label>
+                <input type="text" name="ter_nom" id="ter_nom" class="form-select" value="{{ old('ter_nom') }}" required maxlength="255">
+                @error('ter_nom') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Població (ter_pob):</label><br>
-        <input type="text" name="ter_pob" value="{{ old('ter_pob') }}" maxlength="100">
-        @error('ter_pob') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_dom">Adreça (ter_dom):</label>
+                <input type="text" name="ter_dom" id="ter_dom" class="form-select" value="{{ old('ter_dom') }}" maxlength="255">
+                @error('ter_dom') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Codi Postal (ter_cpo):</label><br>
-        <input type="number" name="ter_cpo" value="{{ old('ter_cpo') }}">
-        @error('ter_cpo') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_pob">Població (ter_pob):</label>
+                <input type="text" name="ter_pob" id="ter_pob" class="form-select" value="{{ old('ter_pob') }}" maxlength="100">
+                @error('ter_pob') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Provincia (ter_pro):</label><br>
-        <input type="text" name="ter_pro" value="{{ old('ter_pro') }}" maxlength="100">
-        @error('ter_pro') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_cpo">Codi Postal (ter_cpo):</label>
+                <input type="number" name="ter_cpo" id="ter_cpo" class="form-select" value="{{ old('ter_cpo') }}">
+                @error('ter_cpo') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Telèfon (ter_tlf):</label><br>
-        <input type="text" name="ter_tlf" value="{{ old('ter_tlf') }}" maxlength="50">
-        @error('ter_tlf') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_pro">Provincia (ter_pro):</label>
+                <input type="text" name="ter_pro" id="ter_pro" class="form-select" value="{{ old('ter_pro') }}" maxlength="100">
+                @error('ter_pro') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>Fax (ter_fax):</label><br>
-        <input type="text" name="ter_fax" value="{{ old('ter_fax') }}" maxlength="50">
-        @error('ter_fax') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_tlf">Telèfon (ter_tlf):</label>
+                <input type="text" name="ter_tlf" id="ter_tlf" class="form-select" value="{{ old('ter_tlf') }}" maxlength="50">
+                @error('ter_tlf') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <label>DCE (ter_dce):</label><br>
-        <input type="text" name="ter_dce" value="{{ old('ter_dce') }}" maxlength="255">
-        @error('ter_dce') <div style="color:red;">{{ $message }}</div> @enderror
-        <br><br>
+            <div class="mb-4">
+                <label for="ter_fax">Fax (ter_fax):</label>
+                <input type="text" name="ter_fax" id="ter_fax" class="form-select" value="{{ old('ter_fax') }}" maxlength="50">
+                @error('ter_fax') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-        <button type="submit">Crear</button>
-    </form>
+            <div class="mb-4">
+                <label for="ter_dce">DCE (ter_dce):</label>
+                <input type="text" name="ter_dce" id="ter_dce" class="form-select" value="{{ old('ter_dce') }}" maxlength="255">
+                @error('ter_dce') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
-    <p><a href="{{ route('op_tercers.index') }}">Tornar enrere</a></p>
+            <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+
+        <p><a href="{{ route('op_tercers.index') }}" class="btn btn-secondary">Tornar enrere</a></p>
+    </div>
+    <x-footer />
 </body>
 </html>

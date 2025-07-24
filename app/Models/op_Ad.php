@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 class op_Ad extends Model
 {
     protected $table = 'op_ad';
+    protected $primaryKey = 'id'; 
+    public $timestamps = false;
     protected $fillable = [
         'data', 'responsable_id', 'partida', 'import_reserva',
         'exp_sedipualba', 'concepte_despesa', 'cif', 'rc'

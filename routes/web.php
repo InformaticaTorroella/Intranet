@@ -237,7 +237,7 @@ Route::middleware('check.session')->group(function () {
         Route::get('op_ads/create', [op_AdController::class, 'create'])->name('op_ads.create');
         Route::post('op_ads', [op_AdController::class, 'store'])->name('op_ads.store');
         Route::get('op_ads/{op_ad}/edit', [op_AdController::class, 'edit'])->name('op_ads.edit');
-        Route::put('op_ads/{ad}', [op_AdController::class, 'update'])->name('op_ads.update');
+        Route::put('/op_ads/{id}', [op_AdController::class, 'update'])->name('op_ads.update');
         Route::delete('op_ads/{op_ad}', [op_AdController::class, 'destroy'])->name('op_ads.destroy');
 
 });

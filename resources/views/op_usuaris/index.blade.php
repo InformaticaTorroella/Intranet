@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <title>Llista Usuaris</title>
+  <meta charset="UTF-8">
+  <title>Llista Usuaris</title>
+  <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/op.css') }}">
 </head>
 <body>
-    <h1>Usuaris</h1>
+  <x-header />
 
-    <p><a href="{{ route('op_usuaris.create') }}">Crear Usuari</a></p>
+  <div class="container">
+    <h1 class="page-title">Usuaris</h1>
+
+    <a href="{{ route('op_usuaris.create') }}" class="btn btn-primary">Crear Usuari</a>
 
     @if(session('success'))
-        <div style="color:green;">{{ session('success') }}</div>
+      <div class="success-box">{{ session('success') }}</div>
     @endif
 
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Accions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($usuaris as $usuari)
-            <tr>
-                <td>{{ $usuari->id }}</td>
-                <td>{{ $usuari->nom }}</td>
-                <td>
-                    <a href="{{ route('op_usuaris.edit', $usuari) }}">Editar</a>
-                    <form action="{{ route('op_usuaris.destroy', $usuari) }}" method="POST" style="display:inline;" onsubmit="return confirm('Segur?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="background:none;border:none;color:red;cursor:pointer;">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="table-header">ID</th>
+          <th class="table-header">Nom</th>
+          <th class="table-header">Accions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($usuaris as $usuari)
+        <tr>
+          <td class="table-cell">{{ $usuari->id }}</td>
+          <td class="table-cell">{{ $usuari->nom }}</td>
+          <td class="table-cell">
+            <div class="btn-group">
+              <a href="{{ route('op_usuaris.edit', $usuari) }}" class="btn-warning">Editar</a>
+              <form action="{{ route('op_usuaris.destroy', $usuari) }}" method="POST" class="inline-form" onsubmit="return confirm('Segur?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-danger">Eliminar</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
     </table>
 
-    <div style="margin-top:10px;">
-        {{ $usuaris->links() }}
+    <div class="pagination">
+      {{ $usuaris->links() }}
     </div>
 
-    <p><a href="{{ url('/') }}">Tornar a l'inici</a></p>
+    <a href="{{ route('op_ads.index') }}" class="back-link">Tornar enrere</a>
+  </div>
+  <x-footer />
 </body>
 </html>
