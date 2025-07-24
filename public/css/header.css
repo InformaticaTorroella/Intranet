@@ -1,42 +1,46 @@
 header {
   display: flex;
   align-items: center;
-  justify-content: center; /* centra los links */
+  justify-content: space-between; /* logo izq, redes der */
   padding: 10px 40px;
   background: #fff;
   border-bottom: 3px solid #800000;
+  position: relative; /* para centrar menú absolute */
   box-sizing: border-box;
 }
 
 .logo {
-  margin-right: auto; /* empuja logo a la izquierda */
+  /* sin margin auto para no empujar */
 }
 
 .logo img {
-  width: 200px; /* ajusta según necesidad */
+  width: 200px; /* ajusta si quieres */
   height: auto;
   user-select: none;
 }
 
-
 nav.links {
-  flex-grow: 1; /* ocupa espacio para centrar */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .menu-list {
   display: flex;
-  justify-content: center;
   gap: 20px;
   list-style: none;
   padding: 0;
   margin: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu-item a {
   color: #800000;
   text-decoration: none;
   font-weight: 600;
-  font-size: 18px; /* más grande */
+  font-size: 18px;
   padding: 8px 16px;
   border: 2px solid transparent;
   border-radius: 6px;
@@ -49,11 +53,10 @@ nav.links {
   background-color: #800000;
 }
 
-
 .redes-header {
-  margin-left: auto; /* empuja redes a la derecha */
   display: flex;
   gap: 15px;
+  /* sin margin auto para no empujar */
 }
 
 .redes-header a {
