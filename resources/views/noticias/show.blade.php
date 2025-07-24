@@ -14,7 +14,7 @@
         <div><h1>{{ $noticia->nom }}</h1></div>
 
         <div class="detalle-item">
-            <strong>Descriptció:</strong>
+            <strong>Descripció:</strong>
             <div class="detalle-caja">{{ $noticia->descripcio }}</div>
         </div>
 
