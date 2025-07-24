@@ -12,9 +12,30 @@ class op_AdController extends Controller
 {
     public function index()
     {
-        $ads = op_Ad::with(['responsable', 'partidaRel', 'tercer'])->paginate(10);
-        return view('op_ads.index', compact('ads'));
+        $username = session('username');
+        if (!$username) {
+            // Sin redirección, solo pasamos vacío o mensaje
+            $ads = collect(); // colección vacía
+            $noUser = true;
+            return view('op_ads.index', compact('ads', 'noUser'));
+        }
+
+        $usuari = op_Usuari::where('nom', $username)->first();
+
+        if (!$usuari) {
+            $ads = collect();
+            $noUser = true;
+            return view('op_ads.index', compact('ads', 'noUser'));
+        }
+
+        $ads = op_Ad::with(['responsable', 'partidaRel', 'tercer'])
+            ->where('responsable_id', $usuari->id)
+            ->paginate(10);
+
+        return view('op_ads.index', compact('ads'))->with('noUser', false);
     }
+
+
 
     public function create()
     {

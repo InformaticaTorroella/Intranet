@@ -7,7 +7,7 @@
     <p>
       Hola,
       @if(session()->has('username'))
-        {{ session('username') }}
+        {{ session('name') }}
       @else
         <a href="{{ route('login') }}">Iniciar Sessió</a>
       @endif

@@ -4,19 +4,20 @@
   <meta charset="UTF-8">
   <title>Llista Tercers</title>
   <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
   <link rel="stylesheet" href="{{ asset('css/op.css') }}">
 </head>
 <body>
   <x-header />
+  @php
+      $userGroups = session('user_groups', []);
+      $hasAccess = session()->has('username') && (in_array('Intranet_Operacions', $userGroups) || in_array('Intranet_Administracio', $userGroups));
+  @endphp
   <div class="container">
     <h1 class="page-title">Tercers</h1>
-
-    <a href="{{ route('op_tercers.create') }}" class="btn btn-primary">Crear Tercer</a>
-
-    @if(session('success'))
-      <div class="success-box">{{ session('success') }}</div>
+    @if($hasAccess)
+      <a href="{{ route('op_tercers.create') }}" class="btn btn-primary">Crear Tercer</a>
     @endif
-
     <table class="table">
       <thead>
         <tr>
@@ -29,7 +30,9 @@
           <th class="table-header">Telèfon</th>
           <th class="table-header">Fax</th>
           <th class="table-header">DCE</th>
-          <th class="table-header">Accions</th>
+          @if($hasAccess)
+            <th class="table-header">Accions</th>
+          @endif
         </tr>
       </thead>
       <tbody>
@@ -44,16 +47,18 @@
           <td class="table-cell">{{ $tercer->ter_tlf }}</td>
           <td class="table-cell">{{ $tercer->ter_fax }}</td>
           <td class="table-cell">{{ $tercer->ter_dce }}</td>
-          <td class="table-cell">
-            <div class="btn-group">
-              <a href="{{ route('op_tercers.edit', $tercer) }}" class="btn-warning">Editar</a>
-              <form action="{{ route('op_tercers.destroy', $tercer) }}" method="POST" class="inline-form" onsubmit="return confirm('Segur?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn-danger">Eliminar</button>
-              </form>
-            </div>
-          </td>
+          @if($hasAccess)
+            <td class="table-cell">
+              <div class="btn-group">
+                <a href="{{ route('op_tercers.edit', $tercer) }}" class="btn-warning">Editar</a>
+                <form action="{{ route('op_tercers.destroy', $tercer) }}" method="POST" class="inline-form" onsubmit="return confirm('Segur?');">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn-danger">Eliminar</button>
+                </form>
+              </div>
+            </td>
+          @endif
         </tr>
         @endforeach
       </tbody>
