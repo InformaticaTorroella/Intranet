@@ -62,7 +62,7 @@
                 <td class="table-cell">
                   <div class="btn-group">
                     <a class="btn btn-warning" href="{{ route('op_ads.edit', $ad) }}">Editar</a>
-                    <form class="inline-form" action="{{ route('op_ads.destroy', $ad) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar?');">
+                    <form class="inline-form" action="{{ route('op_ads.destroy', $ad->id) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar?');">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-danger" type="submit">Eliminar</button>

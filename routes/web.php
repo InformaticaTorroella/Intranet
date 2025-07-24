@@ -44,7 +44,6 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [AdminController::class, 'home'])->name('home');
 
 Route::get('noticias', [NoticiaController::class, 'index'])->name('noticias.index');
-Route::get('noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
 
 Route::get('documents', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('/documents/view/{id}/{action?}', [DocumentController::class, 'view'])->name('documents.view');
@@ -243,4 +242,5 @@ Route::middleware('check.session')->group(function () {
 });
 
 
-
+// Rutes que potser donen conflicte amb daltres pq son molt generiques
+Route::get('noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.show');

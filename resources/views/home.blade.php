@@ -56,31 +56,23 @@
         </a>
       </section>
 
-
-
-      <!-- 🧾 Últim registre AD -->
       <section class="home-box">
-        <h2>🧾 Últim registre AD</h2>
-        @if ($ultimaAd)
-          <div class="home-item ad-item">
-            <h3>{{ $ultimaAd->concepte_despesa }}</h3>
-            <p>Responsable: {{ $ultimaAd->responsable->nom ?? '—' }}</p>
-            <p>{{ \Carbon\Carbon::parse($ultimaAd->data)->format('d/m/Y') }}</p>
-          </div>
-
-          <a href="{{ route('op_ads.edit', $ultimaAd->id) }}" class="btn btn-secondary ad-btn">
-            Editar registre
-          </a>
-        @else
-          <p>No hi ha cap registre AD.</p>
-        @endif
-
-        <div class="ad-create-container">
-          <a href="{{ route('op_ads.create') }}" class="btn ad-btn btn-success ad-create-btn">
-            Nou registre AD
-          </a>
+        <h2>Espai extra</h2>
+        <div class="home-item">
+          <h3>S'accepten propostes</h3>
+          <p>
+            Contacteu a 
+            <a href="mailto:informatica@torroella-estartit.cat" style="color: inherit; text-decoration: none;">
+              informatica@torroella-estartit.cat
+            </a><br>
+            Es consideraran totes les propostes i es valoraran.
+          </p>
         </div>
       </section>
+
+
+
+
 
 
 

@@ -12,7 +12,7 @@ class op_AdController extends Controller
 {
     public function index()
     {
-        $username = session('username');
+        $username = session('name');
         if (!$username) {
             // Sin redirección, solo pasamos vacío o mensaje
             $ads = collect(); // colección vacía
@@ -99,10 +99,13 @@ class op_AdController extends Controller
 
 
 
-    public function destroy(op_Ad $ad)
+    public function destroy($id)
     {
+        $ad = op_Ad::findOrFail($id);
         $ad->delete();
         return redirect()->route('op_ads.index')->with('success', 'Registre eliminat.');
     }
+
+
 }
 

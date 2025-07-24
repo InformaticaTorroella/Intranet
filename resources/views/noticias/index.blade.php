@@ -27,6 +27,7 @@
                 </select>
                 @if($hasAccess)
                     <a href="{{ route('categoria-noticias.create') }}" class="btn-secondary">Afegir Categoria</a>
+                    <a href="{{ route('noticias.create') }}" class="btn-secondary">Crear Notícia</a>
                 @endif
             </form>
 
@@ -48,14 +49,7 @@
             <div class="pagination">
                 {{ $noticias->links() }}
             </div>
-            @if($hasAccess)
-                <a href="{{ route('noticias.create') }}" class="btn-crear">Crear Notícia</a>
-            @else
-                <p>
-                  No tens permisos per crear notícies. <br>
-                  Si vols crear notícies, contacta amb el seu administrador.
-                </p>
-            @endif
+            
         </section>
     </div>
     <x-footer />
