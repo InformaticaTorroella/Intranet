@@ -20,11 +20,10 @@
         <div class="actions mb-4">
           <a class="btn btn-primary" href="{{ route('op_ads.create') }}">+ Nou registre</a>
           <a class="btn btn-warning" href="{{ route('op_partides.index') }}">+ Veure Parides</a>
-          <a class="btn btn-warning" href="{{ route('op_tercers.index') }}">+ Veure Tercer</a>
           <a class="btn btn-warning" href="{{ route('op_usuaris.index') }}">+ Veure Usuaris</a>
         </div>
       @endif
-      @if($ads->count() > 0)
+      @if($ads->count() > 0 || $hasAccess)
         <table class="table" aria-label="Taula de registres">
           <thead>
             <tr>
@@ -55,8 +54,8 @@
               <td class="table-cell">{{ number_format($ad->import_reserva, 2, ',', '.') }}</td>
               <td class="table-cell">{{ $ad->exp_sedipualba }}</td>
               <td class="table-cell">{{ $ad->concepte_despesa }}</td>
-              <td class="table-cell">{{ $ad->cif }}</td>
-              <td class="table-cell">{{ $ad->tercer->ter_nom ?? '' }}</td>
+              <td class="table-cell">{{ $ad->tercer->TER_DOC ?? '' }}</td>
+              <td class="table-cell">{{ $ad->tercer->TER_NOM ?? '' }}</td>
               @if($hasAccess)
                 <td class="table-cell">{{ $ad->rc }}</td>
                 <td class="table-cell">
@@ -75,9 +74,12 @@
           </tbody>
         </table>
 
-        <div style="margin-top: 20px;">
-          {{ $ads->links() }}
-        </div>
+        @if(method_exists($ads, 'links'))
+          <div style="margin-top: 20px;">
+            {{ $ads->links() }}
+          </div>
+        @endif
+
       @else
         <p>No hi ha registres amb el eut usuari.</p>
       @endif

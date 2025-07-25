@@ -5,6 +5,9 @@
     <title>Crear Registre AD</title>
     <link rel="icon" href="{{ asset('images/Escut_Transparent.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/op.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
     <x-header />
@@ -77,12 +80,12 @@
             </div>
 
             <div class="mb-4">
-                <label for="cif">CIF (Proveïdor):</label>
-                <select name="cif" class="form-select">
+                <label for="cif">Proveïdor:</label>
+                <select name="cif" class="form-select select2" required>
                     <option value="">Selecciona proveïdor</option>
                     @foreach($tercers as $tercer)
-                        <option value="{{ $tercer->ter_doc }}" {{ old('cif') == $tercer->ter_doc ? 'selected' : '' }}>
-                            {{ $tercer->ter_nom }}
+                        <option value="{{ $tercer->TER_ITE }}" data-terdoc="{{ $tercer->TER_DOC }}" {{ old('cif') == $tercer->TER_ITE ? 'selected' : '' }}>
+                            {{ $tercer->TER_NOM }}
                         </option>
                     @endforeach
                 </select>
@@ -102,6 +105,51 @@
 
     </div>
     <x-footer />
+
+    <script>
+    $(document).ready(function() {
+      function formatTercer(tercer) {
+        if (!tercer.id) {
+          return tercer.text;
+        }
+        var terdoc = $(tercer.element).data('terdoc');
+        if (terdoc) {
+          return $('<span>' + tercer.text + '<br><small style="color:gray;">' + terdoc + '</small></span>');
+        }
+        return tercer.text;
+      }
+
+      function formatSelection(tercer) {
+        if (!tercer.id) {
+          return tercer.text;
+        }
+        var terdoc = $(tercer.element).data('terdoc');
+        return terdoc || tercer.text;
+      }
+
+      $('.select2').select2({
+        placeholder: 'Selecciona proveïdor',
+        allowClear: true,
+        minimumInputLength: 2,
+        language: {
+          inputTooShort: function() {
+            return 'Escriu almenys 2 caràcters';
+          },
+          noResults: function() {
+            return 'No s\'han trobat resultats';
+          },
+          searching: function() {
+            return 'Cercant...';
+          },
+          loadingMore: function() {
+            return 'Carregant més resultats...';
+          }
+        },
+        templateResult: formatTercer,
+        templateSelection: formatSelection,
+      });
+    });
+    </script>
 
 </body>
 </html>

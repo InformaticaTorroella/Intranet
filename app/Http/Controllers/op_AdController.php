@@ -7,25 +7,32 @@ use App\Models\op_Usuari;
 use App\Models\op_Partida;
 use App\Models\op_Tercer;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class op_AdController extends Controller
 {
     public function index()
     {
         $username = session('name');
+        $userGroups = session('user_groups', []);
+
+        $hasGroupAccess = in_array('Intranet_Operacions', $userGroups) || in_array('Intranet_Administracio', $userGroups);
+
+        if ($hasGroupAccess) {
+            $ads = op_Ad::with(['responsable', 'partidaRel', 'tercer'])->paginate(10);
+            return view('op_ads.index', compact('ads'))->with('noUser', false);
+        }
+
         if (!$username) {
-            // Sin redirección, solo pasamos vacío o mensaje
-            $ads = collect(); // colección vacía
-            $noUser = true;
-            return view('op_ads.index', compact('ads', 'noUser'));
+            $ads = new LengthAwarePaginator([], 0, 10);
+            return view('op_ads.index', compact('ads'))->with('noUser', true);
         }
 
         $usuari = op_Usuari::where('nom', $username)->first();
 
         if (!$usuari) {
-            $ads = collect();
-            $noUser = true;
-            return view('op_ads.index', compact('ads', 'noUser'));
+            $ads = new LengthAwarePaginator([], 0, 10);
+            return view('op_ads.index', compact('ads'))->with('noUser', true);
         }
 
         $ads = op_Ad::with(['responsable', 'partidaRel', 'tercer'])
@@ -35,13 +42,11 @@ class op_AdController extends Controller
         return view('op_ads.index', compact('ads'))->with('noUser', false);
     }
 
-
-
     public function create()
     {
         $usuaris = op_Usuari::all();
         $partides = op_Partida::all();
-        $tercers = op_Tercer::all();
+        $tercers = op_Tercer::orderBy('TER_NOM', 'asc')->get();
         return view('op_ads.create', compact('usuaris', 'partides', 'tercers'));
     }
 
@@ -54,7 +59,7 @@ class op_AdController extends Controller
             'import_reserva' => 'required|numeric',
             'exp_sedipualba' => 'nullable|string',
             'concepte_despesa' => 'nullable|string',
-            'cif' => 'nullable|exists:op_tercers,ter_doc',
+            'cif' => 'nullable|exists:op_tercers_aytos,TER_ITE',
             'rc' => 'nullable|string',
         ]);
 
@@ -85,7 +90,7 @@ class op_AdController extends Controller
             'import_reserva' => 'required|numeric',
             'exp_sedipualba' => 'nullable|string',
             'concepte_despesa' => 'nullable|string',
-            'cif' => 'nullable|exists:op_tercers,ter_doc',
+            'cif' => 'nullable|exists:op_tercers_aytos,TER_ITE',
             'rc' => 'nullable|string',
         ]);
 
@@ -95,9 +100,6 @@ class op_AdController extends Controller
 
         return redirect()->route('op_ads.index')->with('success', 'Registre actualitzat correctament.');
     }
-
-
-
 
     public function destroy($id)
     {

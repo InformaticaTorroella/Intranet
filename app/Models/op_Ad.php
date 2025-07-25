@@ -22,6 +22,8 @@ class op_Ad extends Model
     }
 
     public function tercer() {
-        return $this->belongsTo(op_Tercer::class, 'cif', 'ter_doc');
+        return $this->belongsTo(op_Tercer::class, 'cif', 'TER_ITE');
     }
+
+
 }

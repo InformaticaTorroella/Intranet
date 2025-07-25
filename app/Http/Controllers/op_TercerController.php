@@ -21,15 +21,15 @@ class op_TercerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ter_doc' => 'required|string|max:20|unique:op_tercers,ter_doc',
-            'ter_nom' => 'required|string|max:255',
-            'ter_dom' => 'nullable|string|max:255',
-            'ter_pob' => 'nullable|string|max:100',
-            'ter_cpo' => 'nullable|integer',
-            'ter_pro' => 'nullable|string|max:100',
-            'ter_tlf' => 'nullable|string|max:50',
-            'ter_fax' => 'nullable|string|max:50',
-            'ter_dce' => 'nullable|string|max:255',
+            'TER_DOC' => 'required|string|max:20|unique:op_tercers_aytos,TER_DOC',
+            'TER_NOM' => 'required|string|max:255',
+            'TER_DOM' => 'nullable|string|max:255',
+            'TER_POB' => 'nullable|string|max:100',
+            'TER_CPO' => 'nullable|integer',
+            'TER_PRO' => 'nullable|string|max:100',
+            'TER_TLF' => 'nullable|string|max:50',
+            'TER_FAX' => 'nullable|string|max:50',
+            'TER_DCE' => 'nullable|string|max:255',
         ]);
 
         op_Tercer::create($request->all());
@@ -45,15 +45,15 @@ class op_TercerController extends Controller
     public function update(Request $request, op_Tercer $op_tercer)
     {
         $request->validate([
-            'ter_doc' => 'required|string|max:20|unique:op_tercers,ter_doc,' . $op_tercer->ter_doc . ',ter_doc',
-            'ter_nom' => 'required|string|max:255',
-            'ter_dom' => 'nullable|string|max:255',
-            'ter_pob' => 'nullable|string|max:100',
-            'ter_cpo' => 'nullable|integer',
-            'ter_pro' => 'nullable|string|max:100',
-            'ter_tlf' => 'nullable|string|max:50',
-            'ter_fax' => 'nullable|string|max:50',
-            'ter_dce' => 'nullable|string|max:255',
+            'TER_DOC' => 'required|string|max:20|unique:op_tercers_aytos,TER_DOC,' . $op_tercer->ter_doc . ',TER_DOC',
+            'TER_NOM' => 'required|string|max:255',
+            'TER_DOM' => 'nullable|string|max:255',
+            'TER_POB' => 'nullable|string|max:100',
+            'TER_CPO' => 'nullable|string|max:5',
+            'TER_PRO' => 'nullable|string|max:100',
+            'TER_TLF' => 'nullable|string|max:50',
+            'TER_FAX' => 'nullable|string|max:50',
+            'TER_DCE' => 'nullable|string|max:255',
         ]);
 
         $op_tercer->update($request->all());
