@@ -14,13 +14,29 @@
   <div class="espacio-superior">
     <section class="panel-enlaces">
       <div class="enlaces-grid">
-        <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
-        <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
-        <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
-        <a href="{{ route('telefons.index') }}" class="enlace-panel">Telèfons</a>
-        <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
-        <a href="{{ route('quadres.index') }}" class="enlace-panel">Quadre de Classificació</a>
+        <a href="{{ route('noticias.index') }}" class="enlace-panel panel-noticies">
+          <span>Notícies</span>
+        </a>
+        <a href="{{ route('documents.index') }}" class="enlace-panel panel-documents">
+          <span>Documents</span>
+        </a>
+        <a href="{{ route('avis.index') }}" class="enlace-panel panel-avisos">
+          <span>Avisos</span>
+        </a>
+        <a href="{{ route('telefons.index') }}" class="enlace-panel panel-telefons">
+          <span>Telèfons</span>
+        </a>
+        <a href="{{ route('circulars.index') }}" class="enlace-panel panel-circulars">
+          <span>Circulars</span>
+        </a>
+        <a href="{{ route('quadres.index') }}" class="enlace-panel panel-quadres">
+          <span>Quadre de Classificació</span>
+        </a>
+        <a href="{{ route('op_ads.index') }}" class="enlace-panel panel-ad">
+          <span>Operacions Comptables</span>
+        </a>
       </div>
+
     </section>
   </div>
 
@@ -56,29 +72,17 @@
         </a>
       </section>
 
-
-
-      <!-- ❓ Última FAQ -->
       <section class="home-box">
-        <h2>❓ Última Pregunta</h2>
-        @if ($ultimaFaq)
-          <div class="home-item faq-item">
-            <h3>{{ $ultimaFaq->pregunta }}</h3>
-            <p>Feta per: {{ $ultimaFaq->usuari->name ?? 'Anònim' }}</p>
-            <p>{{ $ultimaFaq->created_at->format('d/m/Y H:i') }}</p>
-          </div>
-
-          <a href="{{ route('faqs.show', $ultimaFaq->id) }}" class="btn btn-secondary faq-btn">
-            Veure i respondre
-          </a>
-        @else
-          <p>No hi ha cap FAQ.</p>
-        @endif
-
-        <div class="faq-create-container">
-          <a href="{{ route('faqs.create') }}" class="btn faq-btn btn-success faq-create-btn">
-            Nova FAQ
-          </a>
+        <h2>Espai extra</h2>
+        <div class="home-item">
+          <h3>S'accepten propostes</h3>
+          <p>
+            Contacteu a 
+            <a href="mailto:informatica@torroella-estartit.cat" style="color: inherit; text-decoration: none;">
+              informatica@torroella-estartit.cat
+            </a><br>
+            Es consideraran totes les propostes i es valoraran.
+          </p>
         </div>
       </section>
 
