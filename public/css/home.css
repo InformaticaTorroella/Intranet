@@ -113,6 +113,7 @@ main {
 }
 
 .enlace-panel {
+  position: relative;
   display: block;
   padding: 40px 20px;
   background-color: #fff;
@@ -124,14 +125,81 @@ main {
   color: #800000;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
-.enlace-panel:hover {
-  border-color: #800000;
-  background-color: #800000;
-  color: #fff;
-  transform: scale(1.03);
+/* Imagen oculta inicialmente */
+.enlace-panel {
+  position: relative;
+  display: block;
+  padding: 40px 20px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #800000;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
+
+.enlace-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  filter: brightness(0.8); /* opcional para oscurecer la imagen */
+}
+
+.enlace-panel span {
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.enlace-panel:hover::before {
+  opacity: 1;
+}
+
+.enlace-panel:hover span {
+  opacity: 0;
+}
+.panel-noticies::before {
+  background-image: url('../images/noticies.png');
+}
+
+.panel-documents::before {
+  background-image: url('../images/documents.jpg');
+}
+
+.panel-avisos::before {
+  background-image: url('../images/avisos.jpg');
+}
+
+.panel-telefons::before {
+  background-image: url('../images/telefons.png');
+}
+
+.panel-circulars::before {
+  background-image: url('../images/circulars.jpg');
+}
+
+.panel-quadres::before {
+  background-image: url('../images/quadres.jpg');
+}
+
+.panel-ad::before {
+  background-image: url('../images/ad.png');
+}
+
+
 /* FAQ home styles */
 .faq-item h3 {
   font-size: 1.15rem;

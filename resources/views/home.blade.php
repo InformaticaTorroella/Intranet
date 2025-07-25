@@ -14,13 +14,29 @@
   <div class="espacio-superior">
     <section class="panel-enlaces">
       <div class="enlaces-grid">
-        <a href="{{ route('noticias.index') }}" class="enlace-panel">Notícies</a>
-        <a href="{{ route('documents.index') }}" class="enlace-panel">Documents</a>
-        <a href="{{ route('avis.index') }}" class="enlace-panel">Avisos</a>
-        <a href="{{ route('telefons.index') }}" class="enlace-panel">Telèfons</a>
-        <a href="{{ route('circulars.index') }}" class="enlace-panel">Circulars</a>
-        <a href="{{ route('quadres.index') }}" class="enlace-panel">Quadre de Classificació</a>
+        <a href="{{ route('noticias.index') }}" class="enlace-panel panel-noticies">
+          <span>Notícies</span>
+        </a>
+        <a href="{{ route('documents.index') }}" class="enlace-panel panel-documents">
+          <span>Documents</span>
+        </a>
+        <a href="{{ route('avis.index') }}" class="enlace-panel panel-avisos">
+          <span>Avisos</span>
+        </a>
+        <a href="{{ route('telefons.index') }}" class="enlace-panel panel-telefons">
+          <span>Telèfons</span>
+        </a>
+        <a href="{{ route('circulars.index') }}" class="enlace-panel panel-circulars">
+          <span>Circulars</span>
+        </a>
+        <a href="{{ route('quadres.index') }}" class="enlace-panel panel-quadres">
+          <span>Quadre de Classificació</span>
+        </a>
+        <a href="{{ route('op_ads.index') }}" class="enlace-panel panel-ad">
+          <span>Ad</span>
+        </a>
       </div>
+
     </section>
   </div>
 
@@ -69,11 +85,6 @@
           </p>
         </div>
       </section>
-
-
-
-
-
 
 
     </div>
