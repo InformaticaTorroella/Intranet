@@ -33,7 +33,7 @@
           <span>Quadre de Classificació</span>
         </a>
         <a href="{{ route('op_ads.index') }}" class="enlace-panel panel-ad">
-          <span>Ad</span>
+          <span>Operacions Comptables</span>
         </a>
       </div>
 
